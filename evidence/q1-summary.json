@@ -1,0 +1,297 @@
+{
+  "snapshot": {
+    "retrieved_at_utc": "2026-09-16T05:21:41.920261+00:00",
+    "remote": "https://github.com/deepseek-ai/deepseek-harness.git",
+    "default_ref": "refs/remotes/origin/master",
+    "head": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+    "shallow": false,
+    "roots": [
+      "b67e81ac97647270b3002d78532baf3a5b68cbc3"
+    ]
+  },
+  "total_commits": 17177,
+  "merge_commits": 7097,
+  "non_merge_commits": 10080,
+  "earliest_committer": {
+    "hash": "b67e81ac97647270b3002d78532baf3a5b68cbc3",
+    "parents": "",
+    "author_name_raw": "Tianyi Cui",
+    "author_email_raw": "53024+tianyicui@users.noreply.github.com",
+    "author_name": "Tianyi Cui",
+    "author_email": "53024+tianyicui@users.noreply.github.com",
+    "committer_name_raw": "Tianyi Cui",
+    "committer_email_raw": "53024+tianyicui@users.noreply.github.com",
+    "committer_name": "Tianyi Cui",
+    "committer_email": "53024+tianyicui@users.noreply.github.com",
+    "author_epoch": "1781103464",
+    "committer_epoch": "1781103536",
+    "subject": "Initialize repo with README, AGENTS.md, and CLAUDE.md symlink",
+    "merge": false,
+    "author_utc": "2026-06-10T14:57:44+00:00",
+    "committer_utc": "2026-06-10T14:58:56+00:00"
+  },
+  "latest_committer": {
+    "hash": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+    "parents": "0a15e36e7f82b6ed45af6fa9759f29b40dcd965d e459e3263733075bd806d9ba6dd92bbc4bf3983f",
+    "author_name_raw": "imccyu",
+    "author_email_raw": "276526105+imccyu@users.noreply.github.com",
+    "author_name": "imccyu",
+    "author_email": "276526105+imccyu@users.noreply.github.com",
+    "committer_name_raw": "GitHub",
+    "committer_email_raw": "noreply@github.com",
+    "committer_name": "GitHub",
+    "committer_email": "noreply@github.com",
+    "author_epoch": "1789442166",
+    "committer_epoch": "1789442166",
+    "subject": "Merge pull request #4192 from deepseek-harness/worktree-bootfast2",
+    "merge": true,
+    "author_utc": "2026-09-15T03:16:06+00:00",
+    "committer_utc": "2026-09-15T03:16:06+00:00"
+  },
+  "elapsed_days": 96.5119212962963,
+  "calendar_days_inclusive": 98,
+  "active_days": 97,
+  "peak_days": [
+    {
+      "date_utc": "2026-07-30",
+      "commits": 846,
+      "merges": 453,
+      "non_merges": 393,
+      "by_author_date": 889
+    },
+    {
+      "date_utc": "2026-07-27",
+      "commits": 582,
+      "merges": 310,
+      "non_merges": 272,
+      "by_author_date": 617
+    },
+    {
+      "date_utc": "2026-07-31",
+      "commits": 571,
+      "merges": 317,
+      "non_merges": 254,
+      "by_author_date": 580
+    },
+    {
+      "date_utc": "2026-07-28",
+      "commits": 527,
+      "merges": 224,
+      "non_merges": 303,
+      "by_author_date": 564
+    },
+    {
+      "date_utc": "2026-07-29",
+      "commits": 509,
+      "merges": 180,
+      "non_merges": 329,
+      "by_author_date": 569
+    },
+    {
+      "date_utc": "2026-08-11",
+      "commits": 507,
+      "merges": 211,
+      "non_merges": 296,
+      "by_author_date": 478
+    },
+    {
+      "date_utc": "2026-07-22",
+      "commits": 432,
+      "merges": 200,
+      "non_merges": 232,
+      "by_author_date": 440
+    },
+    {
+      "date_utc": "2026-07-15",
+      "commits": 427,
+      "merges": 297,
+      "non_merges": 130,
+      "by_author_date": 412
+    },
+    {
+      "date_utc": "2026-08-08",
+      "commits": 426,
+      "merges": 112,
+      "non_merges": 314,
+      "by_author_date": 303
+    },
+    {
+      "date_utc": "2026-08-10",
+      "commits": 417,
+      "merges": 177,
+      "non_merges": 240,
+      "by_author_date": 441
+    }
+  ],
+  "author_identities": 76,
+  "committer_identities": 57,
+  "single_commit_author_identities": 14,
+  "top_authors": [
+    {
+      "name": "Tianyi Cui",
+      "email": "53024+tianyicui@users.noreply.github.com",
+      "commits": 6210,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Yichen Jiang",
+      "email": "jyc132780208@sina.com",
+      "commits": 1895,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "imccyu",
+      "email": "276526105+imccyu@users.noreply.github.com",
+      "commits": 1764,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Chinesezjc",
+      "email": "jczhai@deepseek.com",
+      "commits": 1029,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "_Kerman",
+      "email": "kermanx@qq.com",
+      "commits": 901,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "creatixchu",
+      "email": "creatixchu@deepseek.com",
+      "commits": 811,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Turtle",
+      "email": "turtle1999@deepseek.com",
+      "commits": 718,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "pku-xht",
+      "email": "xht@deepseek.com",
+      "commits": 578,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Hypatia May",
+      "email": "hypatiamay@outlook.com",
+      "commits": 481,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Dudu-0223",
+      "email": "fsyo0223@gmail.com",
+      "commits": 393,
+      "explicit_bot_label": false
+    }
+  ],
+  "top_committers": [
+    {
+      "name": "Tianyi Cui",
+      "email": "53024+tianyicui@users.noreply.github.com",
+      "commits": 5582,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "commits": 2156,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Yichen Jiang",
+      "email": "jyc132780208@sina.com",
+      "commits": 1638,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "imccyu",
+      "email": "276526105+imccyu@users.noreply.github.com",
+      "commits": 1473,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "_Kerman",
+      "email": "kermanx@qq.com",
+      "commits": 850,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "creatixchu",
+      "email": "creatixchu@deepseek.com",
+      "commits": 808,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Chinesezjc",
+      "email": "jczhai@deepseek.com",
+      "commits": 780,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Turtle",
+      "email": "turtle1999@deepseek.com",
+      "commits": 603,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "pku-xht",
+      "email": "xht@deepseek.com",
+      "commits": 530,
+      "explicit_bot_label": false
+    },
+    {
+      "name": "Hypatia May",
+      "email": "hypatiamay@outlook.com",
+      "commits": 471,
+      "explicit_bot_label": false
+    }
+  ],
+  "author_committer_date_mismatch": 1568,
+  "snapshot_mailmap_present": false,
+  "checks": {
+    "git_total_matches_rows": true,
+    "git_merge_count_matches_rows": true,
+    "git_non_merge_count_matches_rows": true,
+    "daily_sum_matches": true,
+    "author_sum_matches": true,
+    "shortlog_total_matches": true,
+    "shortlog_identity_count_matches": true
+  },
+  "zero_commit_dates": [
+    "2026-06-27"
+  ],
+  "mean_commits_per_calendar_day": 175.27551020408163,
+  "top1_author_share_pct": 36.15299528439192,
+  "top5_author_share_pct": 68.69069104034465,
+  "top10_author_share_pct": 86.04529312452699,
+  "top5_non_merge_author_share_pct": 64.60317460317461,
+  "unique_author_emails": 62,
+  "unique_author_names": 58,
+  "explicit_bot_authors": [
+    {
+      "name": "dependabot[bot]",
+      "email": "49699333+dependabot[bot]@users.noreply.github.com",
+      "commits": 8,
+      "explicit_bot_label": true
+    }
+  ],
+  "author_identities_at_most_5_commits": 28,
+  "peak_by_author_date": [
+    [
+      "2026-07-30",
+      889
+    ]
+  ],
+  "case_hashes": [
+    "b67e81ac97647270b3002d78532baf3a5b68cbc3",
+    "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+    "6e5a155868053b11e55b0a8e89c7135980362210",
+    "b46dcb16cbb570c7ff984cdb292481903f04de09",
+    "771dd49a06c625c73e54311593c21369dc72f911",
+    "53066fd6406a23e57a8015fb5c4010b19a3b1489"
+  ]
+}

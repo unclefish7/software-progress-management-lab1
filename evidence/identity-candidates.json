@@ -1,0 +1,117 @@
+{
+  "policy": "Candidates only: no automatic identity merge; shared email can also reflect misconfiguration.",
+  "same_email_multiple_names": {
+    "276526105+imccyu@users.noreply.github.com": {
+      "imccyu": 1764,
+      "Tianyi Cui": 1
+    },
+    "53024+tianyicui@users.noreply.github.com": {
+      "Tianyi Cui": 6210,
+      "pku-xht": 1
+    },
+    "turtle1999@deepseek.com": {
+      "Turtle": 718,
+      "turtle1999": 36
+    },
+    "grllll@deepseek.com": {
+      "Ruilin Geng": 1,
+      "gengruilin": 11
+    },
+    "zzy211851@gmail.com": {
+      "Ziya": 81,
+      "ZiyaZhang": 8
+    },
+    "199893125+ZiyaZhang@users.noreply.github.com": {
+      "ZiyaZhang": 245,
+      "Ziya": 41
+    },
+    "ihsiang@deepseek.com": {
+      "yixiangihsiang": 3,
+      "ihsiang": 8
+    },
+    "maghsk2017@gmail.com": {
+      "Yudong Han": 5,
+      "Yudong": 3,
+      "yudshj": 19,
+      "HYD@OVERTON": 3
+    },
+    "kingwenlu@gmail.com": {
+      "Wenlu Wang": 30,
+      "kingwl": 272
+    },
+    "hypatiamay@outlook.com": {
+      "hypatiamay": 14,
+      "Hypatia May": 481
+    },
+    "silver.ding@deepseek.com": {
+      "Ag": 2,
+      "Jiaying Ding": 11
+    },
+    "87308515+NI0317@users.noreply.github.com": {
+      "Terra": 3,
+      "Ni Shentu": 2
+    }
+  },
+  "same_name_multiple_emails": {
+    "imccyu": {
+      "276526105+imccyu@users.noreply.github.com": 1764,
+      "cc.yu@deepseek.com": 175,
+      "imccyu@users.noreply.github.com": 17
+    },
+    "Chinesezjc": {
+      "jczhai@deepseek.com": 1029,
+      "1751557948@qq.com": 1
+    },
+    "Tianyi Cui": {
+      "53024+tianyicui@users.noreply.github.com": 6210,
+      "276526105+imccyu@users.noreply.github.com": 1
+    },
+    "Yichen Jiang": {
+      "jyc132780208@sina.com": 1895,
+      "75920107+LegGasai@users.noreply.github.com": 1
+    },
+    "Turtle": {
+      "turtle1999@deepseek.com": 718,
+      "turtleshell1999@proton.me": 14
+    },
+    "Ruilin Geng": {
+      "grllll@deepseek.com": 1,
+      "1585363499@qq.com": 1
+    },
+    "turtle1999": {
+      "301751225+turtle1999@users.noreply.github.com": 8,
+      "turtle1999@deepseek.com": 36
+    },
+    "pku-xht": {
+      "53024+tianyicui@users.noreply.github.com": 1,
+      "xht@stu.pku.edu.cn": 80,
+      "xht@deepseek.com": 578,
+      "170163488+pku-xht@users.noreply.github.com": 1
+    },
+    "Magolor": {
+      "magolorcz@gmail.com": 7,
+      "magolor@qq.com": 3
+    },
+    "lsdsjy": {
+      "lsdsjy@163.com": 14,
+      "1356263+lsdsjy@users.noreply.github.com": 73
+    },
+    "Ziya": {
+      "zzy211851@gmail.com": 81,
+      "199893125+ZiyaZhang@users.noreply.github.com": 41
+    },
+    "ZiyaZhang": {
+      "199893125+ZiyaZhang@users.noreply.github.com": 245,
+      "zzy211851@gmail.com": 8,
+      "ZiyaZhang@users.noreply.github.com": 14
+    },
+    "winewill": {
+      "leto.wine@gmail.com": 1,
+      "324803222+winewill@users.noreply.github.com": 1
+    },
+    "Kaige-Gao": {
+      "102539609+Kaige-Gao@users.noreply.github.com": 6,
+      "michellegkg@163.com": 6
+    }
+  }
+}

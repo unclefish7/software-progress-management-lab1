@@ -1,0 +1,36 @@
+{
+  "snapshot": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+  "estimated_people": 39,
+  "person_commits": 17167,
+  "excluded": [
+    {
+      "group": "dependabot[bot]",
+      "kind": "bot",
+      "commits": 8,
+      "non_merges": 8,
+      "merges": 0,
+      "identities": 1
+    },
+    {
+      "group": "Ubuntu",
+      "kind": "unresolved",
+      "commits": 2,
+      "non_merges": 2,
+      "merges": 0,
+      "identities": 1
+    }
+  ],
+  "top1_share_pct": 36.17988000233005,
+  "top5_share_pct": 69.86660453195084,
+  "top10_share_pct": 88.43129259626026,
+  "top5_non_merge_share_pct": 66.48460774577954,
+  "people_to_reach_80pct": 8,
+  "checks": {
+    "all_identities_mapped_once": true,
+    "all_commits_preserved": true,
+    "merge_counts_preserved": true,
+    "non_merge_counts_preserved": true,
+    "bins_cover_people": true,
+    "bins_cover_commits": true
+  }
+}

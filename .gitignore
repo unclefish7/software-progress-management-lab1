@@ -1,0 +1,39 @@
+# 本地研究对象：不将其源码或嵌套 Git 仓库纳入作业仓库
+/deepseek-harness/
+
+# AI 工具与编辑器的本地配置
+/.agents/
+/.codex/
+/.idea/
+/.vscode/
+
+# Python 缓存、虚拟环境及测试缓存
+__pycache__/
+*.py[cod]
+/.venv/
+/venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 本地依赖、构建产物与临时文件
+node_modules/
+/build/
+/dist/
+/tmp/
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 本地环境变量与凭据文件
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# 与 q1-summary.json 内容重复的终端输出；其余报告证据保留
+/evidence/q1-run-output.json
