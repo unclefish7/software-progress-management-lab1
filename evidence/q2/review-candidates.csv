@@ -1,0 +1,172 @@
+hash,category,reason,matched_lines
+16a7ead9aba0bbdee10a6a8cea8e292bd20e0e60,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr-3111-review
+3031cb0e33004dd67aad27caebd7f6563095cb25,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr-3111-review
+fab41be07e7bcf50a3d4b363882d7e4c441f7635,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr-3111-review
+d495089ff7a020f6f933fc4cee713e65c2329cd6,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,review fix: align Codex policy evidence
+e2315e3b149ff8d06e32675796c0a2a6bbe4a0fb,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,review fix: tighten Codex failure ownership
+7d30a39619635efaa2ed6620a04999cb88762142,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,review fix: simplify Claude diagnostic evidence
+c7dce0e784ff154c159ba3317b4273e08edde21d,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge final Claude review evidence into Codex layer
+62da706b64b15b31a0a960d8987d6cc9d93950d3,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,fix(subagent): address Claude permission review findings
+061100f6f2cc1608a2c73811d74382f9d92b27d7,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs: fix four factual errors found by Codex review round 1
+2cf637480ce3de8a2b813a0abc31ee183eec1b50,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge PR1 review fixes into Claude provider
+46db6088436d948aaee311f68151aa5d2d095fe1,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,Align Codex provider review evidence
+36b562e4e95da11ce6996595826d37c870c368fc,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,fix(subagent): close Codex provider review findings
+30b9d0464a0b66cb1a1190f62043db6a5eb519dd,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 3
+13631134aa422af1e670808e84892958d6b179d0,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 2
+4bd98407a98d2c570508e3b1de588a8cb661383d,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 1
+7428cdf41e8680d949ae173f3fd6f39b9107e56f,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(subagent): address codex review round 3
+cbaceb73a98a6ef41c06d72a186f1911fb64c151,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(subagent): address codex review round 2
+c485b6136d6411c898a3b2e1fad8c559daf1140d,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(subagent): address codex review round 1
+9e5ae0d12e8582910a81a7e2fc2fb481670d3082,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 3
+4eda48d002f3d9cab151aa5de8a2e2c09a41dbf8,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 2
+71570d7becc259365705868219163c23e14190ff,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 1
+43d81b67cef2a957afd2cb0646894757f3f28315,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of the acp-only fix found lsp-local carries the identical
+c9dc0977491dfd82bf7b4836e383c6b02f0aa819,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs: fix NIH-audit review findings (Codex round 1)
+e678db440e3818cfbb760db7e73aded5c4f7d6c2,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex re-review (A): AGENTS.md layout tree, the architecture capability"
+fb0d4ba56434f01cd71efb1e9685702fcd3ae708,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(process): close review gaps from Codex round 1
+3b911359232d784ca336c07d54b1bb7c2e893d66,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Review finding (Codex round 1): abstract erases at runtime and
+e20545c9eeda8ac2e5418146aa784a263b7b659d,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Review finding (Codex round 1): abstract erases at runtime and
+ec38cac8efb4a95e8cda44839cc23999ce767be8,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Review finding (Codex P1), pinned red-first: the marker was tied to"
+88f393332752fdd93f5b7f0b0e70a2113614280d,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(docs): address Codex round-1 findings on the review-fix stack
+26bfd37da0422898988d203148a32e7d056eb2fe,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge commit 'refs/codex-unblock/20260723/master' into worktree/pty-review-fixes
+2434afd2efabde721f9fc513d47b55b2824cdf92,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge pull request #450 from deepseek-harness/codex/invariant-service-review-fixes
+317f740dc268d2039fae641ade8a47ce7efabc5f,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge pull request #447 from deepseek-harness/codex/pr239-plan-mode-review-fixes
+fe42baeaa33dd192c359067f22cbd15ab53d7700,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge codex/invariant-service-seam into codex/invariant-service-review-fixes
+7eee0b48b763529a1debc62f45997a6c9fea1a28,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge codex/invariant-service-seam into codex/invariant-service-review-fixes
+4466d582c4eb42f6e587aa8de012824c5425dad1,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/feat/plan-mode' into codex/pr239-plan-mode-review-fixes
+167a5e95e042b0d4760072e7599b2c8bb30e4d80,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge codex/invariant-service-seam into codex/invariant-service-review-fixes
+6aa71aca94b8e0672c0b3577a1026705cf019d00,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/feat/plan-mode' into codex/pr239-plan-mode-review-fixes
+a19dcf40ef51753ee47238eaeffe127a318e0fac,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr370-review-20260719
+2bc4791f84f3f159cb8e9e9597dfe14b2409e149,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr370-review-20260719
+f756fcb7d36e1f6148646db80db70395fbf724f2,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge pull request #395 from deepseek-harness/codex/code-review-prevention
+8733f365a427d82e3e7338c455983e35a1c4c930,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/code-review-prevention
+38b7275eb1d242ed6c9dffab4a5e8f8b8df84f16,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge pull request #393 from deepseek-harness/codex/code-review-human-principles
+2db406186107354fc1aae2879e6563b067af10fa,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/code-review-human-principles
+5510b4ec06a6a6fbab6ffe49df065f2524cc55d7,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr357-merge-review-20260719
+3ffc1ce8f5ca98bb8265914e625f7a285584c27a,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr357-merge-review-20260719
+dff38cb6fe37b8c8f7cd0097753d7a083bdf2626,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr357-merge-review-20260719
+ca11085a8f619bfd66b07eb40c137b54461ecbef,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr357-merge-review-20260719
+2815d66063a13048c8b4d0e0e042ee68fdadace3,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr357-merge-review-20260719
+43d419ac5c1da0bc3e3920eb6fe089597350330c,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(lsp): address codex review round 3
+0f3f0efd9c08b755d6127ef8b77100a34170a512,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(lsp): address codex review round 2
+8e8f90e235dedf21872fa07e314e1d72b93bf36f,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(lsp): address codex review round 1
+380519b6d203c6d90413c0d8984f26d82977c154,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr106-master-merge-review-20260715
+ff056f860fa6562002defcc29e17991c27438e86,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr106-master-merge-review-20260715
+b045b553a98dd7c4ec8cc5814895f66167bdba21,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge pull request #315 from deepseek-harness/codex/fix-pr172-review-findings
+a673ee4888b798a7eca599ffa2d26aed167698eb,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr202-merge-review
+7cbed547c72be4c5c14ca6bac2f4e696401611ed,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/pr202-merge-review
+2e631a4ba237f69c38f131d27dbb945ec57178df,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge remote-tracking branch 'origin/master' into codex/fix-pr172-review-findings
+883948d1d5485dba6f3bc484bf8aec42c858cbae,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merge commit 'refs/review/pr-312-head' into codex/fix-pr172-review-findings
+460a58639ae5aba84f97c24f8ba957d25b64db94,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 3
+590f520949dcd57bb52aebd713a5fa593bf209de,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 2
+e94305d99ebcee7c93208b3e347b4ee791ada0b2,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 1
+013f12963bacfbc83f0c71ac12ca66942a81800d,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex follow-up findings on the carrier commit, both verified:"
+c9310d2a19c7f8129f8014fc927329c35a35906c,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 3
+326b199f255c61647c190286960dd974488a70ee,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 2
+db6aed0459aee0b48dead730448a74dade805a95,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex confirmation-round finding: an OUTERMOST prepend pre-execute deny
+d0c2f0916dfd14f9299f25e9c9669e760c378a60,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 1
+0ba6de00010b2e67ab945d9819a4f1dba1747886,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs: catalog the code-runtime seam vocabulary (Codex review finding)
+cb3246d2d875e5195902f6b2c01c9307bfbc48fa,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs: fix Codex round-1 findings on the Code Mode RFC
+15a34319134bd8278e9311a9cb59d5bb4545a24b,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs: catalog the code-runtime seam vocabulary (Codex review finding)
+3e678180256c41258bd374c678487f1170ef9781,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs: fix Codex round-1 findings on the Code Mode RFC
+d1b52a063b75b89b655d14d5312306d8744948fc,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Three Codex findings on json-schema.ts, one discipline:"
+515d04339b56a137070c6411ed5fac40e08b95ca,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Residuals from the Codex re-review:
+a0d8f33b29234f65468b90b9ff0128656c84fc3b,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review findings on the pinned-header change:
+a4152705ef873380259bb84d5144faf0cc01d803,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of the draft: the abort-on-dispose tests asserted only that
+eaac3b58a4a6934268f45eef2f0d85edc2920589,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex round-2 review found three adjacent fail-open shapes:
+9ff010cbef92569597058ae46f72917463852396,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex round-1 review found three fail-open paths in the new gate:
+b4ba84a1a941add356982419c6c8eeaaa30f371f,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: drop trailing blank line in fs README (codex review round 1)
+8bd80e5e9bf21acc3edc149541fdcf696618beee,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex diff review, round 1, two (A) findings:"
+706691a7dff8262f640683f74dbd68d6b9ccdeeb,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex convergence round 1 on the review-response commits: agent()'s
+dd44402871b68353af61503bbc9f38f318f8df19,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review caught three procedure defects: the dependent check used
+0e29de459e7f1db998eb2c68640ffc1afd779cc3,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"docs(rfc): address Codex review — fence-aware format gate, exact corpus counts"
+7234d41b915d0b75e7b69ee1b99e42fa002e7e4b,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex code-review round 5: agent()/parallel()/pipeline() returned HOST Promise
+95c8c878e1e967b9be6e306593d845e21e6ed30e,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex code-review round 4 flagged the return channel: an async IIFE
+fff2e1f33ddf97e45fd868885d990f604476dbe4,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex code-review round 3: the round-2 'contained stack getter' still let a
+57b9910339658b17c86eea0eb8aa2b3406fb563b,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex code-review round 2: errorText() read .stack/.message as plain property
+e264a106fdfea5d5c1db8be72058b6f1a16edf99,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"workflow, subagent: fix Codex code-review round-1 blockers"
+e890a3373e237a34861bfea2fd1570dfed0d9235,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex round-2 findings:
+e85e21c8b05fb74e3c95723c50a644da4b4d7ed0,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex round-1 findings, both confirmed:"
+53dc3c8a28b7af6b727333cdd2fe553e0bbb2d53,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Harden generator against Codex review findings
+d752eed88b2a4777856d0439839a749cd74d6806,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex review: the RFC claims the fixtures prove each guard fires, but the"
+48d25cdd44abe6cfea67b1bd2584049d7c84860a,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,A Codex review pass on the draft caught four real gaps and two solid
+9db3ce73138c92669de8b684a6ea828a324541a8,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex review, with its own probes, showed the RFC overclaimed: the"
+c4d637300dbf8af4c6a075f6303d9bb103d1a571,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(docs): address Codex review on the architecture rewrite
+e5120d21936ac67218fd9d1f8ec2f98b02765fff,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(docs): address Codex review round 3 — last three moved-policy citations
+26339144e39ca4f44319e1e2508e317cb3fdfbf8,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(docs): address Codex review round 2 — repoint every remaining moved-policy citation
+c3424e54876509c797b092919bc4674adec12d2f,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(docs): address Codex review round 1 on the AGENTS.md rewrite
+226a8b5e4cc8872c9c438515498d376550440c77,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review found three gaps between the documented contract and what
+65690d8cf10c3904d8c1477647fe1c8e7c716162,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"fix(doc-budgets): address Codex review — exact-freeze ceilings, list missing entries"
+e6418398ff40d74891d4cfd61cb77ed751f97063,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs(rfc): address Codex round findings — timeless framing + narrowed fs acceptance
+9389c5df19360cb52af0b1198e46d596a38f12c2,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs(rfc): address Codex review findings on the RFC batch
+fb78a844af7a4c810fab8bb3d4152f02e153018d,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of the vocabulary relocation found two doc-accuracy issues:
+2a66b7c4e0ce53bedf6939f4393f324c06025ac9,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex convergence findings on the delegate-and-fold fix (code path verified
+8e8c791eb0bd6e2abb41689af4ea729bfbe8d36c,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,docs(hooks-claude): current-state comment wording caught in review
+84f3019310c6b8734bdfa36095802528ee29cbbe,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,Address review: `agentType` was a Claude-Code concept (`subagent_type`) that
+d3be934a173a0d58295c8be48904dafba85added,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of the interception-seams merge flagged current-state prose still
+5533bb783a87d5430253ea76667b119d13075a36,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex review of the reframe found stale ""trusted-plugin surface/boundary"""
+9e575a2a2cc016c30aee0a9225c858269ea9e31a,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of the turn-mirror removal found current-state docs/comments that
+eda2983b001010e3ea480e0500b6881f1f17b028,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"fix(docs): address Codex review — document the subagent_fork alias, harden dispose | Round-1 Codex review findings on the tool-schema catalog:"
+4da2b99bc32b0f884855a5fd14bb8b10de2177c5,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Round-2 Codex review of the round-1 fixes:
+8870da431357aea4195805ad2d9ebee2ae7953a1,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"fix(hooks): address Codex review — Stop force-continue, Codex tool_name + plain-stdout context, defer continue:false | Round-1 Codex review findings on the bridges:"
+24e9c0fa70692b45a4ff27bb045ea4a3dbf9310e,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review finding on the bridges PR (PR-F); fixed here on the codec that owns
+c658f4d1559f869b64c5f69b4a6f049d262240bc,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"fix(hooks): address Codex review — tighten codec to the reference schemas, preserve stdout | Codex's PR-E review found three protocol-fidelity blockers + two doc gaps, all"
+93106b87b4cbed9dcbf7905404620c3ca96f264b,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review caught an observe-only violation: the subagent/end emit fires from a
+60418a5779f073bfbfa19191e8ac095afe24edf9,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex's confirmation review confirmed blocker #1 (post-execute mutation) fixed and
+483e0e5edf5fcd965afeba0cb61d2819fb6dcad2,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"fix(events): address Codex review — protect post-execute result, purge stale tools/execute refs | Codex's PR-C review found two (A) blockers:"
+b44066d54425c96a0dc110e0297787768817c878,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"docs(bash): address Codex review — RFC states current truth, fix doc reference"
+a821dcbe0d4154394b0265737fba1643506e191c,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"fix(events): address Codex confirmation review — strengthen /goal guard, fix doc drift | Second-round Codex review of the PR-A taxonomy change found four issues, all"
+8df89d8e3334b75a47b8c358990a69a3cfa13a49,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"fix(events): address Codex review — balance step on step/start-listener throw, restore /goal guard | Codex review of PR-A found three blockers:"
+8395722db555c2e44d3477d46df551b621d76b33,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review findings on web seam
+5f744e4fa6acff4e50bcce1f9ef63ee51d887f9b,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex confirmation review: the trim-the-stored-content fix had no test that
+4f09157612046e48501fb2c15cff2213cbe2fb52,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex Phase 1 review: the event JSDoc described Phase 2 consumers (the
+1059166cb19aa4264142e62b748b7e62d2407481,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 2
+f9f475cbea682b0120225bfa463411e2a6a01097,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 1
+a1624530ee776c47413047527990e79a3bbb51bb,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 3
+0930e483ecf98ef363fddb51e47bf0475d34b629,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 2
+567519184ba42ffd2204583327e08091ae3b5120,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 1
+d612ebaef15cf2ac1e5182489262d16b3ddfc6ee,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 3
+b80291206710e0fbd2165ea24f33972168579df3,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 2
+1409e2ed154de0f22fe9666e7dfa83bb3f58648e,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix: address codex review round 1
+6de5e3a20a58fdd41475f197be6865ece6355ee7,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,codex review round 2 (non-blocking) CBR-004: the example's compaction
+2ff112962b10c0f97389c065a655002e9a2029d5,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Widen the dispose EOF grace past nested-teardown headroom; prove the SIGTERM rung (Codex review round 3)
+4565161c64b86a7db497106a76f0d5dd81e2e119,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Give the ACP child an EOF window to quiesce before SIGTERM (Codex review round 2)
+6801130f8cc79c5001c458e52150e622024ac840,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Bound ACP dispose with SIGKILL escalation; skip spawn when pre-aborted (Codex review round 1)
+413db680088eb7cebf95122e786e894519f6fc8d,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Clarify the child-ordering invariant (Codex review follow-up)
+9c1048f2b599ce3e3e8fa127a45237715e61a138,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Honor an already-aborted request signal in the subagent driver (Codex review round 2)
+b82c310db391df7ac60e1889983d5ccc24e747e2,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Fix subagent in-process result scoping (Codex review round 1)
+25eccdaedcfc918a32a30592219871a807f1e8a6,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Address four findings from the first Codex review round:
+66e56bd395bd27ebfa1090068a442963562505cb,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of PR #88 found three issues in the example-app extraction:
+b0422f2a50b68fcd9ac3b7fdc8b8fea852201d79,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of the trace-event fold found two merge-blockers.
+5f9d10c58793de43dcc208d80d04a3fd0bc622ea,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of the PR2 diff caught doc/comment sites doc-sync does not gate
+584349f881336675ec4518a07272c0c458dc6c09,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of the PR1 diff surfaced docs/cleanup drift:
+bf3cfe84c3e481808ef678eaa40b95c48cfae4c5,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs(rfc): fix Codex review findings on branded-IDs RFC
+d324b06e7403b64e5f6b649a3d2cb40265a32a9e,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs: fix Codex review findings on the cordis catalog
+be6cf4510bd3686b036f56f409d0dc923c50a448,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,test(tool-bash): make the notice fake's agentId differ from its session token (Codex review)
+5a5b7d19c3580af94025709995e3f0d816c315ee,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(agent): contain a throwing agent/disposed listener in the register disposer (Codex review)
+9ee22bc6f69c9912c327c4cafbdd55e3d04c0823,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(agent): don't resolve whenIdle() early on pre-step cancel + requeue (Codex review)
+3d67a982919bb18f1a8b860d1dc4291cfa36a728,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(session-persistence-jsonl): make loadLive cwd-scope-exact (Codex review)
+31af23b4fe22d4288067dcf8eba12aa2c93a1c90,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs(session): fix stale sidecar/migration references (Codex review)
+4f291953eab2ca4540fd4ec66773a0c192d0f8f7,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Round 1 of Codex review on the extraction PR.
+9caaa6c95e3db3ba40e82595771ad664f2bdffc2,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Plan converged with Codex (gpt-5.5:xhigh) over 3 review rounds.
+76fceae5b361a198af222374eedcbdb26670a474,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Also hardens runScenario teardown (Codex review): workspace seeding and spawn
+81d434896da39babaaeba16631531cbedef57f24,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Incorporates Codex review: record-fixture writeback, failure-safe teardown,"
+c182543dd51a196d4c021593624a5e4075550c71,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Hardens against a Codex review finding: a derived group is only valid if it
+4a3f3af296212d7275fbb5f80e37c3b1428c4551,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Address Claude review follow-ups
+bef93865914d4c655bf21aee73ca6b19ad8c6209,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Captures the design choices hardened in a Codex (xhigh) review: record at the
+ede9c1bb155e6786bbd7cfdbdc8a4d04a287636b,merge_context,分支合并命名或合并上下文，排除独立评审计数,Merging after clean merge from master + clean Codex CLI review. Reclassifies 4 non-vendor TODOs that were tagged too aggressively:
+9f6b96c55506648bf4e9d7233fefe72db2010c6c,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex + an independent review pass found three real defects in the prior commit:
+8a92338d2f25b2615e9632d4de8af0416e674a58,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(acp): address Codex review of the tool-call UI seam
+2cb38661263cd808026b1547426af7a9be1b10b7,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex CLI review flagged 2 READMEs still referencing old TODO markers
+7c168fca34f88ca95aa06cc5e441fb24ec0b4350,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"fix(acp): address Codex review — strict ctx.get, correct fiber-ownership doc + test"
+27f5f84e3bfde84688f361aefaaa5c7d8489b1f4,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,docs: address Codex review of the RFC reorg
+5f6ccf91ecf659c3acaf91c11da6ebe64dad49e0,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex adversarial review flagged that ""guidance not authority"" over-rotated:"
+ffc107aa57b2c8979b7bf2d0d264dc52b3121c2b,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,stale (Codex review):
+8e6fd91e15fc9d8380cf535988bfef00dcef48ef,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review follow-up:
+bcfff6f1ee47990a1609d517280a18ea21f35fe1,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Codex review of PR1 found a semantically-identical stale claim outside the
+7a39616a06731b6a61e861494e3169511d87a344,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,"Codex review flagged this as a latent risk; event names live in code, never in"
+7b07b70750bbf7bed3410e1e58a9db57c8896166,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,test: address Codex review of property tests (PR 3)
+89e63f143612fe4ee9bfa5efa5b9d32027af5b0a,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(invariants): address Codex review of dev invariants (PR 2)
+11f85b4f88e62bbf066c77ff0f064be159e0fdf5,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,fix(tools): address Codex review of arg validation (PR 1)
+39b3db4b9cc3668cf4ce285f8d262978fe720efc,product_or_ambiguous,评审对象或产品功能涉及 Codex/Claude，不能确认评审者是 AI,"- Add a committed dsh-code-review skill under .agents/skills, exposed to Claude"
+ef45ca823a303c4e2546c4627d2e08fb76742cde,explicit_ai_review_reference,提交信息明确将评审或发现归于 Codex/Claude；仅证明记录了 AI 评审参与，不判为 AI 编码,Fix schema-DSL findings from the second Codex review

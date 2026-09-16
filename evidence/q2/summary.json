@@ -1,0 +1,40 @@
+{
+  "snapshot": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+  "seed": 20260916,
+  "counts": {
+    "total_commits": 17177,
+    "non_merge_commits": 10080,
+    "merge_commits": 7097,
+    "known_ai_signature_commits": 0,
+    "coauthor_commits": 10,
+    "review_candidates": 171,
+    "review_classification": {
+      "merge_context": 32,
+      "product_or_ambiguous": 9,
+      "explicit_ai_review_reference": 130
+    },
+    "explicit_review_nonmerge": 130,
+    "explicit_review_pct": 1.2896825396825395,
+    "named_pr_merges": 1514,
+    "codex_named_pr_merges": 237,
+    "codex_branch_associated_nonmerge": 1587,
+    "codex_branch_associated_pct": 15.744047619047619,
+    "keyword_commits": {
+      "codex": 2053,
+      "claude": 188,
+      "deepseek": 1974
+    },
+    "sample_count": 60,
+    "sample_strata": 12,
+    "sample_review_count": 1,
+    "sample_branch_count": 15
+  },
+  "signature_pattern": "^\\s*(?:co-authored-by:.*(?:\\bClaude\\b|\\bCodex\\b|\\bChatGPT\\b|\\bCopilot\\b)|(?:generated|written|implemented) (?:by|with) (?:an? )?(?:Claude|Codex|ChatGPT|Copilot)\\b)",
+  "review_pattern": "(?:codex|claude)(?:[^\\n]{0,65})(?:review|finding)|(?:review|finding)(?:[^\\n]{0,40})(?:codex|claude)",
+  "checks": {
+    "git_total": true,
+    "git_nonmerge": true,
+    "parent_difference_crosscheck": true,
+    "samples_unique": true
+  }
+}

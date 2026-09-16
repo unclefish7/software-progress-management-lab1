@@ -37,3 +37,7 @@ Thumbs.db
 
 # 与 q1-summary.json 内容重复的终端输出；其余报告证据保留
 /evidence/q1-run-output.json
+
+# 第二问完整提交消息缓存与探索阶段重复输出，脚本可重新生成
+/evidence/q2/messages.json
+/evidence/q2/review-candidates.json

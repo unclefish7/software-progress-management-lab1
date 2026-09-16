@@ -1,0 +1,121 @@
+commit 43d81b67cef2a957afd2cb0646894757f3f28315
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Mon Jul 27 01:21:32 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Mon Jul 27 01:21:32 2026 +0800
+
+    fix(subprocess): consumers with one mixed env map split DSH_* onto the managed channel
+    
+    Codex review of the acp-only fix found lsp-local carries the identical
+    defect: its server config's unrestricted env merges into the connection's
+    ordinary spawn channel, so a configured DSH_* fact crashed the spawn with
+    the reserved-namespace rejection. The partition now lives on the seam as
+    splitEnvChannels() beside the scrub it complements; the ACP run and the
+    LSP connection both use it, and each proves child delivery end-to-end
+    (MOCK_ECHO_ENV / LSP_FAKE_ECHO_ENV fixture knobs). Seam + consumer README
+    rows updated (en+zh, re-recorded). bash-local is already two-channel;
+    mcp/pty/sdk bypass the seam and only share the scrub.
+
+ packages/lsp/lsp-local/README.i18n.yaml            |  4 ++--
+ packages/lsp/lsp-local/README.md                   |  2 +-
+ packages/lsp/lsp-local/README.zh.md                |  2 +-
+ packages/lsp/lsp-local/src/connection.ts           |  5 ++++-
+ packages/lsp/lsp-local/tests/connection.spec.ts    |  9 +++++++++
+ packages/lsp/lsp-local/tests/fixture-server.ts     |  8 +++++++-
+ packages/subagent/subagent-acp/src/run.ts          | 19 +++++--------------
+ packages/subprocess/subprocess/README.i18n.yaml    |  4 ++--
+ packages/subprocess/subprocess/README.md           |  2 +-
+ packages/subprocess/subprocess/README.zh.md        |  2 +-
+ packages/subprocess/subprocess/src/index.ts        | 22 ++++++++++++++++++++++
+ .../subprocess/subprocess/tests/service.spec.ts    |  8 +++++++-
+ 12 files changed, 62 insertions(+), 25 deletions(-)
+
+commit b46dcb16cbb570c7ff984cdb292481903f04de09
+Author:     creatixchu <creatixchu@deepseek.com>
+AuthorDate: Thu Jul 30 09:22:16 2026 +0800
+Commit:     creatixchu <creatixchu@deepseek.com>
+CommitDate: Thu Jul 30 09:22:16 2026 +0800
+
+    revert: restore the reviewer-approved tree (97a192d7b)
+    
+    ZiyaZhang approved 97a192d7b; the subsequent bot-review rounds (7-24)
+    landed after that approval and were not requested by a human reviewer.
+    This commit restores the approved tree verbatim as a forward commit
+    (pushed history stays intact). git diff 97a192d7b is empty.
+
+ ...2026-07-28-directory-picker-capability-seam.i18n.yaml |  4 ++--
+ .../2026-07-28-directory-picker-capability-seam.md       |  7 +++----
+ .../2026-07-28-directory-picker-capability-seam.zh.md    |  7 +++----
+ docs/cordis-catalog/services.md                          |  2 +-
+ packages/client/connection/src/client/fixture.ts         |  4 ----
+ .../client/runtime/src/client/contract/workspaces.ts     |  5 +----
+ packages/client/runtime/src/client/workspaces/service.ts |  3 +--
+ packages/client/test-runtime/src/workspaces.ts           |  9 ++-------
+ packages/client/test-runtime/tests/runtime.spec.tsx      |  9 ---------
+ packages/host/apiproxy/src/api/host.ts                   | 16 +++-------------
+ packages/host/directory-picker-browse/README.i18n.yaml   |  4 ++--
+ packages/host/directory-picker-browse/README.md          |  1 -
+ ...
+ 24 files changed, 149 insertions(+), 771 deletions(-)
+
+commit ac36c6b9753919d9691b39b5d784c4a523e4addc
+Author:     Chinesezjc <1751557948@qq.com>
+AuthorDate: Wed Aug 26 13:35:58 2026 +0800
+Commit:     imccyu <276526105+imccyu@users.noreply.github.com>
+CommitDate: Wed Aug 26 15:09:49 2026 +0800
+
+    test(web): drain trajectory scroll timer before teardown
+    
+    Co-authored-by: Codesmith <codesmith-bot@users.noreply.github.com>
+
+ .../tests/trajectory-image-display.expected.e2e.ts | 32 ++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 6 deletions(-)
+
+commit ace0c4619e34b2af7213b29a4a9dc085b86cf928
+Author:     fz <fz@dsh.dev>
+AuthorDate: Tue Sep 8 20:12:38 2026 +0800
+Commit:     fz <fz@dsh.dev>
+CommitDate: Tue Sep 8 20:12:38 2026 +0800
+
+    chore(subagent): upgrade Codex and Claude Code runtimes
+
+ ...4-claude-code-and-codex-subagent-backends.i18n.yaml |  4 ++--
+ ...26-08-04-claude-code-and-codex-subagent-backends.md | 12 ++++++------
+ ...08-04-claude-code-and-codex-subagent-backends.zh.md | 12 ++++++------
+ ...oduct-subagent-noninteractive-permissions.i18n.yaml |  4 ++--
+ ...8-15-product-subagent-noninteractive-permissions.md |  4 ++--
+ ...5-product-subagent-noninteractive-permissions.zh.md |  4 ++--
+ ...2026-08-08-native-windows-pull-request-ci.i18n.yaml |  4 ++--
+ .../2026-08-08-native-windows-pull-request-ci.md       |  2 +-
+ .../2026-08-08-native-windows-pull-request-ci.zh.md    |  2 +-
+ THIRD_PARTY_NOTICES.md                                 | 18 +++++++++---------
+ .../subagent/subagent-claude-code/README.i18n.yaml     |  4 ++--
+ packages/subagent/subagent-claude-code/README.md       |  2 +-
+ ...
+ 28 files changed, 160 insertions(+), 160 deletions(-)
+
+commit c7e29f4b68be8d77333a707757427e8b1d516935
+Merge: 9292dd8a2d 0f83a2cdc0
+Author:     pku-xht <xht@deepseek.com>
+AuthorDate: Mon Sep 7 18:30:37 2026 +0800
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Sep 7 18:30:37 2026 +0800
+
+    Merge pull request #2825 from deepseek-harness/codex/subprocess-native-containment
+    
+    fix(subprocess): contain escaped descendants with native owners
+
+ .../architecture/2026-06-13-capability-seams.i18n.yaml     |  4 ++--
+ .../architecture/2026-06-13-capability-seams.md            |  2 +-
+ .../architecture/2026-06-13-capability-seams.zh.md         |  2 +-
+ .../2026-07-06-timeout-deadline-library.i18n.yaml          |  4 ++--
+ .../architecture/2026-07-06-timeout-deadline-library.md    | 14 +++++++-------
+ .../architecture/2026-07-06-timeout-deadline-library.zh.md | 14 +++++++-------
+ ...ngle-file-executable-sdk-runtime-distribution.i18n.yaml |  4 ++--
+ ...7-10-single-file-executable-sdk-runtime-distribution.md |  2 +-
+ ...0-single-file-executable-sdk-runtime-distribution.zh.md |  2 +-
+ .../2026-07-16-explicit-turn-cancellation.i18n.yaml        |  4 ++--
+ .../architecture/2026-07-16-explicit-turn-cancellation.md  |  2 +-
+ .../2026-07-16-explicit-turn-cancellation.zh.md            |  2 +-
+ ...
+ 161 files changed, 8412 insertions(+), 1032 deletions(-)

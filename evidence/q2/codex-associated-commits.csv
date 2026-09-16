@@ -1,0 +1,1588 @@
+hash,subject
+0009d1369330a71e252146afc2e2643fdde08848,docs: refresh tool catalog
+000cb1a0dbe46b8e3ee679ce8d23c8b9ebe22076,docs(subagent): clarify unattended review contracts
+00462f80a6ff59604e44b71446bb9b2427a212c8,docs: expose agent ownership in Cordis catalog
+00af8d4f77d7c5982a046228a1c96243f6b8820d,test(i18n): model reserved paths portably
+00c466437033206f631d6ba60569cae9e7d336c9,test: refresh translation prompt snapshot
+00cc600b148dcb4a1862792a4c2a43e2ff9ecc12,fix(snapshot): canonicalize macOS cwd tokens
+00d4349eb4fd2e37e9a610f4dd2dad9024aecbc6,feat(client): surface pending session interactions
+01257351d984489706ec9d296e13ad1073d0b018,fix(ci): recognize root dsh script
+0129063ae7d45e0eedbee9b2055b98cfb13e5d95,feat(goal): add model-facing goal tools
+012bb0a54977f1c0c1167fdc58cab634b3f7a88c,docs: address review feedback
+0135b34df7a0a55f19d4a4150fbd4805183c1d9b,fix(infra): map directory picker auto to source
+015ad420af375aa17280962d15265351997ccdcf,fix(goal): align human commands with blocker reasons
+015ba14bae3bcd817b88636d375add27ee31d6cf,fix(llm): preserve serving retry policy
+01704b9a3ab7008664be6599e003e4eae499dae1,Add Codex DeepSeek credentialed e2e
+01ac16b04b76c264428b09995896b685d57782a6,fix(mode): guard suspended retry flush disposal
+01da49a3aba3ee285784262af847988f70935ad9,refactor: prune code runtime surface
+01fa4ceb6e44818b6146991332cef6853218a319,test(workspace-context): cover pre-resume tool reconciliation
+0234a01ac9b67d82c2d2b35dbd71804f38250438,test(session): preserve surface boundary coverage
+0236a123242f8676fe754450cde6c17ff321dde4,refactor: prune core tool and prompt surface
+027970043c30048048433fea95e7e79a55bd7a4b,docs: document package model experience
+02a61d3a25c32425f30a94f4fc3e6674dd79843b,Clarify the platform-specific PTY path
+02e4100f2a09253dd967ee94c2ff572ffaf0669b,fix(subagent): normalize Codex payload diagnostics
+0301b7fda86d9f52fbc913d177201dc4c220528e,feat(gui): add write tool row variant
+03186fe93f1215fb2f322a42802aa6993a91b7c9,fix(sandbox): cancel sibling drain after child termination
+032cd2f72dc5592ec976cfa3cd78c2aafbcb6041,docs: refresh event consumer graph after master merge
+0334b4ad2e5589de9b6ef1452dcf20d02424e82a,chore: trim stale comments and duplicate strings
+0378a72431dcde1526630f0fac4a60adf0c845a9,Align trajectory bundle test with session history
+03973cb074bbd8439182c503ada91e5e14a9b9e5,test(acp-agent): refresh header pins for the new subagent tool wording
+03ca568246bff66a92f25f7d6313769338bbbfe5,fix(host): refresh metric capacity metadata (round 6)
+03d95d0d8499828a7719de159e6e082781097e60,fix(subagent): keep one-shot labels optional
+03f91a547183919422aeb1d699af58d678a8984d,fix: retain local subagent completion identity
+0405a211c84a8a78b7bbded5cb180012b9952ceb,test(session): preserve surface boundary coverage
+042d752fd2ca7f8699011275b03a952935a0a54a,docs(repeat-guard): trim module orientation
+044f65e46b6e62b38c3f2e181575d905a423e0ce,fix(subagent): tighten named Claude instance evidence
+0478f5965ac8ce6ab7a34ed866021c08a1b8ebce,docs: address review sync gaps
+04c0758fe9cff8941658d699244ae76f13ba9ebc,fix(history): adapt packed pages to session journal
+04df615dd64f204e62cc865e00620f4e236c87c1,docs(rfc): propose agent execution context
+04fe477e7e632993c3b5ca132bf92718600d8a72,docs: make Web UI the primary onboarding path
+0517d7487538331b9468ab0fe1ff6e5f655f48d7,test(persistence): use stored-prefix lookup
+055c505c6d84269459c9d306496da324e05b44f3,test(history): measure complete response parsing
+05b67894254929a816527a34b24db47da45285bf,fix(subprocess): preserve clean range after start errors
+05c57757109b3d187ed08f5de679a0e0e31ee99a,docs: describe code result fallback
+0652b7b4d7a2955838edab1ce35e3825c8f38606,fix(subprocess): close containment review gaps
+0659151cd50e597fb96b7773a9613038c6a907ab,test: refresh translation prompt snapshot
+06f161a8c6ae35db5e311b6355c8b855b25e3203,docs: refresh module graph for token usage projection
+07058e527cc87b81de4c2359bce67ff3244cf6a7,fix(snapshot): isolate concurrent spill roots
+0708bd5ef2bf45e5d7e3e008cadacac060ac9c83,docs(code-runtime): refresh config catalog
+07408ff0f127baddfc2236100ec17c68d15c0e91,fix(subprocess): preserve failed teardown state
+075108dc08150e6bcd3d4b0f9815b4d94a0df40b,docs(config): refresh ACP process grace catalog
+075b6b0756c2491e3f5f8bf9f4a7bddb67d4568a,fix(subagent-codex): drop unused initialize metadata gate
+07b0efc49e3e10f0ac20164d6fa3ca0688ddb0ff,fix(web): hide session lineage in header
+07f4047ff0d0d5e8f4eb24b0747e1a92b578b424,Use explicit ts specifiers for declarations
+0815ff4db4857447de9da581a26cd0d8a61c160d,refactor: share loader smoke harness
+0821ceb03337f2d44a7023b1c0809c47e15afd41,fix(sdk): mount local task registry for subagents
+0852d5ab63b0a24ae2ca2edf91792f10377a3322,test: stabilize deep Code Mode worker coverage
+0853f52f49a711d2e2abaea73d7a4ddf7c792608,docs: split README guidance by audience
+0892831177c895b4139cb61b9c20a32b465fc923,docs: refresh LLM service catalog
+0893aaa7cb9ec075caf78e4198598da7088eba22,test: rename golden snapshot files to expected
+08a2c234c0b3f336d222e1575c1414faa06d4e99,refactor: remove codex/claude dep from direct builtin dep
+08aed20139dfc56ab7852244e97d25cbf47d3f2f,test(ci): stabilize cross-platform consumer gates
+08e09217bffce25eb444fd1a67fd0ada69aec1a3,docs(rfc): record parallel GitHub CI gates
+08ec2622b0e79bd0c82f29ad82cdbffc4f966bfe,fix(i18n): share Markdown link parsing
+08fc8467bc221d0c444567e9527973cccb0c723a,Add ask_user_question interaction tool
+09326fd84ae550eb586a23168f6dbb395455332c,ci: split lint lane internally
+096586886af57983cf8464e38d021619a3d73510,fix(review): address terminology feedback
+096ae14db290d453016ae59c0cb973220d5ca05a,fix(subagent): bind preflight to provider route defaults
+0998db87d869c423fceba3d3f89d18504babf773,test: align time context with full headers
+09a2e120f3c5a6f300f3d7a3999a6dd3c3f0edd4,test(ui): strengthen TeX parser boundaries
+09fcf48ad88c4e550208c15f8cbad3a921a23174,test(snapshot): refresh DSH diagnostic prompt
+0a1a1b937946482a96cd56c0de868cff31ddc8ff,test(i18n): share structure signature fixture
+0a25c0d2371eb3ecc84545ae5241821e2f2961f1,feat(web): add queue collapse control
+0a95ad8cc03c1147990206b19e99e9a69b49077e,fix(sdk): mount task controls for subagents
+0aa7f8c5cf6e682df87de52b24502b2036bc0761,fix(web): converge session search boundaries (round 9)
+0aafe0f8f841c37bd952431ddcb5ec0ea6f6c861,test(subagent): align DSH SDK route evidence with profiles
+0b036d808ce016448e89dc93ba312087fb3cd7eb,test: cover new defensive branches
+0b0de64769a5a57294012ac03c3852be0103e4de,bound inactive subagent timing to projection cut
+0b203534248379b166ebda9783a236960669962f,test(acp): clarify skill snapshot fixture
+0b492e6e62be53abb8560d16f806a4078f56c651,fix: drain ACP test launcher streams
+0b720942dfe6e8e018d537b80364dfbd201ed27e,review fix: qualify one-turn documentation
+0bf50d3469ec464db9e41e88f056c0aa98365e60,test: wire user interaction in stdio readline spec
+0c08e34a4ab2a7eaa399485fadfb385fd2c6c2f7,fix(invariants): harden runtime contracts and gates
+0c232cf5b8477dcf4feed4c19d7fd34c2dfe1506,fix(subprocess): prioritize host-exit cleanup listener
+0c59e3e0892be3ffe5886b8c55e94fa0003bcee6,fix: cr
+0c708cb10dd7d37bb959b2c25fc583fbf090652e,refactor: replace overloaded surface terminology
+0c80f9e7a1229c35bd58e4beca0783973ec8fd7a,test(subprocess): align native evidence with plan
+0c88df78b209b2e234f65006ae0c7cced8ffc5f6,refactor: hide web provider helpers
+0c911172e959d16fdf54a0cd1d927f4cb23c997b,docs: drop rejected compaction RFC
+0ccd847ef30cd9c09d6179e1eaf58e7113c4d1db,Fix timer bounds and ACP teardown ownership
+0d5b15b5b46a1c6ade75c47e6dba6d7fc6239cad,test: cover spill plugins in built stdio consumer
+0d851adc3e9b64e3935ed9f978a6072ad8a92c53,fix(session): traverse JSON values iteratively
+0dc0cc046b89295cf97c41c8a675bdb63edba22e,fix(host): keep metrics route lookup passive (round 3)
+0dc66d5b77b012230595f2022c45b416608686fe,fix(web): support large search corpora (round 4)
+0dcb514fc6c1bd4305b4bd3a784d5732d9a42d51,refactor(subagent): drop unused ACP cancel classification
+0e220ab566cab2577b3cd95be02df991db425254,docs: allow rewriting pushed PR history
+0e7d539bbc5b75ad224b312a11cc1e15e1ba527a,refactor: share the ACP test launcher
+0e7fee95c0a5a981f27a564eaeaa9d9ef032f25e,fix(sqlite): preserve session metadata contracts
+0ebb86e70f533c0cc232a650393feba6a6c4feef,Implement mandatory app-attribution headers per the RFC
+0ed8e7baf62ee5243ea67e9a864ca2000fd2ca63,docs(lsp): document canonical query results
+0f13ffa45825c954bc3eaa02dafef4816ba0846c,docs: link Web UI guide index explicitly
+0f1c29c75110fb1cb218fff38bce048b6d9ce3c9,test(web): cover onboarding branches
+0f3db7990294ebf71ce1d38fa248546ea2a102a8,docs(subprocess): record native systemd evidence
+0f734991e15e32743914e483300017d1f165e509,test(web): refresh product subagent skill rendering
+0f85ae0a9df15ad0a356087715afebba12ff41b4,fix(subagent): identify lifecycle runs explicitly
+0ff3c236ecb6384302c20f729452af4d0cc9da5d,refactor(subagent): simplify Codex diagnostic handoff
+1044db218d054915ae0b31cadb18f716a86d97cd,feat(subagent): carry model routing through DSH SDK
+109df5210e2b8107ea517fb4ce9a328fe0c5ff2f,docs(goal): align current-base contracts
+10bb9cbf4a22b5095bb9ff04d1425907af8f08af,cleanup: remove TUI package and legacy dsh entrypoints
+10c1d77a4f3842812293d138a4e447356149ab5b,fix(landlock-run): address release review feedback
+10fd0b4504b47285b67aed611e4cc0a2e86c5db4,docs: align unified identity translation
+1123e946c0f5f1966c995debd83adf9c42b50f82,refactor: simplify session log representation
+112b0fbad1a80de70c6b9bec6fdebf0e4ac884af,fix(web): address queue review feedback
+112e25bb054f49eabc97d6234a70599a4e94e4d7,refactor(subagent): unify service errors
+1145ee5fc378e1d2158d8d19719d42507558d7bc,"fix(invariants): assert runtime relationships, not API shapes"
+11773170f09d0e2261a326cc611b058687b05498,docs: propose unstable LLM API recovery RFC
+119c55e35eb6fff4d760029599c717a7fd23a099,fix(workspace-context): reconcile resumed baselines
+1222d07da965b40be77861c8455c0efc09129eeb,Document host sandbox retry behavior
+1250b41054fb7916f076e22885fcb1386c40d76d,docs(subprocess): clarify Windows runner disconnect
+129ded523c9c0ad52429c1f7948768c70cefb3b4,test(web): keep policy snapshots host-independent
+12fe458e355115212bc0e53dfec726572a207bcf,Address comment cleanup review
+130410bb98593ffc45d203c42049cb8c76f4bfc9,fix(web): preserve subagent navigation and fork grouping
+1316022cc8eeebd348e0960f0e486fa89a44d17c,docs: revise graph docs from review
+133be74b1552375cd390bc9e01a9da7333b95329,ci: tune static lane concurrency
+133f37584f1e9ad13796a0cd3f7c11b6d143f931,docs: reconcile LLM recovery RFC with sibling PRs
+13631134aa422af1e670808e84892958d6b179d0,fix: address codex review round 2
+13d7318dace1316e82b91a397c338aaff669a5b5,Fix provider diagnostics and ownership docs
+13f3b2c1727f0ba6506645ac992705e8be682325,fix(subprocess): match native spawn error semantics
+140d32681ef2fc4b35dbae710044c7b7c4e693b7,fix: make ACP test teardown failure-safe
+1446e36a036cf4d8a551878fc3e2961ec6701125,test(subagent): pin Codex payload diagnostic
+1468773dcd7f2a6eb0ffa85978a7ad959a152995,fix(goal): simplify blockers into one durable phase
+1477d5b9efe79bf354ca67cc257666f374a73419,fix(profile): preserve current fallback architecture after rebase
+148046b9c8688e833d0a7904f970bdf8719e88c2,docs: rebalance prose cleanup and add trimming skill
+14c16012fb9b991a8ae8030e3c4cdcc615d57a01,fix(subprocess): preserve post-commit runner errors
+14dc8cd349ff03c551fe91bbfab7ad6ae1ac01ca,docs(agent-presets): record shared product provider placement
+151d6387e03b9f41b553e7f079588f76d7317516,docs: refresh module dependency graph
+153f1579e1084ec5e896bd9c74a1f07eb44ebf9d,refactor(subprocess): restore native containment baseline
+1540e76598f8365f64ccdcb200f7f9fb6ac50591,docs: capitalize Service Provider across repository
+15612c19986dd17eb5e8957751b377a864ef59dc,review fix: trim duplicate closure evidence
+15640ca697b5bfcee514faad467a1584a6b0cf01,fix(goal): require explained model blockers
+1578b7b3246ff03ac68bc5655d48972ff6ab3d6a,test(web): fix default search CI coverage
+15c7a27f39868eed13e483d8216f7143de8a6bc6,Fix project instructions review findings
+1627728eff0acd837c7b5cf0a63043f3668779ee,fix: allow audited publishing repository links
+166004a6a8cb0e88e9b2d848d775283661b257e5,fix(subprocess): preserve Windows startup errors
+1698f0baa6226a945bc1c459a2a320e389f2cec2,fix(cli-demo): preserve disposal diagnostics
+169f86966a2cb2aec97ed2613cb8f766b6caed4f,fix(review): lint prompt Markdown paragraphs
+16ffd631153924ceab91763f391a71cd05fc906e,feat(web): add nested subagent conversations
+1709b8cfee7c00643007e0fd15f02b5eaa1d6865,fix: keep source Code Mode worker self-contained
+171bae5c20ee23abfafaf7a244e13ce1a2692649,fix(compact): harden pruning integration (round 2)
+1760649ba7489c6a6d22d8ef550c79784dcb63c7,refactor(subprocess): derive native owner state
+17893c503edef94236f1a8c4923d51ca434ef6ae,feat(web): match context injection disclosure design
+1795dc6e19b9c0393fa7b20f7460dddc34584eec,test(apps): configure workspace context in loader fixtures
+17b979253222261a5a5ba5122a31ac7df6fa9db3,refactor(tools): share terminal task schema
+17c99efcc14c76bbc548f64ec536d95a2dbb25c5,fix: complete unified subagent identity
+1815095579a28d5eb46ba7329f508d31b3a79d56,docs(api): refresh compact reference
+182e6a28ccc20035cb22c7246fbd67c6e0909c65,test(code-runtime): cover malformed key markers
+183aa65deb29f7df8fb320cc3ba448c9d1cdf661,docs(agent-notes): revert public beta framing in default-off note
+184e164091d462cefc9dfe309c0e85d46ca6e231,"feat(tasks): background task runtime, generic task_* control tools, bash/subagent producers"
+18527071c442702d809f98e808313c79bb8d0a2a,docs: refresh module graph
+1891cb52d5738ccf857597a7a51158dcd92967fb,Defer OpenRouter-specific attribution headers
+189502e4ac65bffd86bcc42a69ee0fa6a936f605,fix(subagent): preserve follow-up provenance
+191c8cd64000658c3134776132225c71566eb814,fix(acp): scope connection-owned continuation drain
+19256704c7bb72f537a74390625ec5a58707298e,test(win32-process): type handle-order assertions
+1934035d04dea2d88caa520c27d86cd8cbe8f57a,docs: update skill system RFC format
+194facabdba04e8a43b3d2c031bf98d6bd9db130,fix(team): authenticate browser panel snapshot
+19504f7e342f1c0f534eb3a2fe43648ee33c3ea9,fix(i18n): resolve pairing workflow review findings
+1951eb546386e9002caf6c270ff0e055793fbeab,fix(runtime): include dsh-home in bundled closure
+1986de9ac14d8eb5ae5b0d8c79341d9faa3e2369,fix(web): show plan status only while active
+19a1aec89e82c8c37c130fc01c2ee77b0760e1fa,refactor(llm-retry): simplify policy history validation
+19b96037f685e7fda01bb4906be89bfbf8287091,fix(sqlite): enforce integer session metadata
+19be29cd0bc21d8e58a41c9d150c173684078549,fix(workspace-context): guard baseline restoration
+19d034169e6b22d3e90ba9da4d082a9a021b669d,docs: regenerate the config catalog source line
+1a111654ae13b9dd448cc7166499c45247e20731,docs(subagent): restore local run identity contract
+1a14b605695a35472b12afe2b1ed8724f9e9e00a,test(goal): close terminal pause e2e
+1a4349be880a7ea500636b6b05fe442e88d1e2b3,test(sandbox-policy): record cache-safe policy context
+1a69a3debedbe6b54b53f069084cc68b6d3ee284,fix(tasks): bind cleanup and notices to exact owners
+1a8621527c41e87e649c4d7c2e108f9a20385e26,docs: refresh event producer graph
+1aadce9fe7eaa24f66a210e772acd701ed06fc20,refactor(core): centralize DSH home resolution
+1ab3cbf673b51f1634dd4dc01b48ade7cbc75ed6,fix(subagent): harden continuable persistence
+1ada79af816ad408e13306cda63989093636572e,test(subprocess): cover settled scope waits
+1aedb23ca608c07220186716e6ffd8af4e26ca07,test(web): align subagent access mode golden
+1b59b3fc199f807b4cfd2b89e97761ecb2909f2f,test(web): include context injection in search golden
+1b91e5b4feb955ab0cd81325dc30e563e450b710,fix(workflow): refold coalesced disclosure cycles
+1b9408268b69050c69b485e855dc23dc0412545b,ci: cache eslint lane
+1b9fd9eaa74eefa805480975cbac406d83ac2a51,test(subagent): trim redundant product evidence
+1ba00bf80cbafcaab030d590407cad7da54bcb3c,feat(web): inject workspace instructions
+1bb9995128f75474eeec9933e2bab6fc69a8b60e,docs: state subagent carrier invariant
+1beb38554e62bf6c83b4b163c135b69c0f4ac38b,fix(review): align runtime-context diagnostics and docs
+1c253f7c5a689f0a5a7dc199b29b1a9022ed487f,refactor(i18n): narrow link normalization
+1c30548068ad21384c65c758f05f51efef6cb9da,test(subagent): rewrite continuation spec for activation lifecycle
+1c405d41a588a49c52cbeb4510b95214eebbb021,docs(subagent): clarify Codex unattended runtime contracts
+1c5305ca22d2c1e0ec5ba8fd1c321f5f7f8367c5,test(subagent): type blocked SDK outcomes precisely
+1cc59ae78eb42aa5bd5d7e0044788dd920081efa,test(web): split long conversation performance cases
+1daa35b6e3a8fca62b9e42abed6a0d8cfc6ce398,feat(subagent): add Codex product provider
+1dcfc63a789ae207a7bb61fd6ad860ab1da6fd6f,docs(goal): refresh event source links
+1df9f3a84ade29f3393afbe4737f014b5ee4dde1,test: cover the glob path arg in the fake-executor tier
+1e06fdbb86ecb56d80b4af13fab63de99d320583,refactor: colocate user interaction with ui packages
+1e4de0deaa5d9fbe0b725c90b098001a3fd8ecf9,fix(sdk): pin generated project build tool
+1e73d96bb14f719a0a4e7491ed37c0a3eda942f3,fix(llm): preserve empty assistant serialization
+1ec75c90826bd311cdea00969c405401aa9e90ba,perf(history): retain packed records in client
+1f2c85c854985384febdf6829cc3d9eb2181b3ed,test: await fresh stdio agent publication
+1f4f147699e62ece81ea3d13698ac382603f059a,test(tools): close canonical output coverage gaps
+1f7e1765a5e60443c7990136d8d093da6ba4e39c,docs(tools): distinguish closed object validation
+1f9c8d66e6ddd7e660fc26ec5dea05c97dc7e623,fix: keep root dsh script cross-platform
+1fb1f00ec24ab7580286cc482d455dba7156e01e,test(host): isolate compaction metric preservation (round 2)
+1fc04feb771d99929e741ea7887a87faf2fb4d6f,fix(subprocess): close native platform CI gaps
+1febeb8428d1c1dd4d24f812567b792d3d3f79ea,test(jsonrpc): configure built scope probe
+1ffdacb2c4dd0387ecf370b0ecde41979f046126,fix(jsonl): handle filesystem path aliases
+2027c70a17661fe2b8b5aab1685cd443ac2c3b56,fix: drain failed ACP launches
+203767cd3725405a79a58764ba572ffcaa7af3b7,test: prove ESLint to Oxlint rule parity
+207692bc161f004193af4bc750703e089cb59b71,feat(goal): add human goal command
+207c45d15f5486bcf958a0c01c0ea5bab8192a49,fix(workspace-context): deduplicate baseline on resume
+208f37157abc37964d3fffee3a9c44cafa84bc33,fix(subagent): simplify optional provider delivery
+20cd7777534990d615acb27fe98553219a042841,Cover next-step report delivery in subagent runtime
+20d55b2c410606854d3f300865b2e944f49e97e9,feat(gateway): support ranged journal entries
+215c8c813283b9bcdc75d984761c8e5847f014b2,fix(subagent): wait for real startup evidence
+21820b6816930d26fd285115b38d2336294e0bf6,test(subprocess): cover async scope failures
+21ae7348390f5454b9de4a4333a62f3f0b0db991,fix: tighten project instruction path handling
+222096e3cf50ea1fbe182f129caa96e942fa540d,fix(web): validate search hit provenance (round 2)
+222bebbbbe427d31d4009be5f5161cbed54b67ff,Clarify ACP workspace resolution
+225796c90dc5a6ea9b4afa2a9f4081f9d48606ae,refactor: hide the concrete agent loop
+22c70870742bd69590863c769a5beee684bf8e77,fix(landlock-run): publish under deepseek scope
+23330b7a7d00fa6f4f058423aea57d4552792808,chore(goal): remove retired e2e dependencies
+2333ab19e3b03bc84cf050b16e897b830b2dfdf2,fix: verify JSON-RPC child ownership
+234ffe4604f784cd45d9d6a181cad2a0291b6f52,refactor: move project instructions to prompt group
+23680e838b60dbf57b03d97b4daa31cf0ba7d3ea,fix(web): synchronize subagent navigation state
+23850b4ad9e90dac72e358578587684ac93be2c1,docs: align model experience with scoped runtime
+23af4410f60df2c441efa0f8e9899eeb2517a177,fix(subprocess): resolve source runner loader absolutely
+247526d4cacda04b29f9629676e2fd74931b8b6f,fix(acp): adapt compaction wiring to token meter
+250d90d481162b55e0c72b262fc50df4f2f8a74c,docs: regenerate cordis catalogs after the master merge
+25555c9cfc33b0e7eb0d656cb3ae011d6e7bfdab,feat(goal): drive same-session goal rounds
+255cd90c6e04e3fd14ec54df4764106fbc1a1673,compact long subagent durations
+25a5dc35ba4498a3dbb75264aa74b3937c9782d2,Refresh Cordis event API summaries
+25d0ef5c6c1a6570ae8eddb6141bc616da2397a2,test(code-mode): cover terminal output types
+2623ddbee4ae625458b77fb0fb2594f2f44aec7e,fix(code-runtime): validate arguments before worker dispatch
+264bc41a13cc24d66e1d5b2b275854b7f99331d5,fix(subagent): preserve ordinary start requests
+2660635e6302e1b0fdef1e827a984d28c049ceaf,fix(shell): preserve stderr on provider failure
+26891ce5ca26d385ab2bde721d023b5fb990f2fb,docs(tasks): narrow invariant rationale
+26969588b7f3960c2857306f024c586557b9bf44,fix(subprocess): address native containment review findings
+26a117f842c9cc87987963a2cd127b2c980e283c,feat(subagent): activation-based continuable subagents (source)
+26b4b036fcb8376c87b8bfb292ea01d246bfa7a4,test: refresh prose snapshots
+26e2fe9356bf1c65a8022dac8492be257ebb722a,refactor: drop assembled section order echo
+270b8e0acc64581f604a86367dd57ce5d6104d62,fix(subagent): close Codex provider CI gaps
+273c2847e536e4a4710b2e7370660c48e6282eed,fix(subprocess): support packaged native runner
+2765de87c888f5148536f52bd0573fb45e46b621,fix(ci): await math snapshot metrics
+276ebd9339a09680ee67cab574385530e1dc281a,docs: propose experimental plugin group
+277b58088f68b10cac0b9b6b1010f2ea7dfe7a0b,docs: narrow LLM request recovery proposal
+277c540a9235dd8d794473ee166cb63dda2d45ae,test(web): refresh preserved queue snapshot
+27b5c12da924491a0aec2027dd89f3cf7206e353,fix(i18n): preserve authored external URLs
+27b8d6fe97bdbeacfd25bb89c001967f772b3e5f,fix(chat): exclude packed deltas from token fold
+27fe26f8d25ee2fa57f55b7edb8e1d701da6a4da,docs(code-runtime): record captured intrinsic boundary
+283c78eec88c3d1e3720c9f2c19dd5de04bf5549,test(goal): refresh shipped ACP goal snapshots
+2850c22b7a075ce77d8bb07d80cdeb5cd1917118,feat(ui): add plugin command registry
+287041e39e93b368646f0fe8298b65feab692acc,fix: preserve malformed snapshot fixtures
+288023dac182c407c296571f3730ff3a89a0696a,docs: define local subagent lineage
+28f7fa0969949c1ab1dc38840c3eb236723f72fe,docs(rfc): record deferred skill extensions
+28fcda2751c73882c3b0e4471f2d4d2813e7e0de,feat(agent-presets): enable background Codex and Claude Code subagent tasks
+2943d0303ce1da92b7d954cfd09c7769178a0d7e,Address skill review findings
+29729f83cf101be3be334a84f93e3a1cf7eaf162,Test the TUI through ConPTY on Windows
+29c68b6da90af0b00d2315931741c08df668c6ce,docs(subprocess): sync native containment evidence
+29d545eb212e88f9589134be420eff3ed8673b81,Refresh front-door config catalog
+2a060adfa828fa126b563f4f115033f2605e6764,fix(subagent): keep ACP failure observation cancellable
+2a6fef66ef3d55aff250f31f3d728f15e15f5269,test(agent-loop): remove review bookkeeping
+2aae64b5da49b62dcb101b0852ad52ed2aab241d,fix(goal-session): preserve typed error variants
+2b2f109dcb3f6a6c02111f13d7532e885f915410,fix(web): keep default capability search-only
+2b36620e55c94bd49a66d2956a63c97254bdafb6,fix(persistence): tighten crash repair and dispose semantics
+2b4641799e237f751512309b0523c39448dc3be0,docs: expand session persistence event catalog
+2b82225543c0103b436959fe5361f5fc61b36499,test(workspace-context): align source form metadata
+2b99d8f5c27119004c3a29d445d71e1cdf11ea79,test: cover project instruction configuration branches
+2bc4e05a089ca25d6187649f8a997803a1bf5395,fix(tools): enforce cooperative cancellation
+2c0ebebdf8967ab56d3cea6e666629e0f320e76f,test(subprocess): type close interleaving fixture
+2c16c20d2a93282b323c88b43b724a4769ec0ffe,fix(profile): address Agent Teams CLI review
+2c36792b6caa1747973aba87c392a922c703741b,docs(architecture): synchronize Chinese pair
+2c7822ddee5fc0ac6f7253de07f8e88a5a43a206,fix(docs): map exact source aliases in built checks
+2c94ec6cd3e1a1468883f9dc006e2cb6cc6d8d56,fix(i18n): localize encoded exact links
+2cf689301c337c53739e4cebcc37929c06e325ff,review fix: close one-turn lifecycle gaps
+2cfc38fb70c9128c3a80c5a5dd753769cf7ef4fd,docs(agent-notes): clarify superseded ACP rendering
+2d80d868bed2aa4fa8df8d769e50894635b2a167,ci: isolate lint and tune coverage lane
+2dca8e2151ef3745f88507fe2aac17cabd630eac,docs: refresh agent loop catalog location
+2dd3b1dfba6921216ba7d0168a15ac277a4e4cd8,fix(commands): harden registry and UI ordering
+2dea4afac0d49976700139a766d40734e3204f4e,fix: bind stdio to its configured agent
+2e00a93edaa0b3bf846ea0556d30e3f551492c6d,fix(subagent-codex): support Windows command shims
+2e5c439ecfc30e3f193c7e787393d43965c481b8,fix(subagent): decouple child listing runtime
+2e68e086449b1884d2ae22005c4e156de00e5a85,test(web): isolate direct smoke skill homes
+2ecc89a1867e17383f93f5f218ddf3e4ac5616ed,chore(web): drop plan RPC residue and stale carriers after merge
+2ef9590f3323ebf7293b49d73394ca0fb28c2f09,test(loader-smoke): declare argv lib fixture
+2f1a40d9381aea67badc63f7c1d30e5cda5c0f02,docs(catalog): refresh AgentLoop source link
+2f3ac10da046036a36870e4bef1ed04f518580d5,docs: implement experimental and internal package group
+2f4bf08798421d66807f8260fe85da0f5c7090c1,docs: add Chinese contribution guide
+2faeabb05a2ed90f4853d04162bbc3dc57c86164,refactor(examples): rename coding-agent leaf to repl-agent
+30503c3b0308752d9f915e8af631d76a1fed754d,test(web): type large-corpus search mock (round 5)
+306dd2b1fef2d1df141b6acf268ee4a0da3af598,fix(cli-demo): make failure rendering total
+30b9d0464a0b66cb1a1190f62043db6a5eb519dd,fix: address codex review round 3
+30bffb5642ea4bc2c56ae5a2afb3bb141f4d3819,test(cordis): cover balanced sparse schema lists
+30cd11e698b7e2795b84e53447f098d8f401c938,docs(subagent): distinguish cancelled SDK cleanup
+30d1af3bbcd02f7e4698fce4a83ee979806db041,docs: include JSDoc in cordis catalog blocks
+31215687f9e0a8eb390c1be26cb738e3555d01ef,fix(web): honor search ownership and cancellation
+31be42e92d1792c74466a0f7afe6e2a2d7f18106,test: add ACP spill snapshot coverage
+326b199f255c61647c190286960dd974488a70ee,fix: address codex review round 2
+32774d5ff367b34b57b11eb51f7cf0986ee7e707,Update AGENTS.md
+32864c026cbfc7a36d875d1bee87b8c28bba0a78,fix(clean): remove native build state (review round 3)
+3293d56a066865faec7614f2be7cae3f707d7bbc,fix: clarify provider retry delay contract
+32a0e871b7fd51ba79ecc42368c6ceea6f814081,fix(web): preserve queue on stop
+32b2b2409915ffeffaa086e8a1343b9aa37f7433,fix(subprocess): close runner stdio handles
+32d9268d4a2ecca241b8a40f96b1e95852c2c053,docs: preserve concise config rationale
+32f369c3a01d2961836fdd751526f10b9a5703f3,test(subprocess): widen Windows stdout-end race budget to 5s
+32f829c4e6a3004268afd26dce8684e3555d83d7,fix(subagent): complete product provider lifecycle
+33112b495713d06c5094f58291410e039dc66078,fix(workflow): scope clean-cycle reset to phases
+336f4e51ba0b7fe0c79abbd7d617f6597f0fd7fb,docs(acp): align identity routing contract
+3383c20c638d1a76833dc322df3aec3ce15217a9,fix(i18n): refine Chinese prose and prompt validation
+339c30ed148416e5a7c596c2eb4e20b5f567103a,docs(bundle): correct product provider opt-in guidance
+33e90e991943374577d4a35883142b203dbf3974,fix(sandbox): terminate on first drain failure
+34194f0cd5653a5f0e1b55692bac9d20d973e876,fix(tools): make schema traversal stack-safe
+342e94d2d0462b1bae72064d1e9f13ecb929604a,fix(schema): use inferred PTY presentation args
+344667cbf0c3dfd071a3f3a9ba0f32acc007f0ac,fix(host): cancel retired metric capacity lookups (round 7)
+3464f8829703e9738d63ca294e624ce428b54289,test: shorten compaction e2e smoke
+34abf697306592177c493fea8b7043a864718c82,cleanup: remove managed source installer
+34b6cb91eda44b9febd928eaba192aecec63b909,Keep provider adapters private
+34d313693dc40599f5d059669e133a396d6f3944,test(subagent): pin terminal exit ordering
+34db64d90d77ea8c5646c5c93ea5a6451fcd851a,refactor(subagent): simplify Codex permission runtime
+34fe1677757649be9fcbb93495c98944acab6c23,docs(goal): describe round cache behavior
+350d1b268830d76def9fd8dae53759d1953bb098,docs: verify Cordis signature type links
+3511796fa69bbfd8253d5809b891c026c9085636,test(web): await completed turn footers
+351a2e42b3d70a2514d78b5a9b7348e71a523ec5,fix(tasks): close background task review findings
+352934b9eca194006bc2e7cdeca0467edc89959d,fix(jsonl): reject negative-zero timestamps
+357f317b4cddab70010a5c8e2d14b056489b5680,"test(subagent): update service, send_message, and delegation specs"
+35804737fa9d5c7d8f27299408e2fa60e2ff6d02,docs: address simplification RFC review
+35acd34fd96c5ebbfdd2bd0a263e9700dad62035,fix(tools): enforce a disabled run_in_background at execution time (review findings)
+35b9c454e59643f23ff33c57ffb595e8c75d4075,refactor(web): publish transient model request capacity (round 1)
+3621716704fe5e88317a5c498f25e229194b2626,test(subagent): type Claude failure cause assertions
+36588ade22a55040e47626571b12f5b0e8ae2101,fix(team): isolate browser remote adapter
+3690c5566051b9165c1807c8d6b40f9142bd5345,test(invariants): type agent event carrier rows
+36b562e4e95da11ce6996595826d37c870c368fc,fix(subagent): close Codex provider review findings
+36db13dfb3e2f08e67cb0df01a8548cc79b01352,fix(subprocess): require verified range settlement
+36dbe686314393efd70a7de3001f587f02d581a0,test(cordis): snapshot targeted JSDoc inspection
+36e99e737b8dfa50fb62bdc9f15dd38bb4da36a2,test(sandbox): pack invariant service peer
+3766e333b1cfee2cf53842eebeae024c73fe9c29,test(snapshot): refresh session query tool schema
+379ac32401eb5b71894436dd28b3f88463010213,fix(code-runtime): close outer boundary bypasses
+37aab00c24d46b05f78ec3c1d812037624bc90c0,cleanup(subagent): remove stale lint suppression
+37f34af15ff248e7cd2b8d6cab4d88d65c60abce,"fix(plan): gate the immediate commit on the open-turn fold, not agent status"
+380030c48f564c3e49611e7e70c4407a27efdcf6,fix(workflow): preserve disclosure intent across completion
+382c243e78893814cb751eaf0fc09b35caf4e65b,test(e2e): widen keyless boot-smoke kill budgets to 30s
+384cc8c15742e157793179f48dc0db1ca4121e5e,fix(schema): harden realm-safe JSON validation
+3855a77e7d8b779c74c53cbbe7736a6a29563ba2,docs(approval): qualify audit guarantees
+38922cbbb92646a88bb6141f3e5d72c6673db41a,docs(tasks): clarify admission lifecycle
+38b4a06a13fd09c100ddc709a849cc162442174b,docs(tools): record generic result fallback
+38ce422f71d2d27ae49d107f23009705f16fd93a,fix(llm): drain delegated retry recovery
+3900de296d766e595d2c536ce96aa7084e13dfe0,docs(subagent): distinguish cancelled cleanup failure
+3911b7117ee9c55d1e0f5b7f747596b5ca143b91,test(subagent): reach full continuable coverage and simplify unreachable paths
+39b9c25b8992bbb9623a58820a7a8a3bab6d3175,test: refresh parallel tool call permission snapshot
+39c6c1120abdcc0414325bbdd1624917b0cb8624,"Revert ""fix: share scope carrier across built JSON-RPC"""
+3a1a4e2cd864e449cf3cd9de837a29b2bea35f7c,docs: address fragment review feedback
+3a54694d28e9785134c4c60bbb96fc8e4883da27,fix(client): preserve pending waits across reconnect
+3a920be9c56c5cc653b64f09dafa095adcb6e546,stack subagent token and duration metrics
+3a9f78c55eba0d27971492c84f085649637d2365,feat(web): restore actions after steering consumption
+3ab12acfe397eaac3d6bc3bba30c4671088f6957,Add app attribution headers RFC
+3ab35de64f830bda324695cb5ef12cf2269fb835,refactor: prune unused web seam fields
+3acb84744235512881efed577ec3eb697885365e,fix(subprocess): preserve clean spawn failure settlement
+3aeee114656c0570ff0f045e26d0407b2e8399f7,chore: ignore worktree directories
+3b0b0cefebb82901ed27ef64c0f4ff1d233ff54a,feat: implement bounded LLM request recovery
+3b7ce2e6827056763d6ddd272c09f90670646955,fix(invariants): require justified empty companions
+3b8656857749386ea77a3315ebd79e149e829a1a,test(ui): keep TeX delimiters out of code fences
+3bb90bd4b6d3aa2bdae23509136f585e56912bb8,fix: make search raw output recovery backend-neutral
+3bd2052d7251b9500e8afca02aaee64ca8b2ad40,fix: allow lineage-bearing stdio targets
+3be7ca8664a120cb565891aeb3f6aa0fbdae681e,test(loader-smoke): normalize /private/tmp temp paths
+3befcfc566b4deec276d600df993949f6e49facc,"Revert ""docs(approval): qualify audit guarantees"""
+3c2e07a92d48c712f707603e78bab4954e03a33f,fix(goal): make publication reentrancy-safe
+3c423523101adfad82e6f3fd53ff709ffdb9a090,Fix project instructions fs provider seam
+3c79979d1dba53787a0111859cd386e7379fa25d,fix(subagent): resolve DSH defaults before preflight
+3caa9e4f5a6816cad60cde0e1757b57161379cac,fix(subprocess): retain failed cleanup ownership
+3caaa437977ec4e82af3c49f376cf8de04473897,fix(i18n): make translation contracts executable
+3ceccc87a0299f6ec88b44a5d267665424f1bdaa,docs: drift-check public class APIs
+3d19252e9643df4875b43669e7e22a32865ba857,test: refresh parallel tool call permission snapshot
+3d6decedba498ac6966c6fd4e67d9af66435d7b5,chore(agent-loop): flag request context code smell
+3da48d174168cb48bf1630fe1c61fc31d67087e0,fix(ci): register workspace resume fixture
+3ddea798f12e8bfd4873cfee8775bb97575c9423,test(snapshot): refresh workspace context header
+3dff212c5ddae752b3e55dbc346ceb595a3693ad,feat(workflow): auto-follow run and phase disclosures
+3e2ba3f5574b43dc5af5d03e146769be241f96a3,fix: stop ACP teardown when fallback kill fails
+3e7cd31ab3c699ed061fbd1a7ff7a71c48fbe642,fix(ci): retire root dsh Knip exemption
+3ed74d54761e95a09da64b9ed997ab1cee6ee3a0,docs: refresh merged contract references
+3f2f381209ab4db701a8275bec6ed66d7952fdc0,docs(subprocess): align provider-owned termination semantics
+3f676efbd96dfb7954181fd59884690cb668df1c,fix: bound local fetch timer config
+3fc2a4ca8201ca781ab7e55827c287f3ff3b7474,fix: harden model experience documentation gate
+3fe196a7511058adf54890b4ef34ad9981d0a09f,Adapt workspace context to session prefixes
+3feb05fef83a956e73b0a28057c8cd13bebf3dfd,docs(agent-notes): consolidate superseded decisions
+40279aea1708ac3d06e7744814050cbe7971fa64,fix(subprocess): preserve native runner stdio
+40298c28472317e1851fa7a9a0dcea14df0fe3b7,docs: compact README guidance
+40b68cd8d55a7ae57de4d3b87c3afc0dfa849b5d,fix(web): harden paged search protocol (round 7)
+40f6205cdfe7de566bfc074513daaa5a6f426b39,test(snapshot): stabilize DSH SDK route usage
+414c310324b7700f8e9e29251a3164ade385a94a,cleanup(cli): omit invariants from shipped configs
+415907a1621fbc10a303217637897020eec4ccd1,test(acp): sync advanced snapshot with bash environment hint
+419370ea4b7afdac2d3ae1d6d5f7248290823f71,fix: keep bash status rendering and parsing together
+419b0bcf7dfd9c0e88bc15ecf303c9576a92b43f,docs: refresh module graph for UI identity
+41a7c70cb1f1a69b3a7e5b805abd08d19700f569,docs: audit package limitations on current stack
+41e1955acef153363bbe47bba8a27c9be2708703,Clarify condensing in doc budget guidance
+4201bbceca8104f6a26013e49c44239b6a257929,docs: use installed dsh command in publish tutorial
+423412b7bf4b31054a102b1bc8f889f2f017ea94,fix(runtime): simplify executable entry dispatch
+42378a987e3570c0196dcda5433de411b49dfe96,fix(profile): deduplicate fallback manifest traversal
+4240c7dd7bf1872238f451358238a6b3967e6bc2,feat(subagent): durable child catalog and list_agents
+426d65a2a25327eacecf66e67175d830cacc05de,fix: honor fs when locating skill project roots
+42c359e57b934caa228a8cc541fb6f97d24f38b9,fix: ci
+42d34473afa4d3a654d7ae4c450f8a8858578669,fix(web): allow follow-ups to running subagents
+43151ed9c015058ad3484520733766ab7f048000,fix(subagent): preserve cancellation during durability
+431fb4b03567eb95f33ac9877434f7a060b4c3cf,feat(subagent): add explicit child reports
+433670a75439804f1d6aedde3fbc60a7dc5ca3c3,feat(invariants): require package-owned companions
+436f9e96861271d464ac2d321030683477b80b2d,fix(subprocess): preserve native failure semantics
+43a2c0a0af16ad1e85e539bf4976b31e3f416e3c,fix(tools): avoid duplicate run_code result views
+43b093a502eddf54fb62b3a22c3df1ef3381fa9a,fix(subprocess): close runner pipe handles
+43d60286e3ef4df567ab96f743f11bce3c52c5db,fix(tasks): an aborted wait must not leave a settled task notice-suppressed (review finding)
+43e81390a3c12e3137a2c3068beff87282815f0c,refactor(web): source the search result bound from its protocol constant
+4435616a04c397a786aa8e177cebea098e6c2914,test(acp-agent): rewrite the continuable snapshot for the Task-free surface
+44664551cfa83012ba1358851d67ef221bb951a9,test: wait for ACP stdout frame under e2e parallelism
+449e3cf29831d1da2be64ed84418ab2df60a690e,fix(tools): make code result cards authoritative
+44ad2ef073b99c186cf2026f7ec7a526cb110b40,Remove the Echo agent
+45034edd1a1816238e6eada2bc03178aa8d770e9,docs(skills): teach Agent Note consolidation
+451c2929ed3b94804da804817823aafc6f8aafcd,fix(subagent): close terminal teardown races
+4574340d7a09e5296b1ba25aaa997f28c88eaf5b,fix(tools): harden unified JSON value boundaries
+458ba498151914fb5feba8d8491ac14918060b6b,docs(win32-process): narrow ABI verification claims
+458f87ea03432d48a0b096b2f43c8903e8db262d,refactor: remove unused surface invalidation
+45be662e85f5059bdf463ecc043688a444827f9e,Add skill discovery and loading
+45e3997efcecf48c57e171a7d77401b1c914ea32,fix: correlate subagent completion by parent scope
+4605124732ba004f6fafc42a8489c3b814a8d309,ci(windows): exercise ABI probes on failover standby
+460a58639ae5aba84f97c24f8ba957d25b64db94,fix: address codex review round 3
+463b72ce9631e7c034089cd508e3ccacbcb75e39,"feat(spill): add tool-output spill seam, local backend, and policy"
+46b8bce03acebd579cdcb4daf91c02e51eddf78e,fix: join exact session startup on teardown
+46ba91bc98ca6eeb529aa343ed905c732deea542,docs: sharpen package limitation audit
+46db6088436d948aaee311f68151aa5d2d095fe1,Align Codex provider review evidence
+47205cbb82f095dbcbd42506ca99c4b86c0c5e32,fix(web): preserve reconnect metrics baseline
+4727d742db2d94af2387393aed45d9426e17628d,fix(web): align session search contracts
+4775095aa2b2488a5d179dd56d1a9eb133983aec,fix(infra): remove stale Codex dependency hints
+4779d04af8143fbd5e1a98a1cf7d4413374abf6d,Remove generated Agent Note index
+47812b45db85a9824530e800b12de1c82fdd6972,test: re-record Codex hook snapshot
+4791b40b269b19a3c40daae5ed412ebc5d1b6d42,fix(llm-pi-ai): classify usage-based context overflow
+48192101426c815dede5a88d0dacf1be77988602,refactor(token-meter): make context occupancy durable projection state
+4851d9570496a8ed5573873c85d18c054a78fad3,docs: propose follow-up simplification RFCs
+486362d2f8a6de1aee998cee320046d5c3db1a8d,docs(catalog): refresh ACP config source link
+4866a76d8692af88ef7523781fc507b64dcf3abf,test(llm): match pi-ai 0.82.1 reasoning catalog
+48e7bde3617dd5c84fb7f1c7692066e9bd530e3c,refactor(bash): centralize managed env prefix
+491dafc78597100736e80230a42facde7fcb9445,fix(goal): close human command surface gaps
+49351cbf0ee08f19ea6fde860eee615d7155fe9e,feat(subagent): support named Claude Code provider instances
+49a40bbd8d213d2c7123e9cc4441f9d40b5bba16,test(web): remove abandoned sandbox wording experiment
+49bb6a88ebb76a85c6ad0807db5c1c7a3f8f6337,fix(tool-bash): handle unavailable spill paths
+49e45ff184dbb1c5a293d83359afd0b8ce333f95,fix: reject legacy fallback headers
+4a1c64663b74843d6c304e93f826cc92e3d9a98b,docs: retire completed tagged-envelope review TODO
+4a3f3af296212d7275fbb5f80e37c3b1428c4551,Address Claude review follow-ups
+4a5463cfc49b8f505b5f47aa7634909c08602a08,test: use the public agent type
+4a722de4fa0218295ea31f9c43346e9818d3d5af,fix(win32-process): close PR1 review gaps
+4a72beacf2fa917a2f0e5cb6f09dd2889a832121,test(web): keep policy acceptance portable
+4aac1514e4e6e008feab8005b863d7b6a8e2fa12,docs(code-runtime): cover captured error construction
+4ab5a76317f6763e682f7525d913e08fb205fdd4,docs(agents): promote review principles
+4afc701e98dd1bccceb8f127eb2f376bb437a643,fix(snapshot): register filesystem tools through explicit overlay
+4afcb5c3c99da7569adbec94868bc3a101c24510,fix(code-runtime): capture worker JSON intrinsics
+4bd98407a98d2c570508e3b1de588a8cb661383d,fix: address codex review round 1
+4be7e7680e157381919f6bf961bc4bba5869e896,test(acp): refresh product subagent skill snapshot
+4c08629b58ef493da1a02e0dcff9eed4d4eb1980,docs(acp): describe concurrent update routing
+4c164cd163a7712143b7e5a78a3616b56c7fd559,fix(subprocess): close native containment CI gaps
+4c49e7109b4280750a226703aea9a9bf700d2e8d,fix(cli): separate dsh from repository build
+4c6618c26da6ff0fe08b1881be31d19ceebe20c4,test(llm): adapt retry coverage to followup API
+4c6ff93535bf15e28569de908e1ab27e21dfc64b,fix(subagent): preserve Claude failure provenance
+4c8b47f3c6252b83f190218ef97b1dfd29d556c5,test(web): refresh markdown image golden
+4cadf096ce2e9792e931ca2cc143ae9e264d9380,Remove the stdio agent
+4cd4c118712be7bd27e0cd2736ffec6135cce402,fix(web): deduplicate plan review rendering
+4cea4979c63c2b9c4b43f01372303e0ea3dc318c,docs: classify loader smoke support surface
+4d03472cd098dc48a630e526ca620f4f37f18a0e,feat(subagent): add Claude Code non-interactive permission modes
+4d0a24d8ed13d081c662d500dab7fc28676dc55b,test(subagent): preserve durability failure after rebase
+4d0c0478f643333b1ab9c3c98192190fd974ba0f,fix(web): defer default mode reminder
+4d54bfdff3159d4a0d1a016ebd4c201f2c7e9701,test(snapshot): refresh DSH SDK route schemas
+4d965414b6074a28f18e5ba1871211d490999d3d,docs(goal): describe cache effect
+4dd6266c53116f59e7604f828919c3103991c7c0,docs(commands): refresh command event catalog
+4dda5b953b5cb3b2de24e964c6f9da6a8c9e1911,refactor(subagent): retire standalone mock package
+4dede454ed6ca776e7efa9ff5e57491348be5d26,fix: address dsh badge review feedback
+4dee9a8d9bc5bbce52dee79bd24ab2523a7f1309,docs: propose background subagent tasks
+4e021b4686bd144610ec4ab1e6f34033c4ba0426,fix(ci): invoke npm portably on Windows
+4e295221f352b4ca507e813a2c410269d5a6e29a,refactor(persistence): group sessions in project directories
+4e47a7c1bf4221bcf0cbfc6f0a6a598c5dfa673b,Fix path-dependent Code Mode snapshots
+4e747942360e9800b3c6a2f570bdd76fde0814f0,test(goal): isolate the ACP lifecycle snapshot
+4e7a2c732f77834e2dc5d03e3861e4a0c18bd132,fix(commands): remove adapter surface filtering
+4e7a5f19cf6e7310f39b68bdfb65c0af1151c16c,docs(subagent): rewrite the subagent data-structure doc for activations
+4e7f40382dfb564225f12c7f406f200ecadd50ec,docs: clarify source build prerequisite
+4e8067e8d52deec3d0320a9f5d4135034d74a976,refactor(telemetry): replay feedback sessions without buffering
+4eb0a52840df227b5541c7beb5edb64495585ec8,fix(workflow): close review and snapshot gaps
+4eda48d002f3d9cab151aa5de8a2e2c09a41dbf8,fix: address codex review round 2
+4ef3e60d57a34d11a6be6a58b63e3f7b2509de37,fix(web): keep details closed by default
+4f02717ebce2f1c367789bc2a265c516ddaba788,fix(e2e): decode packed history records
+4f2f34c6fd04f3787a5e74712f3fcbb6c97461b0,"docs: BashRunResult timedOut/aborted are first-cause, not independent (codex round 3)"
+4f381b83c969c57c6f03c58676c620232fb04628,refactor(win32-process): remove redundant suspension
+4f40197e169c6f8dadf756ca514b824a9050f58d,fix: complete code runtime surface pruning
+4f8ff004e6f000e6e0b85d788690f6fce1e7efca,docs(i18n): point tutorial entries at index pages
+50350088f9b32297f6e1cc6c339169dfa390875c,docs: correct the Oxlint workflow contract
+504fbf59f3202126330517eb8b20f7f5a17c6f0c,fix(invariants): replay histories and pack companions
+510e80e447d1cb1924d080196c2c6a317f56907d,test: update ACP request-header snapshots
+5113b831e85466892306197c82b9be9b84136b29,test(client): align card fixtures with subagent session state
+512ef2a18e73f930077f91800d0b1e6beaeedd3b,docs(invariants): refresh installer API catalogs
+513e16f9dced1d5590463a68302cd59fd5427b91,fix(dev): make hooks and bash seams safer
+5142bc3eb671a3140346af6beb829378e5714007,test: refresh translation prompt snapshot
+51494c9cbeb247664fe772ea4cb69e2d0e461664,fix(ui): render common TeX math delimiters
+51700d4685898a3ef62512c34f2183b7b532a5b1,Fix ask_user_question review findings
+5171e107e0f3dc993b759fe3e3336387c012f33c,test(history): measure end-to-end timing stages
+5189c995433830ff5a32d38b79d30232ff2bfd1a,fix demo readline terminal editing
+51b2fc35f336fec5ccbfc14342b5fe6d07d45ab9,docs: refresh translation prompt snapshot
+52002791a47024589efd15745d8b7c886110dd9b,test(acp): stabilize continuable subagent snapshot
+5201b84863e7a89d3de177be17e398c9038eca07,fix(web): avoid history pagination stack overflow
+5209656086944adcbbf637468b89bb99799c9633,docs: clarify PR label selection
+5261ebab383a3e33fba7546844bbd023b22f0e16,fix(compact-basic): fence surface changes only
+528f9cba6293beffbdaa4926968eabdbd6a51434,fix: default time context to system zone
+5340aedb8bdce3c36f9101dd48948c1976a6c70f,fix(host): guard terminal metric snapshots (round 6 review)
+53531b9af2a4cb84ab814aa7551fa1539c72f415,test(snapshot): refresh Cordis steering API fixture
+5375142827147d1c08c1dafca05948a227e5521c,fix(sandbox): contain drain failure settlement
+539850578aabd477c734a6cbf142d93aeb035764,fix: reject legacy header deltas on append
+53ae9abea2a5361f636c6369a7c6a650640e8673,style(web): polish subagent and bash chrome
+53d9634043333913e175b23504a9ab912885370c,chore: tighten TypeScript duplication lint
+53fadcce8a379897a33b8dc5e4801381825f6833,docs(i18n): preserve modal emphasis across pair
+5409452cc705804386fe029908f14b31840efe96,test: refresh snapshots after master merge
+541591d5f686eb3447b698b2b4a8dc6c4e1233c6,fix: address repository removal review
+542a01c40738d3211a45a2570e945c66019900be,test(acp): cover the continuable drain ordering and its failure path
+54514f48c539b1adb029ada32a5a1fb5aeca7c97,Fix time-context workspace config fixture
+546143048c011b30380fc135efbbde12afc8b465,docs(api): refresh llm reference
+5490a5e070899fb22a00964216697610069ee78f,ci(windows): run ABI probes with MSVC
+54a3c8b2a426a0e875382f70b4e0d7b6df30bf6b,docs: address graph review placement
+54aef6068533d3c31de8d7195b8489ff7d0ff4bb,fix(tools): complete cancellation boundary
+54e908df528f69f9907732a1a1073687a4998c5a,test: simplify DSH SDK route evidence
+54fb96ef04df12bf59c69b14de24bcba8ada98d4,refactor: name front door defaults
+552612622caf8cf715aced0612d58be9ea55bc17,docs: fold useful simplification RFCs from pr 74
+55916f931d10d1d894e7c26467f533065a2bfb9f,fix(core): preserve abort-observer replacements
+55a8c2e9f2c50ae2680c71229c4127e2a1a9ed13,chore(subagent): refresh Codex runtime
+55b47657e55a6808275b7c96160414ed4ef6a1ff,fix(web): fence request telemetry lifecycles
+55f86367adf11a3291e09a53f95117879ef59bb6,test(subagent): update in-process specs and pin both durability failure modes
+56067f997292e07f797a0ad8a6ab44dd13be136a,docs(subagent): refresh Claude runtime notices
+56091d5b5d126cc2b21b57fef93b299143db6f81,fix review findings: keep ask-user opt-in for acp app
+560cabf848d93e05b6903177b3db66d7eb65eea1,docs(telemetry): fix zh wording and complete FULL disclosure description
+5634c08088d0e2fe5b0bc3ed885d1dc3bb9f0ee2,docs: restore architecture turn flow
+569bf3e5e080d329f411b085d9da4a3223c3db8b,docs: refresh DSH SDK config catalog pair
+5716fab2c5499ec2f4bbed80eb64bc6f1f82b6bf,docs: note in-flight RFC implementation stack
+571c6025d56f827c0aeed55e0c9b8a9fa9f974ff,fix: address master merge gate failures
+57408d07fcbc159dc436233984d1ae9351a01c92,docs(telemetry): disclose launcher telemetry in FULL notice
+5759c287a2999cd28cad8207c44c7d585bc665ca,fix(web): narrow default search review scope
+575e1217bb8b0aa77ac8263daefdd790c2898f54,fix: remove scoped bash
+578df3f986f6af1a91c74d264419e2391509654f,Clarify goal rounds around request recovery
+57e2433f455b10b37f959de710bda4532fda3118,show subagent token metrics
+57eba4341c3223f6370906e614da1a75385c9941,fix(subagent): narrow provider route defaults
+582a8ba2888cb5ed01d245a114ff3d5b6a06e10a,refactor: drop unconsumed skill provider events
+586ccb677ec0abd4cab2afd98a98965d5f570341,docs: refine semantic PR label taxonomy
+589259e70c1ae1f57a421bbedc9c1d617df53b82,simplify pre-push skill guidance
+58dc5f94de7049b21233a9fbcb8bab5af978eb63,feat(session-title): add fallback and model providers
+58e61ae20ba28101be0bed01505b03ec20cd6a7e,fix: retain stdio target across agent replacement
+590f520949dcd57bb52aebd713a5fa593bf209de,fix: address codex review round 2
+598d0ea76921ceca019b932ce533722567ab6bdf,test(sandbox-policy): record wording evidence
+598f9719f4e27b6d5e37478fb20a85214956fd0d,refactor(landlock-run): unify workspace release (review round 1)
+59940f086311a5af6c52eaafbbf5e3151cbf0b65,test: keep lint format rules aligned
+59e98ca8dd97c1bc4a1d61ccd183e387749797a0,docs: add contribution guide
+5a1194bf301ecd9f2ab007a599a2e121e57b72e6,test: refresh snapshots after bash guidance merge
+5a5591205f0ff9fbf5958e58f1f5c35469db7c93,docs(rfc): acknowledge experimental ALS teardown API
+5aab7930457c6b3a3c6256e3e7a773b996b0381c,fix(subprocess): preserve clean Windows range settlement
+5ac03dde3fb2bc125263088d1f6015770d3878c0,fix(review): generalize spill storage locators
+5ad483d120d8f45f93017ea32c14f39c697335fe,Stabilize bash kill escalation test
+5b17d3bab5fc09eb7557554a9c9f6b3ebf513d03,fix(web): match queue steer icon to design
+5b215932f821592daee048e20788b01dc3dd8f5c,fix(subprocess): hand off Windows process observation
+5b36be339d918962feb09844f79f828e2727fe24,docs(architecture): keep canonical output map concise
+5b47da02aee90da2b369b0a8c1beb08968859caf,refactor(win32-process): restore mechanical extraction
+5baa86b97f7d0c207bc0dfab1ffabf5c3bba407b,fix(web): align subagent catalog spacing
+5c085e3511689f8b4fa7c129a90702a9e8039038,docs(subagent): align provider opt-in examples
+5c27df5ed711cf2f491498b47c949da9f6eacd5c,fix(subagent): preserve actionable ACP failure facts
+5c82310f47a57f5031e3301042a53a0768a53b30,refactor: prune unused llm contract fields
+5ca3eab6ceb522c5a69bb198af7d71316f87a639,fix(acp): use 256k compaction window
+5caceee380b962af051821b95258037d2c4830ab,Move ACP snapshot replay doc into package
+5ccebb4741199c3f4c51704703f547d3eb61d36b,test(web): align the search e2e anchor with the localized placeholder
+5d3fdf304207668b363de07e6bcad84e5f67d3ab,docs: record separate dsh build decision
+5d411f9c4e4c0b74089266d44357595a39ad3d3f,fix(session-title): preserve agent turn outcomes
+5d56019d22a51f4125c5f54003ebdb75395f2f11,feat: revert crumbs navigation for subagents
+5dabddb164b1bbfac5279864b7bf0dbda45ecb43,test(web): anchor policy experiment on durable state
+5dcf6095cb191d1f13fbc8ebe3d5df570d4d3b2e,docs: include JSDoc in type-equiv blocks
+5dfe09959d507d4f3d10fe082da8e7e828cfd48c,fix(fs): keep listDir child keys under stable parent
+5e0e4b2401a181abba82c48deedfb21648729acd,fix(web): reject credentialed search redirects
+5e1494ff171ed5e2c3b730e1dec2b77864d3a9dd,refactor(subagent): keep ACP permission diagnostics minimal
+5e2607df8c077c1dbab63f8ca080e4bb941ec983,refactor(core): capture session inside loop operations
+5e3da065db2cf3d2442e274dea95311d5c4cd257,test(examples): snapshot headless one-shot stream
+5e3eaea742b06a2f69803c65c887396e7656bcd7,refactor(subprocess): keep runner error bindings one-shot
+5e629f70042715593b0abebc011def2cd82a1e57,test: fix packed install closure and macOS paths
+5e8943fd1cf8efe4c99a3f5085f55580692490bc,fix(plan): make direct exit discoverable
+5e9131e824a86dc2fcdaf910569b1fbf7d4cc72c,chore: sync code runtime surface catalog
+5eca318cdc1ade876476cb3fad75a89626457227,fix(snapshot): preserve volatile id correlations
+5ef5feb01accdc6bb67a918afacf3e5b6b0e32e7,fix(web): reconcile rebased subagent contracts
+5efc449af02417f34959d076c93336418eeb9e4a,ci: keep static lane source-only
+5f7177a0a983b0eb2733605026ee0d9bb4dcdb53,Stabilize workflow worker coverage wait
+5f87c7a89c75de19e852302e1202f7ea8c72274c,fix(web): close queue collapse review gaps
+5fad2fc93445ae2875048b7009ab2deef6161f9d,docs: define extensible PR labels
+5fd647012e83d2dd395b3c6d135ee2178551d4f2,test: make fs policy snapshot portable
+600af3ca7986c0af9a463384e4473f6d2f330d5d,chore: reconcile loader smoke lockfile
+60587b4901c779fb00931545ec6c326ff07c6fc4,fix(sandbox): cancel sibling drain on termination failure
+605b399a8f7de3a7f475dc47f434c2439ce8ff3b,refactor(subagent): simplify Claude failure fact ownership
+60926e32577d1fc0fe9357cdde04f2fef03379d6,test(ralph): await child readiness event
+60999be6023c695cf9e95e0ad37040e83157068d,test(shell): remove stale lint suppression
+60a0bcd35820be8b462f71bd463cb7b4af640abf,feat(cli): mark meta and upgrade commands experimental
+60a88114c21db0760f6e95d40d2a62f2116aa5ac,docs(code-mode): align result presentation contract
+60c4d523d1a868d6766b828a2e5a0771f7c42205,docs(tools): align schema default contract
+60c729250e5059e5f447058b8c012bac90ef5ead,test(subprocess): preserve Windows job descendant
+60ce23d77c52b6f4c183c320d2a1b54c4aedea7f,fix: surface ACP launcher spawn failures
+60dd357a02b1831ac2c59b1280f949d2225206b8,fix(subprocess): preserve native spawn error shape
+60eea35df5d4cdba6e21e10d9a44728e513f49e4,fix(ralph): harden execution boundaries
+610ed618e97141ca3534c1c99690abb6a1fac695,fix(subprocess): release Windows target cwd
+61136b22bbfabae49227843f924cc4832a07fe51,refactor: remove UI identity translations
+616c2ffba30d0279b351cd39dd89174c642166fe,ci: keep measured e2e worker cap
+61dea35bd29ef3a08dab16a84ad3447bc94655fa,refactor: let Team own browser remotes
+62080d49c265d3a7a5bf8efcae524a29e3320b8e,docs: fix release smoke test failures
+6250c103b675e6e2aaa87ffa42709f77e4ca8a47,docs(tools): sync bounded output contracts
+625e8f0ed2ed2eabec851f2b9574dd39b89f01b7,docs: update tutorial for canonical tool output
+627eb6e00bd83296eb4288b7333b4926cc6d3053,fix(code-runtime): bound hostile output accounting
+628006889e07846af0816a127683b3e5aa5f2b5c,docs: keep agent-loop map concise
+6292d522362406d46ba5f74d7c0b3631dd6c0047,feat(skill): move catalogs into session prefixes
+62da706b64b15b31a0a960d8987d6cc9d93950d3,fix(subagent): address Claude permission review findings
+62fc876318dd6b06b1e70e6a769a2194b13747be,feat: inspect exact Cordis API JSDoc
+6332b5b952d7a931fe4c69ec2547f1f214591972,fix(web): align context cards on narrow screens
+635c35991ce18ac09c4237e2edcfd4396ee48c11,test(subprocess): type Linux exec mock
+63b038e469c7a5f680fa5927bc29c42eab76091d,fix(subprocess): preserve close snapshot state
+63cb16a540041d0746e37c19953543c6df8366d8,fix(session-title): honor request lifecycle
+63d1f7679cbc6bbbdec710f5660fdade1a625145,docs(goal): refresh generated service references
+63d48593cc2f6d3024289c8269412e0e4b9c7b44,fix(tools): preserve complete bounded presentations
+63df2b31a70e181c1fe61046c9f035c6ecb6b0e4,docs(subprocess): document runner lifecycle helpers
+642b1c29d3a2155bb101194d8c0d0bb31f6f0977,feat(examples): configure max-token success via env
+642ef353ece7a0d028b3ec6f4003b2718944f3f5,docs(config): refresh catalog after merge
+643b77dabfcd06cc100f92f9350e6c06d928a74a,docs: sync implementation docs and doc gates
+644bf00b86b054d9eb1689d2db86a6d42a6369ad,fix(subagent): cancel pending live delivery
+646f3d2d0c553402b6e352cbcd70f1530c4de883,docs: apply verbatim model experience guidance repo-wide
+64742d3d301006c36c8f2160926f51e81645fb95,fix: remove machine busy loading test
+6475e518255b6c70b5994a7ace0ae563beb220db,fix(goal-session): discriminate plugin turn triggers
+649865043db86045ece6d586f2b0cdb9c2c13268,docs: preserve prose cleanup in session simplification
+64a3933270a0f4636b36b485197597c66945599b,docs: refresh config catalog after parent merge
+6514a59d5de4e40444dc4529c54d64e3af50527f,fix(ui-conversation): preserve semantic chat scroll position
+6532fff45861698e50885b8b24fb6892400c77eb,test(subagent-acp): allow provider fallback warning
+65521b589f3ffa1a912bb3d8db05a6e2ce204a85,refactor: hide remaining subagent helpers
+656ae95263cfd9f832bdeefbf9da6a91b8ce72bb,test: await exact stdio startup condition
+6585847144db642bd89e8de8d0300172cc175817,fix(web): preserve subagent catalog styling
+659749dc09efb196c8684ad5cd06108861294851,fix(subagent): align DSH SDK diagnostics with reachable facts
+661504b3ec6f88baf91f4f62545cbc2c34dc1c4f,chore: gate TypeScript duplication in CI
+665c10ff1980482929358199a21fc504108066f7,docs(graphs): add generated documentation atlas
+668da7f507afb7404bfc6e4721e34f541d8a4f44,refactor(win32-process): share native process primitives
+669acedcadeb5890d72b7b4dbc67d07dba093dc5,fix(test): preserve invariant config failures
+66c36e7325b1a496557a20e9c71c75e01a113692,feat: add canonical typed tool outputs
+671cbe173eec053ac04b205419c6d4bf388cc6f1,add dsh pre-push checks skill
+671ef4d7eec6fa253e0e6a15297d3dd23fe67507,fix(goal): synchronize workspace lock entries
+67317938595e2b4925130f5068730d4373ce366f,revert: use rewriteRelativeImportExtensions for NextNode .d.ts resolve
+6771a733097b0cb077a9630fd4befb60cadb0f6e,"docs(tasks): fix review finding — TaskId JSDoc links TaskService.start, not the removed register()"
+67e038ab3afc9d40e677383508ad5ccd7c66c038,fix(subagent): align ACP diagnostic lifecycle facts
+67ef355800f56fd7b862008595bfee40db710a02,refactor(cli): inline source launch script
+6825918eaddca6bb7113f5a889a95ffc9f386470,docs: finish session simplification prose cleanup
+6845e038a9274cf7569d1e390c65e1c0b10c8692,test(snapshot): refresh request context fixtures
+689e926c0ad55bcf94704fdc9749114d3401a6f6,docs(goal): structure tool model experience
+68b5c716b1265590f5f2936c33f9760b12c8d1db,docs(catalog): refresh AgentLoop source link
+690ca800b47c1e319570014b99551b36c5e4b659,fix(test): assign goal e2e to host program
+691efb0025bfeeebd3aca9fe833aa01526aa960b,"feat(gui): add 'edit' variant for tool row, showing as 'Edit · path' like Read"
+692ef8e61f1ea34cc30e0736c48a951f3dcdb693,test: align headless replay with model routing
+694b0783650d765449d82b37ca3900c904a11769,docs(subagent): update package READMEs for the activation lifecycle
+69c36e4fb5a6bceff4f44a8ba81ee8deb68fc1e8,docs(subagent): name parent session lineage
+6a02570e8fb64eaacff0c7740541088cb6772ec9,test(web): close rebased subagent coverage gaps
+6a02e2c4a95fc149050f27408e867d283a1aae38,chore(subagent): refresh Claude Code runtime
+6a34a0dd4b2f8d454337cc496098c8874ccc9598,fix(subprocess): isolate Linux native target group
+6ad289809bdac10c873f78fc791231b37ba5cf01,fix(docs): keep upstream clone instructions
+6ad4b4fa42eaf296a2692c4e0886dee02cbfe75f,fix: let snapshot recording create fixture inventory
+6b3e97180566685831e54eabf9c460879eb1bcb0,docs: remove implementation narration from prose
+6b4df99c44e95ab0ae1a0bf43e6b75e9c7f93bab,fix multi-query web search review feedback
+6b59b6050e379de30bb8f53bbc38172f8ffe896a,fix: preserve ACP scenario cleanup failures
+6b782b018927139ea07e5907488b0b948d90c813,fix: bind stdio to its exact fresh identity
+6bae03dd692d777c84552e1d21ed01185dc9a582,fix(subagent): preserve Codex failure facts
+6c57e6036d3d330415aada4b2bf40212ebd3ae64,docs(spill): clarify forked spill namespace
+6c887e8bcf69a724c1e334fac1efeeda2da33921,docs(tools): refresh generated catalogs
+6ce5628bb140a40f5540eac2cbcc821ed8822cf5,docs: tighten PR guidance
+6d49ac2ef692f51715ffec4a7b7ca1cf87c382f6,fix(subprocess): align runner bindings with current types
+6d58953f30a49219b48f66431f4080e0be1c67b0,fix(token-meter): close projected usage review gaps
+6d8095825b9bb1ed7703dd011ef0eeb98b7170bc,fix(subagent-claude-code): tighten provider evidence
+6df3ef4f97a145adef0494118012d33097dad945,refactor(subprocess): pass runner pid to liveness probe
+6e1b8eda773e0edf0a4b40ed363553e8c4f2f910,fix(subprocess): preserve runner result boundary
+6e4fabdc1f329bbc34ab3eec671a0cf68ba87ca0,fix(boot): stabilize profile module fallbacks
+6e790b95f25287ea984c8b44cd2d312b34db6459,fix(compact): complete master retarget integration
+6e7b152de7e3d4c5e19b974220e8dc9b1da977f5,fix(subprocess): preserve native runner contracts
+6ea7d7af53138cb5b28a8bf8dff147382e3de4f8,ci: parallelize real-api e2e files
+6eaa6073a25cbc1b798a49b5e0be9b6d196d86e4,test(code-runtime): stabilize slow-binding budget case
+6ebc7313a02cfdae744e1b9d44c31fdb3757c700,docs(agent-core): correct invariants limitation
+6ebf8d199d35bcbfa7a1648ac6ceb7123e4c28c3,fix(subagent): preserve Codex process exit facts
+6ed3cab9b58fceaf0d15608c0f8a5ddd0e7b3419,fix(subagent): preserve Codex diagnostic ordering
+6eddf38a77d1e88c52530c64555124e1fb47788f,feat(acp): enable automatic compaction
+6f002007b08896a3641b3285d3bbeb42156a54b8,fix(host): pair metric agents by lifecycle (round 5)
+6f4f459c73b336d0b82ba88d7e3b895e345f697b,test(goal): cover terminal update validation
+6fc2cee8371fe70ec7eb6fe6f4f60137e863d78d,fix(fs): translate listDir metadata failures
+6fdd04812387ea8e53ebaaf453bb7cd302efb05a,fix(agent-loop): harden lifecycle edge cases
+7016ad93deb203e28cc306f8e88e98bdd69215ff,refactor: make lint workflows Oxlint-only
+70597eefc421ba8e0fa03ccea5b211d0b8eebf8f,refactor(cli): call runTui directly for TUI modes
+706b9c95b1571f4a41ca011f9ada605b870c30a9,Harden nested project instruction tracking
+7091e0db74af2e703feebe395d846a6cf660d540,test(web): refresh search snapshot after master merge
+7094608c5049ac3f1c96b67e3afd1dec04b738d1,Update goal RFC rollup for current app surfaces
+709cc7200eb2b3ac64090c67833a25a367a1b3df,refactor: unify agent and session identity
+70c6c0ac39aacf14ab0b627319b192fd1ca6f03b,docs(approval): qualify audit guarantees
+711245821bf51ddc786e5fdd96b16a85dd15e799,Handle corrupt JSONL sidecars during list
+712d481bdf8c804d3df587ccf9aa066b01d80f71,fix(bash): classify signal-terminated background processes
+71570d7becc259365705868219163c23e14190ff,fix: address codex review round 1
+7185a62d58dbcde3c327d4c8c3f109990125dc06,fix(subprocess): harden native runner lifecycle
+7195d9eda2305ad08e2f5f02e5116f69ac34ebf9,docs: gate concise model experience summaries
+71a5c3fd4c57b86a8f26dcc5d15c85b648e3afce,fix(cordis): reject lossy dynamic schemas
+71e27e4667c97c901c6ca5d145e4a35a1d212be3,fix(subprocess): close native lifecycle gaps
+71f5015c6108835545f941eb2bf630420855bb43,docs(code-mode): clarify result content ownership
+72166dad0388f7da13db4e5313075b7ad82c8e67,Clarify doc budget guidance
+7228c821b7a881d6cadead1033294733354ffb72,refactor(subprocess): centralize stream settlement
+72693a346e54771ddd26ec9d8736783adc5f3344,test(tools): cover adversarial JSON containers
+7278fc21d8bfad12124fe876a61f5a6cc0ba5bc4,fix(session-persistence): handle Windows directory fsync
+72884ec430e131581891f17d50625a62e79d3641,fix(subagent): merge terminal and process facts
+72a73078260f5d7d3f8e7518b1095609c03dc51f,chore: regenerate module graph and refresh composer goldens after master merge
+72ae04abde84856bf653989648923531cd7fa632,test(subagent): cover bounded Codex stderr tail
+72bb02e68e9de94282145a3953f6ccece6e4734f,refactor(workspace-context): move package to context group
+72c83c771a52186a4971f09b5863078d7e318ae4,chore: parallelize pre-push gates
+72cb49dbbb90907cc5a8862d65ad6e1dbcfcfd67,refactor(subagent): narrow Codex runtime ownership
+72f8f4733532d5674eba06dd8e1d71882967477b,docs(subagent): land the continuable-subagents note and supersede its predecessors
+732735b27fb23fe90ee7f6c9853c7953b8879fdc,docs: align default fallback test comments
+73ad649c6aeb39cc768d2110f28e3811e69c4059,fix(goal): align session-stack lock importer
+73e3f658c609a5b43e2acf292315a0260d87b36a,fix(persistence): bind JSONL identity before mutation
+7407c26bc1690cc084d72ccff68a967370bda943,feat(sandbox-policy): expose current file policy
+7428cdf41e8680d949ae173f3fd6f39b9107e56f,fix(subagent): address codex review round 3
+74f2ab90e1235b739938f5f36a16d5788c03a9d0,refactor(subprocess): derive termination state
+7503fa896f35cb009781706ba316e7935c67e0e5,fix(snapshot): pass refresh context in SDK snapshots
+751b970997fe340340ae9a2176db2c46da159cc2,fix(web): align queue panel with responsive composer
+75838e10b557cddce53f4793523c8ec1166e3972,docs: trim generated prose
+7586caf2dd7da5920daf484256bc5fcb983f1668,docs: clarify Node CI matrix
+75b8eb08ba4936af9e1f6a495d9ddbbfa165d589,docs(subagent): qualify startup cleanup outcomes
+75cece4b926862105412eb85af395534ab877fb9,docs(subagent): finalize named instance guidance
+76450b0c5589237d488f4406ff88b25162e49bc8,fix(web): bind prompts to plan selection
+76547dfe0cc7b1db2b6cead44a7f7f2f78b53550,fix(web): restrict message forks to completed turn tails
+765b360e264bbc7f781b3050caa759f46cca0f7b,fix(host): fence stale metric completions (round 4)
+765dfb217414295a81e0609fa704ba64316e52ee,refactor(session): use one surface manager
+7677d49c9346663c52977f94546ea40f6b07bc7f,test(snapshot): cover session-scoped sandbox roots
+76796df39b2bd6a461c31c8f0afbadab0b953940,test: close the two coverage tails on the plan surfaces
+768c79fd45e01987c77aa49430617fe96b9a0ca7,Fix Code Mode workspace context propagation
+76b3353452fd46f2fa27453d18985fab994d14d7,docs: call waterfall interception short-circuiting
+76e185dcb6ac69376ffc33e27cb9e55344aced3a,test(cli): isolate lazy search startup smoke (round 10)
+76ff841279a0669f7046c563bcdb352ddbcf24f9,docs: keep continuable RFC self-contained
+7720b2258d0d07e7feeeef39bcc64adf8518e274,fix(workflow): preserve precise completion focus
+77211b1c262b0bdfe147bfa2ed67aea958782f8e,fix(subagent): expose startup cleanup failure facts
+77479f5ab0dbdd6741deb7181183dee4b3243279,test(queue): close CI coverage gaps
+774ee34b9ad5b526c6fc221fad605cb364e06ff4,feat(subagent): catalog one-shot child sessions
+7786ff9657045736e60c2ef670955a987677f822,fix(host): await cancelled cold-summary batches
+77ab82a94c2f98908a4f46ed2bfb61eb65ecfa9a,fix: list skills through fs seam
+77df80359a40f8b4dfdf69fcfa0dec40ee23d041,docs(session-title): record contracts and generated catalogs
+7809236236580edfea2e70a1f02a5c5104ee4222,fix(code-runtime): capture worker error intrinsic
+78560dbc917ce906ca631f56a44eafbf2c9557f5,test(commands): refresh ACP goal lifecycle snapshot
+78e57ab53e9ac175f9c6321ced5fe35a7517163e,docs: record PR label taxonomy
+7a1c2779a701737f8527e7291801dfeaca35ca0d,feat(retention): add dsh-retention bounded-output library
+7a33ee94be9f4338369f388c5efe3deb4965b50d,refactor: remove agent entry mirror
+7a5886da2d02c9be768adb8a724e881adb5999b9,docs(rfc): record follow-up cleanup seams
+7a9177d624ac06830a1d242c4a969ed0a97acd64,test(jsonl): pin corruption and storage-fault rejection
+7a9c2ef4738ce11b8c9bdde4ce65ea14bc022f61,docs(core): state loop initiator precondition
+7ad08491551f96b0ddedbf8f390b26bcfdc8ce4f,style: migrate merged Oxlint directives
+7aee299bdad88af70f9fe6b38a86e9da287c55f1,docs(compact): correct pruning surface contracts
+7af8f980801fec5ae334bb9e583d62ec3775398b,docs: clarify local gate cadence
+7b3920801b8b891d2b23240f16a92ae37703dc35,fix(subagent): deduplicate activation teardown
+7b539a0f8b3d6e04252db5517ab7551aca6512b3,docs: align model experience with runtime visibility
+7ba4244d6671d5b7b2fbcb5904dab70a1e3dc5a8,fix(subagent): retain cancellation lint rationale
+7bcae0cd64c3cca52ba1ee3ed846138ef354d307,feat(core): add agent execution context
+7bcf5e3fb035613b369adac156beffb1a807aa09,feat(cli): enable Node environment proxy in launcher
+7c2fb0a6fe9d4edc14d61028a18d9f3b08ff0573,fix: keep Code Mode result cards complete
+7c55ec9038902fd7a3a2c531927ee93317ea5444,docs: condense recovery architecture contract
+7c62fa127bba63477f21618c7a435c91d1aa4578,docs(subagent): describe Host-only stderr flow
+7c90422f345688ca84c65acdd86e24decc55782b,fix(ui): harden TeX delimiter parsing
+7c94659ec4d73d13dad20d66bdb7d465e2624215,docs: add source build prerequisite to plugin tutorial
+7cd486805627cfe097b841bab03fcd968229450e,ci: split primary gates into broad lanes
+7cdf36dfd057dbfc51238069390b6972eb88953c,docs: require appropriate PR labels
+7ce330f0e4d0af6c5c37279c1e54e7e285177423,refactor(agent): scope queue actions to edit and remove
+7d08e43720f9a2f0e4123271ecbffe6d72721d96,fix(web): address steering review feedback
+7d30a39619635efaa2ed6620a04999cb88762142,review fix: simplify Claude diagnostic evidence
+7d697315f67f1f71cc41558b846c1be08755afb5,fix(mode): apply mode flips before request retries
+7d6ef0a47260a096a7594e54c797fde9e1ba8ca0,fix: contain config failure observers
+7d711c44a8a6202680f2801ba16b391858715163,fix: keep remote subagent ids parent-scoped
+7d7d69e22512b10322659c247ea6a2069f974eca,review fix: cover post-cancel replacement
+7da7d5784dd286457608dd1a854f76f5cbc0e530,Open command menu from composer plus button
+7db9a6c78039b0324acbc89a0df1679f975944fd,fix review findings: document ask-user recommendation convention
+7dd6436d52aa59f9b58c927f38a1076a12cde85c,docs(subagent): scope named guidance to Claude layer
+7ddbbe20950a545a34325f73c131874b14a702df,test(web): align search golden with latest master
+7e234bb5b9d5a3b0c21e1e3dc08dddecbadcf8e1,test(ci): stabilize required snapshot and Windows lanes
+7e5d5795a53e017ce3933d3d374dcfe71a60a549,test(sandbox): adapt scenarios to latest master
+7e77fcb52b6a9616bda6b39782a8a8524a7f5f59,fix(ci): stabilize snapshot checks
+7e9bf9b951913b1c5d70b5e94e22ccd8f60bed76,refactor: remove impossible ACP drain branch
+7eb203069c9995ba94b2808bafa64fdcda87274d,feat(subagent): add Codex non-interactive permission modes
+7ef1c458f062732a5e98f0b3b107b9a38c4a8dc9,fix(win32-process): close PR1 validation gaps
+7f0b8a7e87c11b39010e0e4e703ca3319e350d2e,test: measure live web streaming performance
+7f2769c529b10a6d174447555e02aac29666e0b7,docs: address latest simplification review
+7fb9de99b5bace643816888f5af6736da8c15187,fix(subagent): close Codex failure result gaps
+7fe915f82b4f9329f1c5c6b9c408025d5683be8e,docs(tools): qualify default result limit
+7fec86d6a1080259eeb787b688f182bb67d02006,refactor(subprocess): derive runner execution plane
+7ffac135a6e9fa7ae1f96a2a26c82eea6c3e4e0f,review fix: disambiguate steering checkpoint timing
+800e08e9308ea558e96bf58069e7e2133198627e,docs: refine package hierarchy RFC
+80179a5ed0c106af81a6a0230b7ae55bb655e78a,docs: address simplification review feedback
+80358aed9f020b30d978a24d99ee6aad8f0100a5,ci: parallelize github workflows
+803ed4bd9547ebc2fa677a473cb95884d7baa77d,feat(fs): add directory listing seam
+806642b064251640e14bb8aebd47ce49e9e736a2,feat(team): add experimental Agent Teams Web profile
+8067701b92982877005fa0c6f567f7aa6caf9300,fix(subprocess): stop escalation after tree exit
+80a5dc935e377cdeb0c0dd1dc0900341b148f8f7,chore(bash): record background failure-status debt
+80b07984c4c43769324760a3c58190b6f59efc6a,docs(web): codify credentialed redirect policy
+80e033efe5d4587bb72bac1fac7c19f1c90d7c10,fix(team): address Agent Teams Web review
+81257defd2f014489c09f7aa5e3680a3b497fe96,fix(subprocess): preserve clean Windows runner close
+81374783d3ee6c2a3ad95d6ed3ead8af1bf71895,fix(subprocess): close native runner lifecycle gaps
+816b6e4c68e26c38c4ac0aab1cad3ee14714a510,fix: restore exact config sessions on loop reload
+81ca81e23dea201a92b9cc6de38dddf5d8cb790c,test(tui): stabilize snapshot workspace width
+81cdebc5315dc7764d11992c363f88a27a4bdcd9,fix(hooks): require invocation signals
+81ff2894ca63c1474d68829a4df98bf8b2c4f488,fix(tui): bound diff rendering work
+820bb290357f2918a6d35fff0357ddf9b01dd7d3,docs: sync repository removal translations
+82218e0c364c74322d269e33ba74dac0ef73819d,test: refresh translation prompt snapshot
+82637524a3bf4192ac449d6be034a131f991e371,fix(snapshot): stabilize refresh volatiles
+828d6004ba35737a5887def0ce3c32b1c84b77ea,fix(sdk): share generated session identity
+829e874ed2d42fc0dd2916797384b540511b3f06,docs: keep prose rule within budget
+82c0d1fb7cc291196bc3fd5733dfec867d84dac7,test: register JSON-RPC artifact smoke
+82db1515fbbf3c161a62e6a989d4e19fca6dde85,fix(sandbox): isolate bwrap PID namespace
+8344d64363412c1b65b96596c1f0401eb513eacb,feat(subagent): default continuable delegation to background
+8379101e3b3b8ec8dae43187f89a860e2e9fba58,fix(code-runtime): keep worker helper private
+83ae7046f2fc9e8ea953f392feffeb5fefa0391e,fix(install): preserve pnpm version errors
+840e5eaa4062a44bba3e060fa8c23964fd4d1952,fix(web): address request telemetry review
+84255e1d7157e8fd6c2becf8f230a198043dd08b,fix: ci
+847c13a11700e3222c58f00fa96a5e2cba29cb0e,test(cli): allow Windows help smoke startup budget
+84a9b7374c2a85248fdcd268b6e4dc98141edebc,docs: propose further simplifications
+84ad8866d7fc5c86e9dd2ff0e85c716c67d397e5,test(snapshot): cover workspace context transcript
+84b15efd854f606dbf2ca3fd922774165742ab16,test(subprocess): harden host-exit cleanup fixtures
+84f752234d246afd604acadd653620f7d6cb5541,test: make LSP canonical fixture cross-platform
+8500974fd466b2faadeda3c95cf9574e1a934a74,feat: unify JSON value schema DSL
+8505d61f6965e95f330f09828bb420479891d9b3,test(sandbox): remove duplicate failure assertion
+853f4d5cfbd7dd2cb54626556f8f6c80fae37e18,refactor(subagent): drop host-user authority and split lifecycle publication
+85b8484a95cee01336c3d56c9bcca480b94e62f3,test(sandbox): remove stale export assertion
+85c658b0285015e84d8764f6fc51eefb7f6d6fe6,fix: drop retry dependency from pruner
+863116daaf406d3fc6485be819bcba0fc3d275f1,fix: retain dynamic tool schema defaults
+865d7de858906efe41e3cb2041ad83fb542bc688,fix(code-runtime): drain late worker pipe output
+869f94d9d85e9a1db03afbb7c670fe608c93f5a3,revert: split hook transcript locator cases
+86c51704cb1c5044400fcae25e8e11a87934ec01,fix(bundle): exclude product subagents from base
+86e79b5886dff2f367ba630f65c3ecd6743056cc,test(history): label synthetic timing totals
+872cdfc774c53e8fef4f5fa682914d217cf3bdf4,refactor(llm): clarify request context immutability
+87a4aaa32e95bbe3e7f77df1847a304b87ed5f6f,feat(sandbox-policy): describe enforced file families
+87c5b551228be2c53d93bbb913d3788947b897a1,Add dynamic project instruction loading
+87c900dfb2a8b73f153828a01c9fbd90cd962311,Document compaction result diagnostics
+87df09e3c3766edaa1ceb70c049d46c9cf0e8e7d,fix(tools): isolate tool schemas and waterfall failures
+87f4e0b28e621de4c84bef11b895070b3c73efec,fix(session): identify intrinsic JSON prototypes
+8829d15b8e252e9bc491c5ca0785a3ca570c00b4,test: update Oxlint override fingerprint
+88521616623136209e6d4af7f84efb519e63d629,docs(team): link deferred Web preset work
+885f1ed1acb9a91fab8256e8d54e67995bc5a25e,refactor(config): centralize DSH home paths
+889cbd45f1c4da1114366a4d793d15db2f11f324,fix(subprocess): order runner stdio shutdown
+88f913a9aeb3e84490e995510fe29696995166ed,refactor(subagent): merge continuation control service
+891e9035e7e792a8c13bb91fd3f4fab342b87600,feat(web): add basic past-session search (round 1)
+892577ee526545a40ebeb612f753fac2758fad8d,test(llm-retry): cover incomplete retry predecessors
+89416002736122864b0eb1530350ad78ef090b26,docs: expand simplification RFC implementation plans
+894f6aeb8ad455308465354ce9474e8f287a322d,fix(subprocess): contain escaped descendants with native owners
+897dc82d9b47adea3af5134bb409cb9a8fa2f756,fix(mode): stabilize plan-mode model experience
+89987f0ad4615ef4b4f8db3854dc30c542dbe614,docs: align one-shot demo prose
+89d8d5678586a8fc25f1ff38c2f88d37e0a15ff1,docs: omit model experience for generic packages
+89f9900be1ad5d5b02c376c9dd61eaf9bc143e01,fix(goal): preserve interactive human turns
+89f9e4fc2109d7163461f0ea0f6ed771809dd9e1,feat(fs-search): hide grep glob without rg
+8a334c4d496e4585867c5452821635e847bf7ac6,fix(i18n): bind localized links to active pairs
+8a518e353b8f7206279367040d729b2039ecd17a,feat(web): rewrite subagent conversations for FIFO activation
+8a6c3736e4adb7da1db40eb6d3ab26a1ee0762a2,docs: separate contribution links from license
+8a7bb03aabc514b5d7a9b799dd483cc057657a4b,fix(persistence): reconcile project session layout
+8a8c1965d7538b356b906e16112f53ba2d4993e0,feat(web): show durable token usage and context occupancy in the stats line
+8a8c2164fdeba9ce96897a4121814b3957a33202,fix(code-runtime): harden captured JSON boundary
+8ada835396a021a7dce8f72d6b025dcd3a264c15,docs: remove links to private subagent helpers
+8ae6e1ffbd61d7fb64801962649d9a11568ab011,docs(architecture): retain canonical output budget
+8af3babaea4ef50b5e19a81caebf56dfb1ed268e,docs: rescan rebased documentation hierarchy
+8b0a7a5d8ddbb6f8883296601f3c08e507d2b025,fix(subagent): close stacked catalog integration gaps
+8b4cbe4293c4c28bb9662dd24ecad0e90f4684dd,feat(system-prompt): cache dynamic policy context
+8b81d77d54ace076659247a8f848bb03f6fb2dc9,refactor(subprocess): use mode as fallback warning latch
+8b86c3febc03d4416b1e2868f04511ff9d1720cc,fix: stabilize spill snapshot path budget
+8bb19f8f7fde89c000aec038aa7af7a5a7b5239b,fix(subprocess): close containment review findings
+8bb8ac8b3c079bfa1555e3e5c120d2d87506bc7c,docs(tasks): condense background task prose
+8bbae77ae6b917433b1032c7a9c28af5be6b9611,docs: regenerate module graph; drop unused devDep
+8be096c540c6b82187051eab9febd461a46e4fc2,fix: preserve master bash guidance wording
+8c8b422f1787233bf8485982bb92f206734a9e3f,refactor: prune bash implementation surface
+8c9cd4c15d5e7f5c8a7d6626a3ae8de592520661,feat: optimize subagent list children query
+8caf9231967a4761d6c1cd31ee5516f319864969,docs(graphs): verify mermaid syntax
+8d35092e267102827a3153d0f113f838571e7b34,fix(examples): isolate headless agent example
+8d3635315738ac45d91fce35a32ab90e2687c090,docs: archive superseded TUI path note
+8d3674695ba708d90719fad504357c1897fd7fce,docs(i18n): localize Chinese internal links
+8d5dce182406e8754a9b99159f42e2ac7400d043,docs: condense package guidance after scope merge
+8dab7d2f92e9ed7a66408171c653944eb04dfed1,feat(web): seat the plan control on conversation.input.plan over the projection
+8dc78528818b403659c95b8c4dbb9c90af241825,refactor(subagent): observe ACP direct process outcome
+8dc91d2c00f231d14b962f27b6a6143f36258add,fix(feedback): report shared anonymous user id
+8dcbabc3a45d78565aba5650162d8e0febd9be85,docs: refresh module graph
+8de33e42f7833194dec1b72530c1bcd184edfefb,fix(web): preserve chat scroll ownership
+8de47601415517df190187c420ae2b528d470e77,fix(host): fence metric teardown reads (round 6 review)
+8de6df19d9763491b0a2c47f026909853ae9ed2a,feat(workflow): show durable run records in Chat
+8debb798d8c2d82d671183bbb07e05f2961f5291,fix(subagent): bound Codex process settlement
+8e3418e925ecc4ca7992b64d924201969b370863,test(workflow): avoid unbound view builder reference
+8e366c3071f88d4c66c0bfae0fcbea45bd61b78f,test(tui): snapshot semantic terminal state
+8e37abb6c9dffa1fa2d5a24d05aa9eef4dde88e3,docs: refresh module graph for unified identity
+8e4a1b3396c1023e5b28f22c09c2191027883108,fix(subagent): keep Codex provider opt-in
+8e4f6662388963c02832262a6e086b42f24d7059,feat(plan): add direct plan exit command
+8e7cf8cc10c3559ded0ee7f93f62d14ff5f18ad4,Update ACP launcher example path
+8e9bac4a27e70dc51153331cbb8b60d46fc3bb38,fix(subprocess): align native containment contract
+8ea88a589b4abaaf9ee81103058e5b9802221263,test(cli): cover shutdown timer invariants
+8eccd5416e58d1ea63f6dfb411a247ff6c272ced,Document restored compaction result fields
+8ef28f76c079c381ac506b04438791f257931537,fix(subprocess): preserve Windows runner spawn semantics
+8f308023a2c8744dd4cb5ee73b940616121ea5f9,docs(workflow): align disclosure lifecycle evidence
+8f34131f01258dae6ba980336089f18c7429c804,fix: restore unused suppression reports
+8f3613c4b7d34f4c4ad482f0e73fe053effcb4aa,fix(subagent): close final continuation races
+8f5ea04c3fe6369fbd13aec1bd204841836d2f2f,fix(tasks): validate owner identity and brand session ids
+8f9262edc3709caa286a8a5ea2dc0547aec45e6a,test(web): refresh snapshots after master merge
+8fa6ad9132561c66c3016a024a4b1a6c1d141db1,fix(subagent): preserve Claude spawn diagnostics
+8fd1201cfaa15b8215f4d62b3dc664e616a504f0,fix(code-runtime): align worker JSON snapshots
+8fd2f0a813864045cdaa061185e31d7febce7ada,fix(examples): follow vendor package rescope
+8ffcef7db9ae4c1c809950a8f7bf1424a9ec1107,test(snapshot): split pinned schemas into sidecars
+901315d8ab0903c2f4ac1f18401fa9ed98f05b4c,Preserve instruction symlink guard through fs seam
+901bd575e1786d1a8f7d12e54fdbf435c5ebf21a,test(web): refresh web aria goldens stale on master
+90220b235fcbdc506c6106a4c33cddd3faebacb1,docs(core): describe the public loop contract
+9028c9b63b6c3ed1737c168ae5e1548bab064668,fix: contain ACP update predicate failures
+902926c7bb357cecbd483d26789fec76f04aa701,feat(web): enable default search and fetch
+907c6334c112a976d7183734fc47c73bf6cb6856,Remove Knip from repository tooling
+908f1afc42c583a11e9fd280fad2c1cddc99ee69,ci: skip
+90adf1003f39f92381819c27db2a3f56ca615ed0,docs: refine simplification audit after master merge
+91075e010ab641a3cc236881d0713f68b27e8191,refactor: hide llm adapter helpers
+914c7e985893541afdde5c74a2c2d00574626e3d,refactor(persistence): share pure backend guards
+915c727e14ceeb0b3bcbc696ca779d399c555fce,review fix: distinguish checkpoint settlement
+9163f6129947b4f908d785968fe3c9dbf963144c,docs: include JSDoc in website API markers
+91d7515fd82080cd4dd2c169846f644138168410,docs: add development setup guide
+922e2f913ef18236543b049f533e76bb0d867ebf,fix(llm-pi-ai): preserve harness adapter contract
+923f919b49a6cdc3923c98f62225de011eb5b451,test(subprocess): remove Windows cwd recursively
+9241ac22af33877dd55d4c506b0df4de1e3dc333,test(sandbox): preserve rejection evidence
+928c99876e8e3a66a730f759236525f7944a4a0f,feat: add optional dsh badge skill provider
+92bfbb86144a80ab3d4858a446a7a987dccf225f,docs: refresh module graph
+92f4a3341ec8962cef9318d10d5390e3d4fd9d39,test(snapshots): record canonical diff metadata
+9339622d3b6da4070944ba10bc9eed2bb121fb25,test(acp): snapshot system prompts as Markdown
+9366baf39fd84f169e1df7f42048088b5cc0c790,docs(acp): describe session terminal rendering
+938f08752dcf84933af46e4955e9257afd0d9742,fix(tasks): reference Schemastery compiler project
+93b0451ed5f36c2f04d99f09f2e27a6c3bff51cb,feat(llm): send DeepSeek user identity header
+93b4b98ef3f626f7d83dc14f4b5734521f5469a0,feat(session): optimize SQLite persistence layout
+93c0032216fa51ce4f225f5bda3dd615317d565e,docs(subagent): document explicit product provider opt-in
+93c11689e71e562e4950e604e93e913afb16af67,fix(subprocess): address containment review findings
+93e858faf969881c49e4fc3dc0e141b5527e542b,docs: address prose review findings
+941b0411d80fba789bdd237946d406593ee13df9,feat(invariants): implement package runtime checks
+941e5c506178681f33b4192dadfc0d622a101201,feat(workflow): let users control run and phase disclosures
+949ee03377719aea96a26fd96ba0bc284cf740ec,test: cover exact session restore failure
+95065330d7c743f657a8c96cc8f7bbbea7967e41,chore: share README gate Markdown scanning
+955a12cca4921a36bacf856bcccc240073c13667,feat(web): steer queued messages into active turns
+95a995968b6bb6a6b7f50a2faf1a3cc47ba5b2e0,refactor: migrate linting to Oxlint
+96055d1763d6ef954d1d6f61a76c7790ae6702e5,docs: rewrite architecture intro
+96d6853a9614e529aa380ee18b88aca4013d68d8,Preserve Claude SDK child environment
+9704749b0139cc539945990a2a00f36d49b1d3ef,docs: replace vague provenance prose with recorded facts
+970b4322272e566be65504c5e799678f0608f1f4,fix(plan): commit an idle selection immediately
+9745a0d43a979d34c44c2a42d8a485d03a25de71,fix: reject empty configured session ids
+975afc9e474614bda566950f1162aef1aea48737,fix(subprocess): release Windows runner stdio
+9784d6c932fe20cd5fa50b51f621b32bb15da02f,test: register web performance entry
+979fbbd96108a8fa6979992a1ac86cd14c2f612c,fix(goal): harden driver cancellation settlement
+97c5ca940d449d5a4b164984dc2ffcc6878ef841,review fix: preserve blocked-prompt RFC contract
+97e0c9607d8fdc7d4599fd9bedc9dcab078cfedd,test(subprocess): cover native probe fallback
+97e3a175ffe5b3a850a00aefdcab3222d083c9be,docs(subagent): include product policy diagnostics
+9848fdf93e4cf35e905104152ad6a4eb377b3b7d,refactor: remove unrelated helper extractions
+98d4551597e9ad0aac12cda1504aa845cf3316b9,docs: refresh module graph
+9912918a48438fade5a9b373df55682e2c9a31fb,docs: tighten agent execution contracts
+993550e6c851e1ae05aa7d587d10ae1626ae1191,refactor: remove repository plugin path
+994bb4b07c261cf031c690ca15ee28cfd17e663c,fix(code-mode): render deep results iteratively
+996ff7a4409e92b26471507395937344bf22c847,test: refresh translation prompt snapshot
+99a203f445f4db36f97e69d1a7b00f8bfc497415,docs: add simplification discovery skill
+99a778d63fe3d2df11a5e608a649021a09a6b1e9,feat(subagent): continuable background subagents
+99b5f04c9bb5ff2ac78d9cc30ce22d65a181c097,fix: use unified identity for bash ownership
+9a25e44fbb4c192ad1912fa504d9b71e19820f36,test(agent-spine-demo): wait for exact agent identity
+9a6914d845039ca4f8190f47fc03b159a424ba72,feat(session): add out-of-band log appends
+9a69feeec0a55abd04f9653d4c70a7d1eee92eec,feat(web): add plan mode controls
+9a6c94cb2f5e055caad1972ba1fe8ab9f05c0021,fix(sdk): gate prompts on route initialization
+9a6f5cf7ff8f45a4c002d397599fcaf8ad24be44,docs(subagent): name ACP quiescence precisely
+9a7be21b7f35b6fbb9d9f8331a61beb165418dac,fix(host): preserve subagent continuation ownership
+9a96d7c34198c68f93e9c4128434c8e04d131e10,docs(code-runtime): refresh config catalog
+9adfc576da0f81ae8c6117d5b976663f0872a24f,chore(knip): include subagent settlement fixture
+9aecbad9dd0770b82c4a6b8d373174a7383e9354,fix(subprocess): keep runner worker-loadable
+9b048354b8e698147cb793f223b5f89f25640f27,fix(session-title): enforce framed input and deadline
+9b83852dccea45c4de8946cd84d9713c2c4db068,docs(subagent): align named instance evidence notes
+9b91e5312ca02da82cb46358ce9717dd3e4cb7b0,fix(web): narrow chat scroll provenance
+9be6419cec1a1df9d394c209c1fe1d7347d63d9c,docs: regenerate catalogs and re-pair bilingual READMEs
+9c133c644d3dec868be27a3ce01ecc0debd2e283,test(bash-local): wait for process readiness
+9c32620e4b8fcb81a1714d7654c47e8398bf72d6,test(web): compare cache-safe policy wording
+9c5224c5277045c70eba4f500de2ae4fd8a82a4c,test(cordis): cover malformed schema arrays
+9ca0241d5d113d4e6d575219df4550f9c0f39ddb,feat(web): add durable session metrics (round 1)
+9cd3c57b751a7df6f4d97813186e7ccc139a5e9f,test(subagent): align continuation fixtures with session API
+9d0066440311c928a23e925fcdc34ba9da5bd184,docs(api): refresh agent reference
+9d173f8333da6013f6db1862c9093251eeb41b71,test(tasks): cover direct admission default
+9d2cf8ce826ee82c2af13f25de12bdf1920dda7e,Add keyless snapshot refresh mode
+9d310ecc27954f412e709fe8a4dd891406ff2e1d,feat(invariants): add package-owned service seam
+9d65894314ac57b505083ee9bf666846ead0e6da,docs(agent-notes): replace product provider proposal
+9d77a50c23a32242cc3c4058a1cd2df7b5d6a31d,test(cli): include list_agents in shipped catalog
+9d79da0c62421e4e58646ed9e9b31409596913f3,test(cli): pin source build-first launch
+9d9b547d55dc6a2db4449193bcc505e2b5282712,docs: refresh telemetry module graph
+9e20f92925068919212c85bb26b3f176e9cfe03d,test(session-persistence): expect request context checkpoint
+9e5ae0d12e8582910a81a7e2fc2fb481670d3082,fix: address codex review round 3
+9e91e206d4ad1662a843956cf73892aa4f3bf94a,refactor(subagent-codex): centralize cancellation settlement
+9ebb40b84b404b3568a53cd6fab1b966e2c82c74,fix: keep SDK subagent notifications local
+9ef673a5a3c2375680f64ae88ab611b188cedd73,test(commands): cover current ACP scenarios
+9f1a69366bb4644f781df1508cd2879d205f343e,docs: tighten identity bridge prose
+9f2c64f1754062c03e6b36c585313c927ab198b4,docs: discourage obvious code comments
+9f5b639a084d0689d32892248aa6690c4aee5748,docs: prefer new commits after review
+9f6ec0ead6e21f368c8ff08d048ae2f73505f326,test(subagent): exercise native Windows Claude shim
+9f6f87cf694c7915b58f9f353a289fe514fc2fd8,test(ralph): snapshot fresh-agent rounds in headless app
+9f7919d89463614395cdfe5e789acba8cf9c9211,fix: remove machine busy loading
+9f9f83c11f0ba190da488156efb015e3f7d921f4,docs: align compaction output contract
+9fcdb2c160ab34dd04d90c4fcf82601a0e77eac1,fix(subagent): close Claude SDK runtime dependencies
+a016e17393d43ca57a0c41884805698a45a232f6,test(subagent): cover Codex permission branches
+a03ed8d60b66b1ab44a816b304853b751158775f,test(schema): refresh PTY tool header fixture
+a043395c2db684239590eaffabac8246568a9ac0,feat(subagent): configure Claude Code provider models
+a0748ce5608f5ecedfc1f2a1ac5305806ef8a988,fix(web): canonicalize fixture plan state
+a0bc2ea803c80976257df7498e62f6ce35db16c2,fix(subprocess): preserve native runner launch semantics
+a0e917ffe37825be599ef8560ce2b7f208b3a4db,Optimize workspace instruction change detection
+a11081ac840b4029134d9368fb8e49391bfbc4b3,test: refresh contribution pairing snapshot
+a11396e43cb57fd1523784dcfbe621f68f908967,test: refresh code runtime snapshots
+a163f4019b15437844951842288aa7002166c9a7,fix(sandbox): preserve all drain failures
+a19c80bf6e0124eef2332e0a206ae86f95b4ed2f,fix(code-runtime): preserve typed failures after mutation
+a1b3bebb61fe2f9cc1157496d5115476e7835ed9,fix(subagent): scope drains and soften final flush
+a1de4d00714556c3a0d00ab0ef6728cc431c4d0d,docs: codify initiator-owned identity plumbing
+a25c0f084f035f94a11292b17ec9a31e93349c2e,fix: totalize configured startup failures
+a27492507d578348b1c2303121905ca89ca389f7,feat(web): add subagent conversation transport
+a278374e8f8daac7383dc0b9a9e7fe825d66b473,docs: structure model experience fields
+a27efdef363de392d675d4ce517db58b78826b44,docs: make technical prose concrete
+a28f543ae4449e2a3389f1a505f2c58245c15078,docs(agent-team-profile): adopt package README standard
+a2c53a885b0c5ad6e93ea0d53baa9acf44cb68bf,docs(rfc): propose tool result retention library
+a2d108838e2650161a5a6c43696a1f6263a5b9ae,fix(cli): install shutdown handlers before readiness
+a31b3eb7b803fba22f15c4084e48fafdd04dca27,test(host): cover queue mirror event expiry
+a33ee3d4f098ffbe9a2617c4eadb12a0282910c5,docs: refresh MCP config catalog
+a39bd9035ecc90a10375f4bc5e89a6f03c3c48b4,feat(web): replace the plan select with a status chip and placeholder swap
+a3a9f86d8968876020bd597ea5e39db63525065f,refactor(subagent): derive Claude exit projections
+a3deb9aa5ed874a638d728a3cc7b8bf86a66281b,fix(subagent): keep Claude plan mode non-executing
+a3f248ff52720758f282ff9680c51320cd0f97ac,docs(workspace-context): mark deferred correctness fixes
+a3fc0b5ecdbe02a3dda42e0b93f4965654902308,test(subagent): use platform Codex argv
+a40e0978da46e7029a822efb3f73055172e9ecb7,style: fix fixture indentation from the master merge
+a41085dfd40033e2e7d2590c9b38e0ade8eceef3,ci: skip
+a415d8fdb1b3de4425495b6c87707b58f5c3f65f,docs: remove stale streamed-prefix rationale
+a416b13eb5d2be8f0791954d04e1f4f33902ff87,fix(subprocess): preserve Windows search miss errors
+a425aff586a5721a4ecd39dbc1e5be183794b092,docs(rfc): propose one-send-one-turn simplification
+a42c28cdc9cbf0c6dc5ba789eecea8cf08448cb7,docs(rfc): refresh agent execution context pairing record
+a435aae538f908fd98b73d9a83041046a34edfd6,test: add opt-in web performance scenario
+a43a0b5cffe1d96abbae4c24b8e8d4bc59d8fb98,fix(compact): soften English checkpoint rule
+a4417f4924151d130e76bdde5c5f40cefa8bd149,docs: classify consumer-owned model effects as indirect
+a447e26272c6e9114f71f53f89d7a78962fb2367,fix: test
+a47e80678e34aae9f70e8d6826e909a972937b8a,fix(history): preserve per-delta replay
+a49ef7581fbc15341e1c34bc7549d51981dda6c7,Fix Codex wire frames and bound grace timers
+a4a9900be1c6f597a92a5955fe2768ca40314756,simplify retention omitted metadata
+a4be4b5e5264e1016cec414d7d43c03c0e15c3d6,docs(invariants): codify semantic review rules
+a4da0f40d5e4ac11990ee0f6485f39ae2def66aa,feat(web): preserve near-full cache-hit precision
+a525776015c10c1a5c25c3cc625bb4a55f4f811a,feat(goal): add persisted same-session goal domain
+a52cac00b1a0dbb6969da5bd634e22c72cf02c1b,fix(project-instructions): load files through fs service
+a5368680ae957e2402aa06ba3d0189890a233841,docs(win32-process): keep localized header link valid
+a552a6ce63e81c6c19c6c6708c4df80182c46b24,test(code-runtime): cover revoked constructor spoof
+a5ea2c46a7c96f1437d6615eb9bffd187e4f5090,test(acp): isolate product diagnostic header pin
+a623ed518398ae9471aea6481ccb286ec7e24d45,test(tui): cover unbounded retry status
+a625ef4fe9295a205767fdcd675fc1d254898dbb,docs(compact): qualify pruning cache reuse
+a633c19b027464f0079ada185b3e7982f1443eb4,ci(windows): raise native coverage test timeout to 60s
+a6c274e250e0f5a07d33fc3226bcd7b3bfef392b,feat(team): add experimental Agent Teams CLI profile
+a6e406a7782303ea5838007e8e85401e95ce4e01,docs(agent-loop): correct identity limitations
+a6e96c47f37e12e1cb1a3a36514ba6aa060fe09e,review fix: pin ordinary-send batching removal
+a7a369a7beee9720d7c7ce4097c7d0804b685f5d,chore(llm): bump pi-ai to 0.82.1
+a7b0e6979732428855fdb06eecb8c4dfd74cc8cf,test(snapshot): update plan command metadata
+a7ddded2ef44bc806a96f9ee00806109ee62b130,fix(workflow): address ready review findings
+a7fc81d745ad178194be6c905bb1a6b4c19cd624,docs: replace front door terminology
+a825b8d0427f8312c600ded8b78964e9ace18c0b,fix(subprocess): close native containment contract gaps
+a8c0e8a03c35b1303d7780b8215e482809c32d6f,test: cover successful ACP cleanup failure
+a8c28be1ba345bda3e8a90847ca992edcda0668e,fix(web): bound search provider work (round 6)
+a8d1624695b78677e65d287b87aea016f3de1288,docs: close web seam simplification RFC
+a91b20f6beacd4167d1bdc649e44e47eb86c712c,fix(subagent): close continuation lifecycle gaps
+a93968bf9361a3240228d8e35bd43bfa1f7f7799,fix(subagent-codex): await managed tree exit
+a93e9b86e7d51cac88ea10fa15f9378e49ecf7dc,docs(testing): require real-example snapshots
+a95f0b368f782e20b54df4e9880b589d9bc10ae1,fix(subprocess): contain escaped descendants with native owners
+a967f5174a0b81b2868d7ed2ca5e8435ba5c3f59,test(snapshot): update unlabeled workflow children
+a977ef30eecc44f47156531f41bde257e7ae5075,fix(subagent): preserve published run failures
+a99750f34128f4d3c2253fd854eecc89fe6157b9,docs(rfc): propose required capability cancellation
+a9c36ad576653d88b498feea3fbf83bb6c4b4305,fix(bash-local): contain spill close failures
+a9c4fe2c4ba9f92a85117d60ad01ce1ee5930c69,test: exclude validated ACP assertion
+a9d518a38ea585e8baf03564c58af0b29f67a1ea,fix(session-title): harden async provider lifecycle
+a9d74932b12e05721cdfb66c25d3aaf2ae70fde9,feat: add optional time context plugin
+a9ed7c2e9891f4e571f493e81547768f1f1ceb83,fix fractional duration normalization
+aa4e62987473c878eaf1a0ee117ebcd8b6327337,feat(agent-loop): give each send its own turn
+aa62b5109a1736e5b468c2652d52cb635bb6cc12,Fix workspace context review findings
+aaa5117ebdd91ee946d0f6229ee276a080fedb17,fix(subprocess): preserve literal spawn error stacks
+aaa85cce01195fc35ab14766d5d66b83ef5e3cd7,docs(subagent): name SDK quiescence precisely
+ab494bfdcaa11f839037c63a9ca43a32fdad7459,refactor(win32-process): narrow PR1 native surface
+ab696d84c20031b08dc7c3d957c9bf0e68654e48,docs(subagent): show disabled Claude tool row
+ab94a2f7d6463ba640af5866c4b28908d5dde3b0,refactor(telemetry): centralize the default mode
+abf498b8dc12b973ff698ff1ef3191f36bad0fc4,fix(web): align composer context stack
+ac1a5891c2faa100ba533cc1f7b88338ae19d583,fix(subprocess): close remaining native containment findings
+ac69b1e0c43590eb932b32a0c690b3e93d45e2f8,fix(subprocess): decouple Windows target stdio
+ac9351594393fb8e3c3cde9ee2e6c58f3f01633f,fix(subagent): preserve Codex payload diagnostics
+aca5c0cb2b76a17978b6b05f7848a7600d373573,fix(subprocess): release Windows runner stdio owners
+aca8162ef21322e4dfbeff4938e546b26e44d4d1,docs: describe lossless Code Mode bindings
+acc628f3afde26ac47168434a3daa4f42351c936,fix(tools): preserve literal and realm-safe schemas
+ad021067e0d8b6e55cbb875cbdcdb71a098492f4,fix: preserve transport cause diagnostics
+ad14b210bfb912d6de893508b84563e5e6d9586c,test: cover skill config defaults
+ad44ba547a8d4ee34c94ac964bf71e7876e173fb,test(subagent-acp): explain fallback warning coexistence
+ad6516933b3176ccc0d262981992c024d2480147,fix(i18n): close automated review findings
+ad8ce3904be01fc4f8c11c28db23bc5c5efbd54b,test(web): drive policy experiment through commands
+adcba3ed961547c6fde2ed4cbedb5a624532eb36,refactor(telemetry): keep frozen-consent precedence coverage-enforced
+adddc4dea69acc8738bd05777748d30ef452b9d4,test(history): cover packed record branches
+adedeb70a8f72c0ef88199fadbd0baae980d928a,docs(skill): clarify comment guidance
+ae419fb692322bdb48facc1394807ad25e8b1e3c,fix(cli-demo): interrupt Loader boot on signals
+ae6976cbbd6d4ac0dba8c90b7880045aa00ca388,docs(subagent): regenerate catalogs for the activation-based seam
+ae77bc0b2f67b5a06b74267754cda060e20e5b2b,fix(subprocess): defer native wait allocation
+ae98294ec50281fcef557f3176720b346e5920fa,fix(sandbox): preserve filesystem cwd semantics
+ae9b69287ff09d96c54d2d1e30b13b2f3f49e958,fix(i18n): encode exact link paths safely
+aee58c73e0ea69c6019283744bf03ec68aa06432,test(subagent): compare Windows Claude paths case-insensitively
+aee859841b8ca8cb5a0199b9510e0636cbbe6380,test(gui): cover edit tool row
+af1894eaef9f13e7a57d07c60e92701d469f706c,test(subagent): cover cmd metacharacter install paths
+af242dbae56df6b4092c3dd026e12a1682045256,Preserve snapshot refresh seed boundaries
+af6951894721ea57dc3c6e8abd67f6d7c63e4cd3,docs(user-interaction): record review detail contract
+afaa9ad828cd9c31afbccd70cdb8c04474cc1143,style: satisfy the eslint lane on the plan surfaces
+afe26c27abd6f1eafb16c88ab782a6e920b70868,test(sandbox-policy): refresh merged web evidence
+b032097c2a651d0ca231f9c4f3ac212376615a54,fix(subagent): preserve terminal turn precedence
+b03e52fab08ec2c84c2d0dc2b46fe69730a0c0d4,refactor(subprocess): simplify Windows runner settlement
+b06722e2d406fd6ecbfcb49cb93bf04a1d51a829,support bounded multi-query web search
+b06ae91fa8acb38cd62c1b5e23992d95dc032201,fix(tasks): address task API review feedback
+b10368a8d53d8cafb1ee991c4b1b9519b8271403,refactor(telemetry): strongly type sharing mode
+b10bcf2d442735d8be20c11974b7d896e692368b,test(web): re-record the hero golden for the localized search placeholder
+b12b5f8a9536e99fad72024451b9c1df84300c8e,test: refresh permission-switching header snapshot
+b1b57a0ac54538a7dc4753a31c30cbbc474643c5,Require Agent Notes for non-trivial changes
+b1d67a693537bb24f0e95460bbdafd98e6c507e6,feat(agent-presets): add Codex and Claude Code subagent tools
+b1e19d8b697865d20db02facd990052e9d6347d0,fix(core): drain cross-realm execution promises
+b2025337b56b8584ffbb71a54b486c48b285fc78,refactor: hide sandbox implementation helpers
+b2031dd6b23be3e50a0b8f73aca570cc754a12ab,docs: keep package index within budget
+b2064cba10f3a0c19ca24472f0ee7d7f81c1816f,fix(agent-loop): reject duplicate configured identities
+b2178ade8028597e7565db77dfe3ef4ecd68b99d,feat(subagent): make Codex provider directly installable
+b23da625bb36a658e25f4976aa0d0d5f01ff2490,docs: trim package and example indexes to budgets
+b25e790e369ca65623febe68bdb8ebb07e635b45,test(subprocess): cover runner liveness polling
+b274f5e6069cffcc94f861285a4d0ee974edffe6,test: refresh dynamic route prompts after master
+b2f08eac4f46a47755b7f69e08330b66750aef9f,test(workflow): register real-engine route
+b30686d634a3fb3bc5f93f89ca10bfcd631b847c,show subagent usage and active duration
+b35d66b86dcbb814f0183174c4d42c303a963178,fix: reject legacy session events on every path
+b3ba4345f591b76f2c365ad144d76146cb139e1c,fix(session-title): respect request and config boundaries
+b3fcca95985f450b52faa7c7671d6b2313560f66,refactor(subprocess): remove synthetic abort race
+b4366e711d634290101b6b82deafac405e3de3b1,feat(subagent): make Claude Code provider directly installable
+b47e4c5276604dd1e5a400f5f60d2c16e195df10,fix: suppress teardown startup failures
+b5731dfdaf81d7b40796ca20a543d75a164ee318,docs: propose continuable background subagents
+b579a13db759c38c41541a021bbbac188f4bf8a8,test: trim PostToolUse snapshot retries
+b58cf7ec2fdb3ba7d88ec097766dd47f2a188a2a,fix: coordinate overlapping configured reloads
+b58e33268afa9771e96bca1a565555d519d97743,feat(llm): add per-provider retry policies
+b5b17a7f65a8581c16ab5af7980faba637679315,fix(ci): stabilize static and coverage gates
+b5cd511f35c52a8c1c4c2530b446b1a6b0574cab,docs: address model experience review
+b5d112a251915e89cca4ed087b8465c07961b8a4,Skip TUI PTY smoke on Windows
+b69129601e5033a62532b0e72061bfab1cafc516,test: satisfy post-merge push gates
+b6c52c82bbe47a63981e889d08c268d8851e52d3,fix(infra): resolve Codex notices from wrapper
+b6dc88be519a6a769453d2730188c86ee9706a1a,fix(subprocess): preserve forced Linux outcomes
+b77cfd64a1cba70c1c2168d370aeab3108989a12,docs(catalog): refresh repeat guard source link
+b78cdbcd51d5c397f181a71ff5b0e61063e6f791,feat(examples): add one-shot CLI demo
+b7cdad6360964089971463737464baed70c45591,ci: reject golden filenames on matching PRs
+b7dbb25c081b18543f7dc5b5cbb9aebeed4a4f51,docs: clarify release tooling exclusion
+b7e195a7e6edfb3932af44c780e243cc46ae915b,fix(i18n): align translation briefing link rules
+b8080268599b33090c150786feb0b9438517f716,feat(workflow): add fresh-agent Ralph tool
+b850e69068fd14e8352d4614281c7aff7640257e,Condense snapshot testing policy
+b85cb981eff636250676b13b2b6a98a46e292c57,docs(subagent): allow multiple product provider instances
+b88a35d506d8ba271a3e2616e01d29c0cccfcc9a,fix(subagent): preserve actionable DSH SDK failure facts
+b8aa1507cd913da4eb90701ad1bf9645cac4eaa6,docs(pty): keep model experience field canonical
+b8ad62eb359409dd688ef3c2401fd6af27d2bf7f,fix(invariants): finish current-master ownership migration
+b8af6c4b430953d23adf5669ad5bc2cbbffb7176,docs(goal): align rollup with implemented stack
+b8be3583e07a8f5b0234b5148aae7a747d5fdcbe,test(cordis): refresh session origin API snapshot
+b920239389866bf80c9d74528c92d96ebc8803cc,fix(acp): align prompt and workspace contracts
+b92795a73126e2ff163cd1e78bd4d98b54d8c21d,Fix nested project instruction review findings
+b94d2f9c1d80f35d051d05c831278ffb50974c14,fix(web): stabilize nested subagent navigation
+b95595f0c7ed9769bad0fdb1e64727ff0dc34284,fix: harden runtime skill registration
+b9c0028f95100ccade815d937505302227eba14f,fix(subprocess): launch systemd scopes without pipe mode
+b9cbcf8e2b73fdd9a9375d290ce697ca3a0b320d,docs(subagent): clarify diagnostic-bearing results
+b9cd0d0c9373232e1c5450d0d408933bfdfea41d,test: declare loader fixture skill dependency
+b9e7db5abfe67a2b9cfd2732a57ebd8264b2ad36,fix(skill-badge): align with current base contracts
+ba0d7dfdca53356c0dde38b98a682311b0f65bb0,fix(sdk): validate closed turn cancellation facts
+ba2925c7041bac2976c362c1a5bec379b2c0af3f,fix(web): converge search runtime boundaries (round 8)
+ba31656258d1c1c4e2c5eaf75eb787e1674e665d,docs: name prototype sharing purpose
+ba4a57c7d19c3119f1f3876a8472b758902ddc9d,refactor(compact): align pruning contracts (round 3)
+ba693f0355f378b289e536436f774aa914cbd721,fix(cli-demo): forward the complete spine config
+ba8a5c89ed4390b4b1679b736f2c44d79bdbaab9,docs: name the public agent injection seam
+bac97a5b2e1ae105eaa3a50c3aa131f8ead02fbb,test(acp-snapshot): cover the delta-insert trailing-newline branch
+baf2bc6dc3260ccd76c884dd05433658da51be6f,docs: clarify missing artifact failures
+baf64e8b2117ff40db66f3c8d9c8677bcd8f07e7,fix(bash): close managed environment review gaps
+bb1c8fa27da12f2432afaf3d5c04fd8299df73e9,fix(llm): restore pruned status contract
+bb3010a8dfb406a472115052754591c58ce09fa8,fix(subagent): use bundled Claude Code CLI
+bb40259083f10cb2071c024f05810c74021e4035,test: preserve ACP cleanup failures
+bb6709b14ac342f848905f4d6400a625fb93fb51,fix(code-runtime): bound completion measurement
+bb6e6d6f3b832bcb17e213d4cc32c60f565985f6,fix(subagent): preserve continuable behavior after rebase
+bb8ea2be51a57bb4602dbb690c0cb0d29bb3bda8,fix(subagent): make strict steering atomic
+bbba57159d581dd121d414edda55d80b8cf7a4d8,test(web): include policy context in plan review
+bbead98c1d28787db04245c56890d664bed08319,docs: align sandbox extraction with prose standard
+bbf1c6e842c52f615abaa1a1f374930411332537,fix(subagent): close DSH SDK diagnostic review gaps
+bc504195df6e17aa2fd4816eea04c0bb0cfcb3fd,test(subagent): close continuable coverage and drop unreachable guards
+bc63b5fe00b86c9eebef18b2287d8b4ef776b5b9,feat(web): project plan mode through host API
+bc681d7a542d503102939897143d508d72425edc,fix(subprocess): harden cancellation settlement
+bc91897adbdd1932ee510ebd5ede3c49f74d9feb,test(cli): load product Bundles through Profile
+bca74015130ed89295d8d83f33979c491a637854,docs: retain rejected compaction RFC
+bca790481c02c710e1c8b339efdf1ec7c2404370,docs: document stable fragment aliases
+bcc041829cd1ebec9533bdc167e5a6811d14b055,chore: expose dsh root script
+bcc920369c5db08fdbd5ca0e40fac377955f25bf,docs: document package KV cache effects
+bd1805c637cf2d3ea704d0077384cf58a7ae5cf1,fix(tools): close cancellation review gaps
+bd42204e53d38af428c7c5985207dc91503a36bf,fix(cli): keep search index ephemeral
+bd59fddacdab4031d6b4e7ca6fc53f18e42f5b79,refactor(tasks): declare-then-execute — ctx.tasks.start() replaces register()
+bd6577072ff1549985fee31f774827a3e99c9913,docs(subagent): align Codex permission evidence
+bd9abba638c81fa4ebecb5dc9d12ab975c429da0,fix(tasks): harden lifecycle and bundle config
+bdd0a05c4aa7397760750c36dafdc1b0975c07e1,docs(agent-note): align goal rollup with implementation
+bde6a9a04155c22e76cde426853a708ef4b151a0,test(subprocess): keep validation assertions explicit
+be44f073e1f4363e0f92116f08a2f466df289054,Fix invariant readiness after CI sync
+be56f64b7a7aef49ff83d7fea34283b096896658,feat(subagent): add Claude Code provider
+be67ca41ca724c8a18ef98d440e740dee37a477c,docs: address review bot feedback
+be8874f8db69471ad4a883088dc2929b660762c5,test: reduce ACP skill snapshot churn
+bea6a74ea0f44d1d9e0f0b5dde331a23f4c552ff,refactor(examples): give TUI its own agent leaf
+bec5721f0cac545d8a7977000a6549fb9a6bb53c,fix(subagent): quote Windows Claude batch paths
+bec7ad544b443c33477f1df7d361b7e3078b5bb1,docs(rfc): record Zstandard JSONL framing
+bf2e9e474cfb55dd7c7c2106c8a7d07b0e4cb1f4,refactor(subagent): simplify Claude cleanup ownership
+bf5a8e42a37d2f2124991826182c560aef26058f,fix(subprocess): keep shared handle semantics provider-neutral
+bf618dabf96d9e2f3037fdc264a308100d7fd8c0,refactor(web): project usage and snapshot request context
+bf6cb38fbc1c63ee0124fbfbce0bf1193d9649b1,test(web): expand long-chat regression and performance coverage
+bf70345d81a35c1e821aa88a96b1dac7e3f38bb2,test(snapshot): widen keep-alive timing margin
+c01b64c3c100dff3e0c3003d5f24f39162955e4a,test(web): follow the Full access product label
+c0433d71ee057170d3629212a73530e19c88a289,test(workspace-context): record baseline identity
+c079b74c789c59e4dee4a74b2f4e9ad3c5e7a75c,docs: clarify package hierarchy example
+c09b20f96b08f5119712c0017858dde214e61236,fix(subagent): finalize Codex provider composition
+c0af59f80455a246ac830afe74fab5ff3e64eef3,docs(rfc): record parallel pre-push gates
+c0e7b9816999c64f4147a35fb143c0f7b369cbd8,test(subprocess): preserve optional spawn error keys
+c148090961bf8de680f6b210e5d0532b23c174b8,test(sdk): cover invalid generated session ids
+c14f488b0059311290d90bd916297629517c137f,fix(persistence): use normalized project directory names
+c16e1078f58a5576b3b95126fade6b1eee11bafd,docs(agent): clarify late steering timing
+c183fae6f9827e20e1a5e09ea38bc91b3f0b5a76,clarify timing projection schema cast
+c1d7b0df814c2ffe57e53b406e60f9ca69338d19,feat: return typed values from Code Mode
+c1f148ce7f4c1e5e96f50a0f13985ed971a1456c,fix(llm): preserve retry routes across turns
+c1fb97c63a3ac7c3a6d4066ccc7615d292c0dfa7,fix: surface config startup failures
+c20445199529f6f85b8fe56dd678e77aa8a07234,test: split hook transcript locator cases
+c23214be5602a4d66cb1d70baa4ddaa4dae965c8,refactor(core): fold initiator scope into agents
+c238992fbbba0b35f7bf2848712960a39e49ea0e,feat(core): make turn cancellation explicit
+c2543de85b1b94e42f32d2cb3dcc6a4883545f17,fix(web): fence stale history after disconnect
+c25e89cb4ce3990a2ae0bb146c45a85be51cc4f0,fix(invariants): reconcile TUI package rename
+c276b246b4f838d88e19958ec4956163df7f08e2,Address skill review findings
+c2979322c8b938b1c2e91920740688788867e6d7,fix: keep stdio targeting on runtime roots
+c2c238d36d36a0f03c5f83ecf7db87f9e67d344f,fix(skill): forward cancellation to local reads
+c2cf2cbbd846f477e6b3674b095a87e5ed0aa2c0,test(agent-loop): name regression contracts
+c2f2740a3edb48ad757ea930b5b487b173ba7488,Fix workspace instruction lifecycle edge cases
+c302bedc3a1d313add3a3127b46438fcab6ec1ce,test(subprocess): defer fake runner disconnect
+c3148d46d5e17e6b2071950d9ab3d1f1cc6367dd,refactor: narrow workflow worker surface
+c3a04de1cfbdc3649025d6ecbccad53af71826ef,test(subagent): model Claude spawn errors with failed handles
+c3a3b6ae41fdde392d75afb887cec022b724ae62,docs: clarify CI and hook gates
+c3cb4b350eeeeaf20419d209bb34937caf104c12,fix(docs): align source examples with headless profile
+c3e4aeca90b37cc515ae445152424a206e3e21ab,fix: missing notes
+c45d7927cf779ab113522794cddd536a3c04f271,docs: tighten prose audit after master retarget
+c485b6136d6411c898a3b2e1fad8c559daf1140d,fix(subagent): address codex review round 1
+c5050f018e467a2f73a8e02f1bb9d976e8004402,fix(web): keep ineligible message forks disabled
+c622a2881d23630f89238379a3a340dad314b88b,fix(session-title): deduplicate fallback creation
+c64eca451c5c2af0699eec4d5b11bc57867897cc,ci: ignore doc-typecheck temp dirs during lint
+c6cab2aadadb929854a497d48e94730f2453686c,fix(agent-team): isolate generated Remote browser entry
+c6cb9f4210d9303c197ac985fca7a4dc3b11cb88,fix: share scope carrier across built JSON-RPC
+c6e1d35a99993127ea9742a651b8653bf50bceb4,fix(core): close turn cancellation contract gaps
+c6f3870b5135cdc3f015a9767ea5904a0926a180,test: refresh terminology snapshots
+c6f8055388feda7b5298e5d03fb9b9f46fa778cf,docs(telemetry): update capture vocabulary
+c748f30055a9d1c5bcd02eddc785fa5dfd10cc3f,fix(workspace-context): skip blocked touches and disable in Code Mode
+c74f17a1433eede9ccd2159aa98537941ec3a715,docs: audit hook compatibility limits
+c778b5b0db18c0b647101de716d02a6f6a0d2f51,fix(subagent): address background-first review
+c7a833a893f59f63d37439d638e19822b42b45b7,fix: simplify skill config wiring
+c7acc8fc6cc2bdb27d9b6927b698d3362021a822,docs: finalize list_agents RFC contract
+c7bd2fdafe3a491dccf34fdc45bc51670e4716e3,fix(workflow): let completion win batched activity
+c7d228c737a6a0485a30a0e1da605641fd451566,test(subprocess): make Windows EOF proof deterministic
+c7dc4d3833dd14322433a6a085d09983608e6ae4,test(subprocess): restore Cordis API projection
+c831c99981f280ca098b1883b9200f6b12d056c5,keep subagent duration fix focused
+c836fcd416ddf0bc0c384fa24d6abbebdeb12c8d,feat(telemetry): add feedback-gated OTEL modes
+c8393a2798b00ab8eca772034a9144fd6e8f60ee,test(pwsh): cover background outcome status mapping
+c84ad45f26ad4105a27ce6c2e335a8ca5f386190,test(web): re-record composer stats goldens over merged master
+c8fbc111db8f731de4a509f684247dbc971106a4,fix(acp): drain continuable subagents before disposing top-level agents
+c9310d2a19c7f8129f8014fc927329c35a35906c,fix: address codex review round 3
+c9729b501d42957ab01e6e6b6ddcebb28f0edc2d,chore: regenerate the module graph for the merged dependency edges
+c97f985caa89137a89d4272abc58c902988cb718,test: stabilize post-merge integration fixtures
+c98a4d09493350b546f8449295c15f5938aecda2,refactor(tasks): simplify admission configuration
+c991a7cc79de48592cee5a25abf0788fb0eaacb9,docs: finish hierarchy rescan after rebase
+c9aa4142141b87a451c97ecdebd0435d60c8b80b,docs(acp): qualify temporary workspace isolation
+c9d3d5d557afb3f5376c50f13d44e66a451ca630,fix(jsonl): reject unusable roots at plugin load
+c9e14307b829816fac821bf76acbafcc2e1dfeb5,docs: simplify source-run instructions
+ca1d838afc39904c61f474e66d6032377e70040d,style(web): refine subagent navigation chrome
+ca4ebb67dce527111f58dc5793a3a0cdc42285d7,Fix CI demo smoke session assertion
+ca5e67490e0ae650823abc6e2994d651eb6b63c4,docs: recommend agent-assisted architecture exploration
+caaa1364ec1b65fd39ebbdf2b184dcba3fb38f6a,test(invariants): bound global companion topology
+caf7d48f88fb9768c7c8a0a4b7f3ed2bc581b3bd,fix(subagent): preserve startup cleanup failures
+cb064c4013175ccefe8020810ae988d5ed2298de,test(workflow): assert pending pointer suppression
+cb177090f9573b30947af31daa876d586bea844a,docs: refresh subagent config catalog
+cb229c896450b160e95cf6a5cfee5f31cb996e62,refactor(infra): keep Codex notices direct
+cb633fd357b0a19674f2de884657a242758d9f9c,fix(web): expose plan selector state accessibly
+cb80277e60c17ac5238dc7ee740ae315ee3521ff,fix: retain JSON-RPC subagent locality per run
+cb8968c80e0fd50fc60388e8049ae4d716d7c9ea,test(plan): cover the final-state tails and refresh the TUI golden
+cbaceb73a98a6ef41c06d72a186f1911fb64c151,fix(subagent): address codex review round 2
+cbfdf9d0922736151bab3a406dd1a951ef7bc551,fix: preserve a codepoint spanning the head|tail split (codex round 1)
+cc2e14f76e1c3919e4bb0be27c7785ca978c4ff4,fix: close recovery review gaps
+cc455c4f5a1ef19f5c56c117410758540365c752,docs(agent-notes): frame telemetry default-off as public beta transition
+cc47f76cea0f83f0381a1ea71f15101402c99f46,docs: propose simplification RFCs
+cc670c0762b7e5c70b22d5338eb50f2b6c49ff9d,ci: use full e2e worker fanout
+ccb0842cfcc23ca11a89c136761e355eb0c94741,fix(telemetry): fail closed outside full mode
+ccd810f84d74ce452d858b553eb0cbdb282d715c,fix: normalize empty stdio resume identity
+ccdc6b0ad32090c0e4f3d7e87c072eacb252733f,docs(code-mode): clarify post-policy rendering
+cd121c636a554a2a07b6469cef0e8700d723787e,fix(web): align composer context stack
+cd4f8b7f46b374dd6d4625034dfc64765d52a8c0,fix(subagent): preserve Claude Code failure facts
+cd6bd5c1882b455df0574f2d3dc260f3cdd67419,fix(llm): honor DeepSeek SSE keep-alives
+cde7ffe6e3c3be1c3f602efd92318c5d2711f4d5,fix(subagent): align named instance guidance and evidence
+cdeec6fc1d984adfdbd645d1a481dd0a2a9fdba8,Update built JSON-RPC probe path
+ce96104a774120c72097d8a89755ec1eb3cfb001,feat(compact): prune tool results before summarization (round 1)
+ceaef2c3d0b4fc8535d1e60bee4d04d976dbb67f,Clarify durable subagent catalog and list_agents behavior
+cebf781d69c774348aac90747e29fb5fa2796bb4,fix review findings: polish ask-user question
+ced6ab9d14d689dd13eb7b6c19ed41d82b0c6cd6,fix(web): fence plan mode projection races
+cede4fdb76cadb6c4adee3c5985ad01d43333372,test(subagent): use valid process outcomes
+cf16ee41bfdec31cf338a8954eb9e60514c6a6bf,test(subagent): narrow named instance evidence
+cf21e252fa8fd7e66c4b0c6a5acface4821d4712,fix: recognize provider-owned local subagents
+cf5e04f75c3f0cfeebef28454145051576b7b8af,docs: document idle watchdog activity pulses
+cf6f25d283baffe0a1fbf1cfa8a88f2d0d04e444,fix(subprocess): keep native runner private
+cf918fa05dc755f4166bba03de8a46866a846d4b,test(web): explain steering replay pace
+cfcecbf0c7fa1f8a33de1f280cced62cda43b2bb,fix(subagent): stabilize Codex permission diagnostics
+d00590c707fcf60427132fdcf18584b1a18f0c81,docs: replace nonexistent repository references
+d060c0dd4f5947e02b52114ea968307bb1b272e5,refactor: prune dead session surfaces
+d06a7e07e560acf36a16453cbcc0d0a25b6d52c5,feat(web): show command inputs in the human transcript
+d07e7dd317c14bacf8af244057f328fa4c5c86dd,docs: refresh module dependency graph
+d091946fc47fdb28a5b0a95d042c4d41d9e37a00,add project instruction file loading
+d0c2f0916dfd14f9299f25e9c9669e760c378a60,fix: address codex review round 1
+d0df50aa8eee0c98b7eacadcdbc797f7780de565,fix: retain LLM HTTP status metadata
+d0eb02c2065e527b73941b77cc3b6ecc3c24378a,docs(team): adopt package README standard
+d139948ed28fff7470abf21cfd8e2760a731fd9e,feat(persistence): compress JSONL logs with Zstandard
+d1629eed45062dd7b1de73e1f0dd51452733d6a8,feat(subagent): make product providers directly installable
+d1a767c66b34b7de8c97f56497d8b6594e87956f,test(infra): isolate Codex alias fixture
+d1e9dcae7a0e86c9322638ee055661881b77e5d3,refactor(subagent): redesign Codex stderr diagnostics
+d25a56b431d98a6df3ff242df6386975acce05d4,Restore CompactionResult diagnostics
+d261a9ca3bb24054f0ada2c4aafd90010fc41b20,sync rfc
+d28527b91fca94c3bf4dee19ebcf739afecc762a,fix(snapshot): preserve fresh cwd aliases
+d29c5e0c07aba60a62964ecb9b657a6cbf076b40,test: prove Oxlint project discovery
+d3323494ba30becd7aa82ec78d51cbf7bdb25064,fix(pty-local): resolve the owner workspace policy
+d33a819d15964fac1212f7b716f50106c8bb0ed1,fix: share scope carrier across built JSON-RPC
+d3aa337c26806d14e45faf1319bb3d2ceada6cd5,fix(landlock-run): close release integration gaps (review round 2)
+d3b59880616e1f054d961216001bb5800422acdc,docs(subagent): restore refusal contract comment
+d3efd9c35d6f35394d6f50b916b66f3272202a53,fix(conversation): restore merge-map lint scope
+d462348556edf0c754a81ac5c647366f36a15ece,fix(tasks): contain async completion listeners
+d495089ff7a020f6f933fc4cee713e65c2329cd6,review fix: align Codex policy evidence
+d4a93cbc1a3d9a41fcacc81d8d71d1d2e36c227d,fix(docs): index the full persistence outline
+d4b126862ea8778a5a8a4383d3d350bf2326fb58,fix(ci): preserve pnpm links in packed probes
+d4b52270717d8db207e0fac694a3964bf6d66916,fix(bash): validate managed env namespace
+d4c96deac3802164c430335309f936f3e5ab4f1d,refactor: share ACP callback cleanup
+d507894d43e5129db2681167207ad6de9b0a8058,fix(subagent): disable delayed expansion for Claude shims
+d50e6d4b8e593f0459af77cb11ea31ee356caabf,test(invariants): include goal session topology
+d5350cd42e9c3c352567accefff480d2453c590d,docs(review): distill human review principles
+d5583210d4af98164e221900d70da0023116ed45,tighten branchless subagent catalog layout
+d56cc8d42417c45c835c2f7576d16bab980eb428,fix(stdio): close startup failure gaps
+d57c2d19db1aa45656653e217ea6cff1840b9077,fix(web): require queries array for web search
+d59149a22183f329665157c49ff26fe11aef7ff8,review fix: restore idle after between-turn cancellation
+d59ab5596eb9278c5ce7f123b0a8f024d89f4757,docs(host): align queue mirror contract
+d626b2582de933b1ce3caed1fe539e60d35084fe,fix(tools): scope canonical provenance to dispatch
+d68ee2fb0eb78a5d305915d43f92301e4fb47e0a,test(web): cover TeX math rendering
+d6de6bb0cbaca9b904b2a393ec08a8fda0eb7f93,test(subagent): align ACP permission snapshot
+d6f478488d068f76a064f4130a1604d3e65f8410,test: allow deep worker checks under Windows coverage
+d7153768f553fd79c28a9ea3ca07d7460687c167,test(web): cover post-fork subagent continuation
+d71c96a44cd88a4d6cf43438843f2e1767e46b0d,ci: keep lint lane serial
+d778e83b2bfa4c3add8b9deada1dafbdc820ccf1,fix(subprocess): route fallback warning through logger
+d77f797d89cbcf0a3d73b78dc0f618edeefe5c7b,docs: replace model experience tables with sections
+d78090267994897063b4faa88a8b104d6b8e2ebc,refactor(subagent): share provider dispose window
+d792a89c8c174272b653b62e01158389942677e4,test web search title fallback
+d7d865060009019f1647a38607f05d664095913f,fix(gui): expand thinking rows on click
+d7de8a8d138b70d79e7066195ac11a512cbf4249,refactor: narrow compaction surface
+d7ee0e798a8b9d90d7b7addb1233885739727146,feat(subagent): mount Codex provider in shipped CLI
+d804c9c94d3e875802ff68acef5b72b4f10c20f4,fix(web): blank means the conversation has not started
+d82fd86c5c949f23e9c278eb3d072da81ef4281b,fix(subprocess): isolate native runner bootstrap
+d83aa8d11aa217fdbee379dce37aa5146228dd21,test: cover exact-id reload cancellation
+d897adac87d0adf2f38d580466c079f1329dcc64,fix(invariants): keep registration gate final-head clean
+d898d1faf0739e4e4f2edd5b6f7a156f54ed2d25,fix: avoid FIFO subagent lineage attribution
+d899333cde07c96ece6ab39c98913d7c06f60a0e,docs: split cordis primer from architecture map
+d8e50c2c0b1e384b210beceb0d80f44885d0833e,fix(review): address source-run feedback
+d90003b4e0c428cc493fb44f52cc3098a3d43379,docs(subagent): qualify ACP cleanup failure
+d91df8cbd5d31610b640dba0aa6fa211b480a2a7,Deliver subagent reports at next step
+d950150cdc1d58cd47afffc06db91636a5d4ae0d,fix(persistence): preserve subagent session origin
+d9557fa5e07240d52b6a2e0202f49938e56a8067,fix(session-title): serialize provider request writes
+d958d9fac616c2328031817543e89fb4e2ece70e,test(snapshot): fold unknown-tool check into fixture guard
+d97868b94333cb55fb88add556c82366d52ad839,test(subagent-acp): exempt Windows-inaccessible branches
+d9a370e185d52291ae57959fb2ff2e9a373a5ed2,test(web): refresh completed-turn-tail snapshots
+d9d9487e0e000b992f07edf8aad01cf78c960826,docs: align time-context prose standard
+d9eef0605150b4491ab881df3dd1350ce5761bb8,fix(fs): align symlinked parent traversal
+da042b8e1014619d3ed20e476c79f06025ce7785,test(subprocess): cover native settlement edges
+da541c10a7d38bac5391e34079d64744e9a4c6d2,docs: align runtime-context contracts
+da68c6b401e3151f92f9ac5349f2788b6a5f2b67,feat(web): teach the fixture the plan projection and /plan channel
+da70e4704856542ab7b2fab0f51dde07e35a1743,review fix: preserve idle waiter quiescence
+da72e61251ce2107c9f2b82e06526a31422ca76d,test(web): include runtime context in loading golden
+db1765c90e491302929af0c1fa27b96b11d8a7e5,fix(docs): index persistence events in page outline
+db3e97fc17a0f96fda7a2ecee94af86e7fad2102,test: create built probe child in parent scope
+db52686a96611f5c987ea9ecfe05b56444720c74,feat(subagent): support named Codex provider instances
+dbea39a125a787163b7725a1eaf01027abf2ade4,fix(subagent): sample Codex diagnostics after cleanup
+dc2ea3a1b4979dab114fdb27f5c5e72515183b65,fix(sqlite): lock before ownership validation
+dc5045dc0ae32b0ec15d945b9978109efd75e5b7,docs: keep PR label guidance general
+dca2cc257db87d7c1e44bb36cebbd5aa76728a29,fix: harden skill discovery
+dca7a436e4039250e685da15e2bebd545ea86b29,docs: update product name
+dd13c05192167bd18c7c6a8bb9cf10e411c9df71,fix(i18n): resolve merge and Markdown edge cases
+dd8d446286c884620aedac9af2a498a5e60d1aad,docs: apply hierarchy across the corpus
+dd9f8947357e23556a83b10593a33cc5dd3e631f,test(agent-loop): wire execution context into session-id harness
+ddab8b84c00af41c80524731ad8f351d914e309c,test(goal-session): cover unsettled attempt yield
+ddda8be7367a16c3a232d5ddbd1b04c7307ad54c,docs: record scoped bash translation pairs
+de6e572e51ffca97d52331595ae479fe0cb907e5,fix(subagent): make session query peer optional
+de72f972b71c58629fff7844986bbdedd971e860,Exercise normalized goal-round rate limits
+dec9732d1f15526c0fbc8e1e1e473846213070f5,test(history): add packed transport benchmark
+deeb3c9e6d42ef6037b8210820af1efebf511b44,refactor(acp): share turn-end prompt settlement
+deed5784d97364c978c584d82d815b3358cb9f7c,docs(mode): align review surface contracts
+df00bb9c448e85ceb93c07e2aea266b5d0acf5ab,test(subprocess): make stream EOF checks causal
+df11a8af920b99885e3654fcfafb6562e8c1e73e,fix(i18n): scope switcher and merge validation
+df1643d5e53142a874191602758b9ecbed059624,fix(goal): remove unreachable terminal branch
+df7be480e1c67d6ae65cdeecda34660da46fa5a9,test(snapshot): cover invalid delayed prompt ordering
+df8e3d7c373bad8afc2dcaaf62c674db657f60fd,fix(subprocess): settle pre-start Windows runner failures
+df9608c43dc6e34e8c31aaccc4a64838ebe4c0dc,test: make lint profile fingerprint honest
+df9617aaff2e45bea858fc75c037e77486945faa,feat(bash): generalize managed shell environment
+dfb36080d8a2500794f8693bfcbf8b96db34d545,fix(subagent): close ACP diagnostic review gaps
+dfcc93da766e6d31cc16d061492fe4403420e85f,test: give hook locator checks loaded-runner headroom
+dff9462bea24f72755da4ebdb1a1efbf9da4bf39,fix(subagent): use Job wording in background ack
+dffe955ed203b85c324fbf3ad77d1996b01e27b0,feat(web): surface and configure composer steering
+e088cfa59d60479078480674678da3a5efb83ba8,refactor(sandbox-policy): remove capability family registries
+e0b5cadd2a97c56404ce4f23ef3070fb819ce9ee,chore(core): align merged initiator changes
+e0f20088d85b40491891dd7a632312a16884f040,feat: bash-backed glob/grep discovery tools (dsh-tool-fs-search)
+e12d66e9ddd02062bf7bf86ba78a6c62135a171f,chore: update gitignore
+e134e7cc38131b0ad66cd691faf877aeeae37580,test(snapshot): refresh unified tool schema fixtures
+e141ffa27f9c10e8a5157b81805fdd4236991904,docs: tighten LLM recovery RFC scope
+e154396612adb59aec8e7c523cd8f133d7fa09d3,docs: refine architecture extension map
+e1633fbc3f2d332d59b1377efd395438d93f7104,fix(tools): preserve canonical output boundaries
+e18564de03869987532c7ccab13500c2090b2758,chore(sandbox): align inherited wait lint
+e19043881a115a2bb65b9339d2adaec5086fe991,docs(agent-core): restore composed capability description
+e1a4a2963d2105056a5e85da2a7c47232f5095f6,docs(core): document initiator API scenarios
+e1b85da182fa72a99f00187465955a798f54f5fb,docs: trim daily command wording
+e1c07cbabfba7bfe046edbbfda16748bd6597d3d,fix(workflow): include Ralph in clean builds
+e1f7eeeb955e00243a971cdd5fdc43546d44df17,fix(subagent): confirm steering request admission
+e2049910d5326d69d93323540875b54c39e58d67,refactor(client): keep pending interaction change UI-scoped
+e20dea16292b92545e5941993f6c74efd855fc4b,fix(schema): align projected and enforced declarations
+e2315e3b149ff8d06e32675796c0a2a6bbe4a0fb,review fix: tighten Codex failure ownership
+e23a6902e77a4610d62f43de52d0753f40e7f05e,fix project instruction review findings
+e24ed27f5f14bfbc03a9058bb2f6ad39a4ee5be1,test: stabilize markdown web snapshots
+e2a5a160d3763ee7faaa9b4235ae7284144f05ee,fix: settle ACP update waiters on shutdown
+e2b73d278ceda2b6dedb590002d5deca390ef042,Regenerate module graph
+e30f5e633d966cc0950645ccc8af687e44774544,add demo smoke to pre-push skill
+e3112be7626f371679f47995e95d8d654bcbb113,feat(tools): canonicalize terminal outputs
+e35a419ba82768c6dd64dd3d2af5538721136941,fix(code-mode): keep deep host boundaries iterative
+e37cb233362266acda5c6db3bbd6f2940b887abf,feat(token-meter): project durable token usage
+e41dbe730335b6208db9a56594b8527f37615cf8,docs: list the user-interaction packages in the ui/ group summaries
+e481288a3a5fdf05f4bcc491dc120820975710d3,refactor: derive snapshot session fixtures from disk
+e48a344f6a1cec2c7f548acfe2aa84d156d4d51e,docs: keep gate cadence guidance agent-only
+e4a5c6fb9d903d8116685de349c7187f9ee264b4,docs(workflow): state current pointer ownership
+e53dcd56c7c59b2dbb646878b97df3f981d7c53f,test(web): keep scroll fixture markers private
+e54a4ad98699b18f31f6c1b58178a928b8d6dfe0,fix(sqlite): match reserved object names literally
+e56c6234d2f4cdaa517f875fbddbc3b7c36181d3,chore: exclude archived Agent Notes from rg
+e5721393969d581e3d7596544e99f94f4ee11798,docs: shorten public API fence marker
+e59af75554ed50e11eaf08cbf6eeb38350d33ab7,fix(cli): keep source launch output clean
+e5dbccce8c2122fd8ec24b1cb809847a40e557fb,fix(subprocess): move SEA bootstrap to runtime packaging
+e61054c4d1778843022478a8e84cd701079ab4e6,test(sandbox-policy): refresh durable context snapshots
+e63f22f2f1c63d2118c7f6f6eb59dd1d4e70be77,temp commit
+e6407477a719a7369cc469bd548180bf9d882f5f,fix(agent-loop): clear compacted runtime context
+e673524976bb2f5b0483be26ed8f686bcf69b38c,refactor: centralize Oxlint worker bounds
+e68cef1be1dff8cde8a04556969af400ecb964fa,test(tui): replay recorded sessions through real tools
+e6bc1f2e1d90dc2a36ab25a5995ebde82a75de6c,fix(subprocess): close managed launch gaps
+e6ce6abd7d4b3747cf3f7610c836fc3435dc20bf,refactor(llm): simplify live request telemetry (round 2)
+e6d2a976451b03170e639fc64cf1751e198c64a6,test: refresh translation prompt snapshot
+e6eb44ed2a2171a4ee5b6a5f1944a2ccec0ea80a,feat(telemetry): require explicit opt-in
+e70405847c39331e72a9ebde90a55a248d10b9cd,fix(subprocess): complete runner resource release
+e73cdd6b7df3b80716a7d10b111f000a366cd037,fix(web): single-flight goal clear
+e784e4dce5f5178b5e22a3d3376599144d8bea1b,fix: await ACP client callbacks during shutdown
+e7e382f9d1b499313c8d62d25e068b252798c90b,docs: require awaited subagent owner cleanup
+e7f62ab932aaa2c3694070399122f353f8c4bb5b,docs(tools): describe the output budget precisely
+e80fc3e61b64bd06e22f38a4d35691fa50dc6489,fix(invariants): join package checks at startup
+e82e5ffd7a1717d2b9e1f565017a814251de6eb2,fix(subprocess): normalize PTY scope launcher environment
+e846a115f29fd4fdfe7d6fc7ac303688a093a715,test(acp-snapshot): cover pre-spawn launch failure
+e8b95c875403ef7e8ddf86efe8ee93279e6db51e,feat(tools): require cancellation signal on every invocation
+e8eddc7ef8cb82e8fb615be48e68ff72386d0e6f,Rename RFCs to Agent Notes
+e8f1bd41f5bd96c529c59ed524cfdeef7d3d1ce3,fix: buffer stdio until exact session starts
+e90b3bc5a2a217c55e91989b9500a44e1e872f64,fix(web): make plan transitions admission-safe
+e91ef39f5a90bb0de62b2b09cff70cbeefc62418,fix: preserve lint migration contracts
+e92b34bd7e42cc84ddcbe9233c30e5a58ba53e5a,fix(invariants): enforce runtime relationships
+e92cfc770a10dcb3bb22a9aa2f67a1b3ae6770d5,docs: unify conjunction in FULL telemetry disclosure
+e94305d99ebcee7c93208b3e347b4ee791ada0b2,fix: address codex review round 1
+e958c222a292807aafafb7815eff021f9ca49cad,docs(agent-note): normalize goal command heading
+e98cd522eef808f62f67dd21f656c523b654af69,fix TUI diff context line accounting
+e9940d35cf5bd33b1c434a5c3f0b4c6695df2511,fix(goal): preserve structured domain error codes
+e9a54f0e719e0806c2498764667975c31d388386,fix(workspace-context): require explicit byte budgets
+e9aef281a1f40fa6ab8fc7f05be0cea2ade8774d,Document the Windows TUI contract
+e9d1e1cdda70eedb49a12f9adce2afb18caa4c00,docs: update ACP ownership routing
+e9e450a90225ac38c9496f0989fa9de78de9c61c,fix(code-runtime): reject forged container prototypes
+ea282f571012e74d29e02375f49affc0803d875b,test(history): measure packed heap usage
+ea3f138ae971ba2ca5d64127d4ab3176dbf8d6ea,docs: address simplification RFC review
+ea7de60840107e903f4d2be2282efd6d50bea75c,fix(subprocess): keep Windows Job ownership in parent
+eadd5df82b5c8ca79e41427a8c50434a0eb19064,fix(team): preserve current Client architecture after rebase
+eaf5b879c6e45d555b695307c7629d84e54b83fa,fix(docs): remove stale TUI source references
+eaf9c09d96352657918dab7c9a4e95147bff0535,test(subagent): normalize Windows Claude path casing
+eb17028720b98ddd4212a2c7b57600903200e0ff,fix(subprocess): preserve post-start runner failures
+eb60d74155e8e293e06b97d0442a91855797f746,fix(subprocess): harden native range settlement
+eb628f979bc75af173e8ee856c2c5a12375b4246,test(web): align long-chat contracts with master
+ebe932e24c02b2afefd416a9ddee580cc6d8e7cd,fix(subprocess): clean managed processes on host exit
+ec236b273edaffafa63219609ac66b194655f2f3,fix(telemetry): freeze launcher consent before running a command
+ec297c0ca0b419b25815423aadc251715eb22586,feat(web): add fuzzy slash command discovery
+ec3da3809a9d222557c95a29a9806c733bd5f1b8,refactor(subagent): align Claude teardown with live handles
+ec4e130e31b8df5760f48fa95a2f169881fe32ef,fix(jsonl): recover truncated zstd frames on node 26
+ecb8aa5b8e319bd0f661a045d6625ba8fb79fcd2,Add a gated Known Limitations and Deferred Work section to every package README
+ed25d4e15bb28cca5c8905befaabd85518b3861e,docs(subprocess): correct probe and terminal failure contracts
+ed3654da00fd14597b79e8e97bf61f09c5981ced,docs: reconcile hidden internals with prose standard
+ed49f1d985205d212aea2b67b160d638c2efda4b,fix(compact): use English checkpoints
+edb999fd0fcb0263c306f1a150db07d667b1416c,test(gui): cover thinking row disclosure
+ee1a44793acc670ef99797a7ef2c16f60d5cf2bf,fix(core): make initiator teardown reentrant-safe
+ee1af10c52386d700fca3e9322802f48c34b66cf,docs(acp): note per-model compaction config
+ee50ee088d09915c68d4377cc8d20908d21eea4f,test(subagent): stabilize DSH SDK background snapshot
+ee6b9d081a254279a21452e3f0aa76b3ea907a63,fix(llm): scope adapter failures to model calls
+ee9465e4b32abf81550ffb7d95af74c7c7d019d6,build before source dsh launch
+eea0a99985741a9e8a89466c4955fd2a4c07dc97,feat: expose agent session log location
+eed43abe663dfd5ca0df9bdf8b7d2ed0ada8480f,docs: address final model experience review
+ef0815db7f33f9da6dddc75a249ad91c1bde5a8f,chore(subprocess): document disconnect recheck
+ef12895cf1c82cf2e6d233924bfc9df03020df57,fix(web): reset live metrics between connections
+ef23b88ad4bcbd29b85f33836da583ea0b3c0445,fix(cli): bound telemetry shutdown on signals
+ef2de530ffd597a1be3efc42ef4b21695effa74b,fix(code-runtime): flatten worker JSON transport
+ef35c7f3b227b0640097e8d8c6ffd37bd5c3e323,fix(feedback): include session id in acknowledgement
+efc47b6a760539d9ededccc51b00ff4cffe20a14,fix(subagent): require durability participant
+efc725b7e4b44a7fa2198db8fbfea90b896ada61,fix(llm): isolate retry policy histories
+efd2999aec2d9b963a074c9bcf1b08a561eee347,test(subagent): correlate Claude process failure facts
+eff7b758b1a0781acf66d176c108ac0e49f42544,fix(workspace-context): restore baseline after compaction
+f02005c832b450d65d372c935c612c7d83eec54d,fix: enforce unified agent startup invariants
+f07f8f15edbffa13731c864ec9e2b3cb1a786213,docs: define hierarchy and document forms
+f0a875e8e9dfa68f2fcf0eb151450e51d9d30684,docs(subagent): clarify preset tool row references
+f0ab04273d536ccb3d26de1177a61db77b1239ea,fix(web): deduplicate subagent navigation
+f0b2d7c762f5975169dfcf93fe39d27a76c02505,refactor(subagent): avoid duplicate process diagnostics
+f0f1966c97469129548372d9d59f2e989fa60e89,feat(plan): register the plan session-projection unit
+f0fc20ca42ec113c88e893c2092abddc81c76b55,docs: align prose with runtime contracts
+f1373cd7abc479ae89a219e6a3fad6023f66aa64,refactor: drop unused tool schema defaults
+f14121a4c22af96eb9b15dc8a456e9a389ef6e47,refactor(subagent): narrow continuation interface
+f1fd304dffb4f4495713d1e7bf329b274d5f9200,fix(sandbox): memoize inherited settlement promise
+f21ed1bfa05449045b6d1b425def6e1c44c90d5e,refactor(core): use initiator in loop internals
+f248dc37732062cdb4c2f23b9b2c8f0c403a9a74,docs: remove line numbers from subsystem catalog links
+f2524e9c4556eb4923cd8a71ba110ff20983f36c,docs: sync dev guide with stacked gates
+f2ca913756b190f1894a91d1a1b7ea97f1fd0cfe,perf(history): carry packed assistant chunks
+f2d86b232e721baff58424e7fd2a01bd817e7537,fix(code-runtime): accept deeply nested JSON
+f32a51b2847eb0703b770c80c462d745afde5363,fix(tasks): bound per-session background work
+f37bb35a97c4b3bca565e74306729b388aabd332,perf(conversation): fold packed assistant history
+f38d37be112ff9cf177eeb911b70965d61434cfd,test: refresh translation prompt snapshot
+f3b42fd738580c737fe75f1001db5d1b6bd0d18e,test(code-runtime): type mutated array predicate
+f453ba77a209a9e071df75dfb427a1836c9ed6da,refactor: split skill providers
+f4a30da10df2e6b227d6213926982bb108cf65e7,chore: align one-shot demo workspace metadata
+f4a65a34e63c7debf01957baea8973e57a591ddf,cleanup(subagent): hide manager-wide continuation drain
+f4acb1cf05719859ac6b4f54e9354efdf0adb960,"fix: report omitted bytes against retained text, not budget (codex round 2)"
+f4c9e53a2a466abff7eeb463dfe643538d9c2d24,docs(persistence): state backend ownership precisely
+f5eb06915ae45b8e839d5ac3bc5b8f6cd39b3bec,refactor(i18n): remove directory index inference
+f626e569a4d5db00d263d5da7ab4322f9573c7da,docs: document skill system design
+f6350ac553dc9f34b7c397eb62991e2566f1ca6b,Keep root instructions within budget
+f66015455e1adab4d81c3175cf9347c5516ccd23,test(session): cover the request/context fold and its turn enclosure
+f66c1ddb0bc762920efb0f35535a5a13cbdc8aa3,docs: cover ACP permission presets in model experience
+f66cde41d181cf2b6fcd80ee7426854889e8e655,docs(core): clarify initiator restoration timing
+f6a56d4882888daed62ec3f6ccb95e7f51ead88c,test(subprocess): align native platform fixtures
+f6fb0740366f30fac5b6a4fe795ef8de8240f31a,refactor(i18n): remove obsolete link lookup
+f71f96d29229fc43c23ac170dccbf115e050ddeb,feat(session-title): integrate queries ACP and TUI
+f72ce2299ac08c153b8b04b83e5e605463b917d5,fix(subprocess): keep native Job ownership in runner
+f741b79e54e2234d9e896f4035387a547f2f39ff,ci: retrigger checks (push event for cc7703449 was dropped)
+f7447b181dd0c4b010a421590e49a9abd09af094,docs: remove missions directory
+f767ad1904183f730322268909da470e75b431a5,Declare agent-core schemastery runtime dependency
+f76cce2fc21f7e8ef2d451b20b1db66feb76c177,test(subagent): cover Claude limit subtypes
+f7af6a87dcf06397bb66b91fd851572e31385815,docs(acp): describe terminal capability lifetime
+f7ee0bf0fd13b8c28c138d0bd8e95e8162100b89,fix: allow ignored-only staged lint
+f817c62baaca2dacc018a0df7928d15534887583,test(web): refresh search stats golden after master merge
+f858c647a6767bafa198b1faba6dcfe3ebc911c5,refactor(tasks): drive wait() timing through dsh-timeout
+f85b831bd2cd0d37ca814473abc17ccfb2a6c287,refactor: hide subagent implementation helpers
+f893e2281dd3187328427f6463dfeb8924e1fa1c,feat(agent): add addressable queue operations
+f899b857a613ba7e789f51cd62e2ee5db3c0370f,review fix: explain one-send turns plainly
+f8cc1af99b9b8a5681f93e8939bf8e93f98a4011,test(tasks): align tool fixtures with unified identity
+f8ceeed610b82fddf3c0d0a10a996a2bef80b2ec,test(workspace-context): narrow instruction events
+f8f270c13ebe51a423fbfa4fc3272ae69781c2f6,Make project instruction candidates configurable
+f913c813d2e975e84cce519060ddddc22887b5cd,fix(subprocess): harden managed-range cleanup
+f95a411b0ac7d5f347c602308df1123dc1aecd5f,fix: record self-limiting hook snapshot
+f96acad43829e6e7461418fa738265cdd8398396,fix(subagent): preserve Codex fatal and grace semantics
+f9a264c76e7173548848889565b8fa5376263e11,test(sandbox): keep aggregate failure assertion typed
+f9adc5a6a683bb1503656d9bbd52da6f3499da97,test(subagent): assert inherited runtime context
+f9db1a6a08b4af895f33b8d01957801aa727714e,refactor: hide filesystem implementation helpers
+fa2ce12162f2bf8691ead92fd5c85212a9a041da,review fix: avoid bigint cache-hit formatting
+fa8b83816e886d6d1d5f9bd29704e7a8ec03a6c5,fix(subprocess): defer native handshake allocation
+fa9438bf161a4960145d7a9e28c8ea76382162b9,docs: update rewriteRelativeImportExtensions to current rfc
+faae2d389b2c2f957fa6e61cc71b1b0e5885ef51,test(fs-search): make loader guard rg-independent
+fac6c35e9a54ef20a2f4d185ca6cbb43a2a0188b,Trim redundant source comments
+fb5292cee5bc462694fe2ffb37895e38785fcbc3,fix(tools): classify body snapshot failures
+fb74156cf8be8ab6db6258a3d8e0178662a5c66d,fix(code-mode): generalize failures and bound diagnostics
+fb7fa980b8411e285c5e396a42868b2f72d68b92,test(examples): include task controls in CLI composition
+fb8f20de6e74738bed9c6433ccdde887f9265797,fix review findings: reject queued ask aborts
+fbefc1d65b3cc20936bb4fd0a079e5a41a8315d7,fix(goal): stop terminal goal tool turns
+fc19a0a3fa8beecd4a22348583574cea302d8bef,fix(subprocess): clarify provider failures and scope polling
+fc2adf8c6b8e06a2562c8c7b4aa368e70280ea3c,fix(ci): isolate source launcher build smoke
+fc59b63c8c4ab4fe797896cc5b4783d774034f7d,docs: propose durable subagent catalog
+fc6b7ccf1e9842616ddf7429615c960e685cd2aa,docs: refresh graph atlas after master merge
+fc6eb4e7a3598c1380f0dd7200f8a043fc9bb2a6,fix(web): retain live capacity before session creation
+fc90114ad9567c876314f1877cf2cf4105bef974,fix(web): add English onboarding copy
+fc9740394642a9df393982a78d35375adce90cde,fix(code-runtime): contain deep output accounting
+fcd355bf45cb13cd500dd56aec6918ee627f7060,fix(examples): remove legacy retry rejection
+fcdc318ddaf1e8e9fbc62ee4db1cb4c6b2620461,docs: restore budget headroom
+fd33a039a2d4c58afc50f870bf7e3e37b9d9c2e9,docs: fit PR label rule within budget
+fd5365e374115b3aa0ec51e6f14414febe9bf607,chore(packages): remove empty experimental group
+fd53e479b48b08981a0a1836046a585f6958d4ff,fix(profile): isolate bundle module fallbacks
+fd8b238d94dae80151b6c78ca19928d7011bfce1,fix(web): contain long plan reviews
+fd8d93da12903b8c9d8455cab0972ff272f36bc0,docs: prohibit creating PR labels
+fdccc58cef4be50c46176026b4230e49852b522b,fix(web): narrow request lifecycle fences
+fdd65269f9545c993267f5e427c014fda38dac5d,docs: synthesize architecture rewrite
+fded16f68881407c261b87480a4cdb7500c73a1a,refactor(subagent): use parent abort as startup authority
+fdf83f2c3ebb5fc14689491e24a8737101e5ac36,document projection-cut duration bound
+fe5d0001ab3d351e1202aa602a38bffd60b01618,test: pin Oxlint compatibility rules
+fe851904ebd128fb207082f9bee86d8dc1ac51b2,docs: harden package README gates
+fe8a961348585c5cd45bf8bad039ba35f49541ff,feat(subagent): configure Codex provider models
+fea31a012ddc171498ff775d4a867c71e2b21b58,fix(subagent): persist descriptor before admission
+fef4313685fcd384b7c5eed7a4628b087e95dd14,test(spill-policy): guard loader export shape
+ff064917a25fe72af8ba109847fa822220cc4330,docs: refresh LLM service catalog
+ff21f91a394fc5c4256e548da91367d2e94dbb88,fix(sandbox): resolve workspace roots per session
+ff413cfe5e98341f05c7c2df0eadcb5cf6405d99,fix(subprocess): align async pid evidence
+ff570ea04c7580385db02ed68c31dd26da9235bf,test(agent): refresh inbox action snapshot
+ff6a49660fba5514f447066f687746b231e669df,fix(subprocess): tighten native containment settlement
+ff7a5a042c5ee0f77550954fe1717b0e06a396cd,docs(win32-process): point ABI verification to its owner
+ffa119e86e1ff17ea0e93a04ed59941c17d58feb,docs(subagent): clarify Claude tool opt-in
+ffbdabf39c94511b13bb6d89451ce0643bfa1f2e,docs(code-runtime): specify mutation-safe boundaries
+fff7dfac8eacc858fd72f6b41becf40bc726216f,test(workflow): follow locale settings prerequisites
+fffd8474ad988088824a1da07bdc2c3bba352cc6,docs(agent-note): record implemented goal execution stack

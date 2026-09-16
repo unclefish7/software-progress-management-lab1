@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="300" viewBox="0 0 1060 300">
+<rect width="1060" height="300" fill="white"/>
+<style>text{font-family:sans-serif;fill:#172033;font-size:14px}</style>
+<text x="25" y="30" style="font-size:21px">Q2: visible process traces, NOT AI-generated code share</text>
+<text x="25" y="55">Snapshot 0d1f50007f9b | denominator: 10,080 non-merge commits</text>
+<text x="25" y="123">Explicit AI review references</text>
+<rect x="330" y="105" width="600" height="28" fill="#eef2f7"/>
+<rect x="330" y="105" width="7.738095238095237" height="28" fill="#2563eb"/>
+<text x="340" y="153">130 / 10,080 = 1.29%</text>
+<text x="25" y="183">Codex-named PR branch association</text>
+<rect x="330" y="165" width="600" height="28" fill="#eef2f7"/>
+<rect x="330" y="165" width="94.46428571428571" height="28" fill="#2563eb"/>
+<text x="340" y="213">1,587 / 10,080 = 15.74%</text>
+<text x="330" y="91">0%</text>
+<text x="900" y="91">100%</text>
+<text x="25" y="255">Measures may overlap. The remainder is unclassified, not confirmed human coding.</text>
+<text x="25" y="278">Review evidence and branch naming cannot identify the author of each line.</text>
+</svg>

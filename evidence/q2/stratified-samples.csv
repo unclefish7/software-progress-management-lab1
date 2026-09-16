@@ -1,0 +1,61 @@
+hash,month,type,stratum_population,stratum_sample,subject,explicit_review,codex_branch_association,diff_lines,excerpt_lines
+0731ed374b942e471e541694393efa5e12244a7e,2026-06,feat,45,5,feat(session): metadata seam + JSON-serializability invariant,False,False,523,90
+36a30180b8efb4cf66d226dc7b3f0c827969d065,2026-06,feat,45,5,feat(tools): validate model-generated tool args at the boundary (RFC 005 pt 1),False,False,491,90
+aa9afcefc7dc85f7dc53b7f79430952ab94a9527,2026-06,feat,45,5,feat(compact-basic): baseline compaction backend (squashed from compact-basic),False,False,2905,90
+f3906af225c291e1164cc2a9583f2d9fb15c06dd,2026-06,feat,45,5,feat(acp): honor per-session cwd — run each ACP session in its own workspace,False,False,414,90
+f4180bd764307f418c66d810e18e7e8c767fc6e5,2026-06,feat,45,5,feat(compact): add optional cancellation signal to the compact seam methods,False,False,111,90
+22e9152d8b97cdd050763a0d1632f028d0ba258e,2026-06,fix,81,5,fix(agent-loop): always close a started turn and any open step on error (P1-5),False,False,529,90
+5299e43bed538d28e856720dadedb8af1711870a,2026-06,fix,81,5,fix(session): snapshot seed + appended data at the boundary (review #31),False,False,127,90
+89e63f143612fe4ee9bfa5efa5b9d32027af5b0a,2026-06,fix,81,5,fix(invariants): address Codex review of dev invariants (PR 2),True,False,335,90
+b920239389866bf80c9d74528c92d96ebc8803cc,2026-06,fix,81,5,fix(acp): align prompt and workspace contracts,False,True,475,90
+ed94daed9ecc379631eb40ba1ef42295544a3460,2026-06,fix,81,5,fix: address build config review findings,False,False,590,90
+53d1ef4a742681c7dc7e3d070f2f445139aa7e35,2026-06,other,261,5,Add runnable echo-agent example,False,False,287,90
+759ef0469277903e0c8d261d6435e1198bdca2b2,2026-06,other,261,5,ci(e2e): source key from DEEPSEEK_API_KEY_EXTERNAL secret,False,False,35,35
+7a5886da2d02c9be768adb8a724e881adb5999b9,2026-06,other,261,5,docs(rfc): record follow-up cleanup seams,False,True,191,90
+d9c9c5d403f2f4c4d3657e83e659291f3e82df0d,2026-06,other,261,5,"docs(rfc): sharpen agent-loop, timer, and leaf-config accuracy",False,False,25,25
+fa7d1df6f2c6dbbae32ecbaf0fb8275c407b8828,2026-06,other,261,5,build: run doc-sync gates in the local pre-push hook too,False,False,57,57
+5611f772b163169c71b29ba304e51547322e8cc8,2026-07,feat,436,5,feat(scripts): generate the RFC index tables from the tree,False,False,673,90
+876065a97d66916b2f336edabd7e9c1b77c9b3bd,2026-07,feat,436,5,feat(todo): allow several in_progress todos at once,False,False,651,90
+8a79679489e04b0e52b8b970af0db7b14b4b6b75,2026-07,feat,436,5,feat(tools): live dispatch lifecycle + native-contract parallel sub-calls in Code Mode,False,False,4022,90
+a39bd9035ecc90a10375f4bc5e89a6f03c3c48b4,2026-07,feat,436,5,feat(web): replace the plan select with a status chip and placeholder swap,False,True,783,90
+c0426142c5fc0a95e67e8ec7adadd8fbeb00e3db,2026-07,feat,436,5,feat(llm-pi-ai): route-keyed profiles with per-request resolution and in-place route swaps,False,False,1049,90
+35acd34fd96c5ebbfdd2bd0a263e9700dad62035,2026-07,fix,1283,5,fix(tools): enforce a disabled run_in_background at execution time (review findings),False,True,107,90
+a52cac00b1a0dbb6969da5bd634e22c72cf02c1b,2026-07,fix,1283,5,fix(project-instructions): load files through fs service,False,True,728,90
+a8c28be1ba345bda3e8a90847ca992edcda0668e,2026-07,fix,1283,5,fix(web): bound search provider work (round 6),False,True,267,90
+abe80cec68cf2ca989f710dec4ecc5c691471602,2026-07,fix,1283,5,fix(loop): record a durable prompt/blocked for every vetoed prompt,False,False,283,90
+d9eef0605150b4491ab881df3dd1350ce5761bb8,2026-07,fix,1283,5,fix(fs): align symlinked parent traversal,False,True,184,90
+15c7a27f39868eed13e483d8216f7143de8a6bc6,2026-07,other,2306,5,Fix project instructions review findings,False,True,100,90
+54bfe41a46b3d26b4db2ac3cea94075c2f953c05,2026-07,other,2306,5,docs(cookbook): generalize runnable wiring inventory,False,False,33,33
+8d4bf5ae412b0594f194b6a3a7f43d4ef5bcd714,2026-07,other,2306,5,chore(docs): refresh generated graph records,False,False,28,28
+db3e97fc17a0f96fda7a2ecee94af86e7fad2102,2026-07,other,2306,5,test: create built probe child in parent scope,False,True,11,11
+deed5784d97364c978c584d82d815b3358cb9f7c,2026-07,other,2306,5,docs(mode): align review surface contracts,False,True,32,32
+3e79f7106e6017142a21037028f15781a39fce10,2026-08,feat,380,5,feat(client-runtime): add target-owned conversation snapshots,False,False,890,90
+975b57b54aec648baf77219fea8d03c1b231478e,2026-08,feat,380,5,feat(web): follow live reasoning tail while collapsed,False,False,281,90
+a943e67798d7cd8c7d72c788e9184ab75174d605,2026-08,feat,380,5,feat(release): bump and commit a release family in one command,False,False,216,90
+e4256a1684b23de0eaa9190e6841eab1e9690718,2026-08,feat,380,5,feat(web): steer the whole queue with an empty-draft Cmd/Ctrl+Enter,False,False,499,90
+f32aa54aeb0b526c6c04dd1212cce33e8751afa5,2026-08,feat,380,5,feat(cli)!: make dsh run the headless entrypoint,False,False,1082,90
+08ec2622b0e79bd0c82f29ad82cdbffc4f966bfe,2026-08,fix,1632,5,fix(i18n): share Markdown link parsing,False,True,553,90
+0a95a9eed85e2a1b98549a21614810c536eab681,2026-08,fix,1632,5,fix(session): refuse foreign format versions before parsing current structure,False,False,356,90
+118f244420de3bc43ae02a440e5f74e3395b858d,2026-08,fix,1632,5,fix(attachment-local): exclude metadata carriers and animation from passthrough; validate the canonical budget up front,False,False,457,90
+19be29cd0bc21d8e58a41c9d150c173684078549,2026-08,fix,1632,5,fix(workspace-context): guard baseline restoration,False,True,783,90
+73792a81b14298a9c0567b674b5f3b41bb2b3a01,2026-08,fix,1632,5,fix(ui-conversation): restore the folder glyph on composer folder references,False,False,55,55
+18527071c442702d809f98e808313c79bb8d0a2a,2026-08,other,2194,5,docs: refresh module graph,False,True,45,45
+80019566f217c0fed069d419d283d8059236a1a2,2026-08,other,2194,5,chore(doc-gates): keep cordisModuleBodies module-local — knip flags the unused export,False,False,14,14
+9e91e206d4ad1662a843956cf73892aa4f3bf94a,2026-08,other,2194,5,refactor(subagent-codex): centralize cancellation settlement,False,True,149,90
+c8815e50adaaca9723c9125fa3afd8a5a4888317,2026-08,other,2194,5,test(llm-deepseek): gate preview vision smoke,False,False,142,90
+e53dcd56c7c59b2dbb646878b97df3f981d7c53f,2026-08,other,2194,5,test(web): keep scroll fixture markers private,False,True,11,11
+3997f36999a186e9a24944f162f3fe0882ccd8e4,2026-09,feat,145,5,feat(client): replace the stats strip with two icon pills and click-open stat dialogs,False,False,3460,90
+3a85ac6d8161b845edfdbc8ce51477da6fe2dcca,2026-09,feat,145,5,feat(resources): add Client resource registry and retained subscriptions,False,False,1146,90
+8870a13aa941fee98455fc4e82877b0bc0ca69a7,2026-09,feat,145,5,feat(sidebar): preview image files,False,False,752,90
+d09b4accd31ccd1d19b62ae9c5881d41de0270e2,2026-09,feat,145,5,feat: 打包 + 错误处理优化,False,False,2361,90
+f1f6ca1c77314fecf1ddf8241d524a89bda09267,2026-09,feat,145,5,feat(visualizer): add dormant Host capability,False,False,4099,90
+0fb509f54497623f16f3dc402d8340d820c1c0d5,2026-09,fix,489,5,fix(agent): preserve initialization failure during teardown,False,False,373,90
+3b27563290a9fbda9a477d36d1a2fd47e1d97d62,2026-09,fix,489,5,fix: include package-index links and align residual metadata,False,False,317,90
+9baebd8f3f3d0b20e11d25ccc250fd0963c1430f,2026-09,fix,489,5,fix(benchmarks): keep composer focus during streamed input,False,False,133,90
+a6ef8dc97a81aa80d3a7c8e75aaf911ea3c92cc0,2026-09,fix,489,5,fix(client): animate the unloading phase dot and correct the catalog,False,False,274,90
+c83f02ad818ce8b94c009b140011805b3a36e218,2026-09,fix,489,5,fix(web): defer desktop metadata until delivery cards appear,False,False,80,80
+0752a09ae6b50ee8fd87a5bc71e0d0a752a90bdf,2026-09,other,828,5,docs(browser-use): explain the Stagehand action timer limit,False,False,10,10
+2927034ffeb647a6f733e77de10c31a2ef0bcfdd,2026-09,other,828,5,test(perf): retain successful CI measurement output,False,False,47,47
+59623c8ff4043d14db34249d552f752bff2a9bbe,2026-09,other,828,5,docs(subagent): refresh event declaration references,False,False,27,27
+a189104d812c416fe23c5196904bc1e43677c6cb,2026-09,other,828,5,docs: refresh session controller module dependencies,False,False,45,45
+bad4254d71448679d9f850447dfcaf8a33d5dac8,2026-09,other,828,5,Rename durable PTC vocabulary with identity-preserving v2 migration,False,False,2892,90

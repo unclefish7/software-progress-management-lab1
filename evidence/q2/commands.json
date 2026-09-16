@@ -1,0 +1,842 @@
+[
+  {
+    "args": [
+      "log",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+      "--format=%H%x00%P%x00%ct%x00%B%x00"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-list",
+      "--count",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-list",
+      "--count",
+      "--no-merges",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-list",
+      "--no-merges",
+      "0f83a2cdc08814d01c532111dfe6ffe599dddb35",
+      "^9292dd8a2db2fdec2eb2a5ba73e4301d9a122cfd"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "0731ed374b942e471e541694393efa5e12244a7e"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "36a30180b8efb4cf66d226dc7b3f0c827969d065"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "aa9afcefc7dc85f7dc53b7f79430952ab94a9527"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "f3906af225c291e1164cc2a9583f2d9fb15c06dd"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "f4180bd764307f418c66d810e18e7e8c767fc6e5"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "22e9152d8b97cdd050763a0d1632f028d0ba258e"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "5299e43bed538d28e856720dadedb8af1711870a"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "89e63f143612fe4ee9bfa5efa5b9d32027af5b0a"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "b920239389866bf80c9d74528c92d96ebc8803cc"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "ed94daed9ecc379631eb40ba1ef42295544a3460"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "53d1ef4a742681c7dc7e3d070f2f445139aa7e35"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "759ef0469277903e0c8d261d6435e1198bdca2b2"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "7a5886da2d02c9be768adb8a724e881adb5999b9"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "d9c9c5d403f2f4c4d3657e83e659291f3e82df0d"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "fa7d1df6f2c6dbbae32ecbaf0fb8275c407b8828"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "5611f772b163169c71b29ba304e51547322e8cc8"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "876065a97d66916b2f336edabd7e9c1b77c9b3bd"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "8a79679489e04b0e52b8b970af0db7b14b4b6b75"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "a39bd9035ecc90a10375f4bc5e89a6f03c3c48b4"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "c0426142c5fc0a95e67e8ec7adadd8fbeb00e3db"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "35acd34fd96c5ebbfdd2bd0a263e9700dad62035"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "a52cac00b1a0dbb6969da5bd634e22c72cf02c1b"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "a8c28be1ba345bda3e8a90847ca992edcda0668e"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "abe80cec68cf2ca989f710dec4ecc5c691471602"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "d9eef0605150b4491ab881df3dd1350ce5761bb8"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "15c7a27f39868eed13e483d8216f7143de8a6bc6"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "54bfe41a46b3d26b4db2ac3cea94075c2f953c05"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "8d4bf5ae412b0594f194b6a3a7f43d4ef5bcd714"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "db3e97fc17a0f96fda7a2ecee94af86e7fad2102"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "deed5784d97364c978c584d82d815b3358cb9f7c"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "3e79f7106e6017142a21037028f15781a39fce10"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "975b57b54aec648baf77219fea8d03c1b231478e"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "a943e67798d7cd8c7d72c788e9184ab75174d605"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "e4256a1684b23de0eaa9190e6841eab1e9690718"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "f32aa54aeb0b526c6c04dd1212cce33e8751afa5"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "08ec2622b0e79bd0c82f29ad82cdbffc4f966bfe"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "0a95a9eed85e2a1b98549a21614810c536eab681"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "118f244420de3bc43ae02a440e5f74e3395b858d"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "19be29cd0bc21d8e58a41c9d150c173684078549"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "73792a81b14298a9c0567b674b5f3b41bb2b3a01"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "18527071c442702d809f98e808313c79bb8d0a2a"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "80019566f217c0fed069d419d283d8059236a1a2"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "9e91e206d4ad1662a843956cf73892aa4f3bf94a"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "c8815e50adaaca9723c9125fa3afd8a5a4888317"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "e53dcd56c7c59b2dbb646878b97df3f981d7c53f"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "3997f36999a186e9a24944f162f3fe0882ccd8e4"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "3a85ac6d8161b845edfdbc8ce51477da6fe2dcca"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "8870a13aa941fee98455fc4e82877b0bc0ca69a7"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "d09b4accd31ccd1d19b62ae9c5881d41de0270e2"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "f1f6ca1c77314fecf1ddf8241d524a89bda09267"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "0fb509f54497623f16f3dc402d8340d820c1c0d5"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "3b27563290a9fbda9a477d36d1a2fd47e1d97d62"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "9baebd8f3f3d0b20e11d25ccc250fd0963c1430f"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "a6ef8dc97a81aa80d3a7c8e75aaf911ea3c92cc0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "c83f02ad818ce8b94c009b140011805b3a36e218"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "0752a09ae6b50ee8fd87a5bc71e0d0a752a90bdf"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "2927034ffeb647a6f733e77de10c31a2ef0bcfdd"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "59623c8ff4043d14db34249d552f752bff2a9bbe"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "a189104d812c416fe23c5196904bc1e43677c6cb"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--no-ext-diff",
+      "--no-textconv",
+      "--no-renames",
+      "--unified=2",
+      "bad4254d71448679d9f850447dfcaf8a33d5dac8"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:.agents/notes/implemented/process/2026-06-11-quality-gates.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "log",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+      "-3",
+      "--format=%H %s",
+      "--",
+      ".agents/notes/implemented/process/2026-06-11-quality-gates.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:.agents/notes/implemented/process/2026-07-19-web-styling-system.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "log",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+      "-3",
+      "--format=%H %s",
+      "--",
+      ".agents/notes/implemented/process/2026-07-19-web-styling-system.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=fuller",
+      "--stat",
+      "--stat-count=12",
+      "43d81b67cef2a957afd2cb0646894757f3f28315"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=fuller",
+      "--stat",
+      "--stat-count=12",
+      "b46dcb16cbb570c7ff984cdb292481903f04de09"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=fuller",
+      "--stat",
+      "--stat-count=12",
+      "ac36c6b9753919d9691b39b5d784c4a523e4addc"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=fuller",
+      "--stat",
+      "--stat-count=12",
+      "ace0c4619e34b2af7213b29a4a9dc085b86cf928"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=fuller",
+      "--stat",
+      "--stat-count=12",
+      "c7e29f4b68be8d77333a707757427e8b1d516935"
+    ],
+    "exit_code": 0
+  }
+]
