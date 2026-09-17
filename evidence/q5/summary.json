@@ -1,0 +1,18 @@
+{
+  "head": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+  "commits": {
+    "25555c9cfc": "25555c9cfc33b0e7eb0d656cb3ae011d6e7bfdab",
+    "33fa98b3c2": "33fa98b3c255d581182fcab3e88751f4f3c007de",
+    "fced51d4eb": "fced51d4ebb35bd105cb10e0d9196d7cc5325b04",
+    "43d81b67ce": "43d81b67cef2a957afd2cb0646894757f3f28315",
+    "3c4c6c3d7b": "3c4c6c3d7b7079d1ea3f721ddf3d519ba8ba7cc9",
+    "a2d0f7f411": "a2d0f7f41121ee81911dd1badbf248edd3f2ab70"
+  },
+  "checks": {
+    "all_six_commits_reachable": true,
+    "goal_initial_is_ancestor_of_later_fix": true,
+    "shared_env_fix_directly_follows_acp_fix": true,
+    "research_worktree_unchanged": true
+  },
+  "scope": "两条定向过程线索和一条 CI 配置演变；未运行研究项目测试或查询 CI 运行结果"
+}

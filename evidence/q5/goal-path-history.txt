@@ -1,0 +1,3 @@
+a2d0f7f41121ee81911dd1badbf248edd3f2ab70 2026-08-13T00:54:38+08:00 refactor: apply repository naming contract
+b02b438667d29b4cdc3ec83e4ea95404945e9d7e 2026-07-24T15:08:36+08:00 refactor(agent): align delivery method names
+25555c9cfc33b0e7eb0d656cb3ae011d6e7bfdab 2026-07-19T20:30:43+08:00 feat(goal): drive same-session goal rounds

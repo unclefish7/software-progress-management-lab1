@@ -1,0 +1,526 @@
+提交：0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
+路径：.github/workflows/ci-master.yml
+
+   1 | name: CI master
+   2 | 
+   3 | on:
+   4 |   push:
+   5 |     branches: [master]
+   6 |   workflow_dispatch:
+   7 |     inputs:
+   8 |       suite:
+   9 |         description: Manual CI suite to run
+  10 |         required: true
+  11 |         default: larger-runner-benchmark
+  12 |         type: choice
+  13 |         options:
+  14 |           - larger-runner-benchmark
+  15 |           - consolidated-runner-benchmark
+  16 | 
+  17 | # New master pushes and manual runs replace obsolete checks in this workflow/ref.
+  18 | # Standby drills share cancellation; use completed runs as readiness evidence.
+  19 | concurrency:
+  20 |   group: ${{ github.workflow }}-${{ github.ref }}
+  21 |   cancel-in-progress: true
+  22 | 
+  23 | permissions:
+  24 |   contents: read
+  25 | 
+  26 | env:
+  27 |   PRIMARY_NODE_VERSION: '24'
+  28 |   # CI runs must never report to the production telemetry endpoint baked
+  29 |   # into apps/cli/cordis.yml (AppCLIEntry disables the row when set).
+  30 |   DSH_TELEMETRY_DISABLED: '1'
+  31 | 
+  32 | jobs:
+  33 |   # These native runtime carriers are post-merge checks; release keeps all targets.
+  34 |   python-runtime:
+  35 |     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+  36 |     name: python runtime / macOS and Linux ARM64
+  37 |     uses: ./.github/workflows/build-exe-for-python-sdk.yml
+  38 |     with:
+  39 |       targets: node24-linux-arm64,node24-macos-arm64,node24-macos-x64
+  40 |       ci: true
+  41 |     secrets:
+  42 |       DEEPSEEK_API_KEY_EXTERNAL: ${{ secrets.DEEPSEEK_API_KEY_EXTERNAL }}
+  43 | 
+  44 |   # Wine runs once here, independently of the native serial standby aggregates.
+  45 |   windows:
+  46 |     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+  47 |     runs-on: ubuntu-latest
+  48 |     name: windows node 24 / wine
+  49 |     timeout-minutes: 15
+  50 |     steps:
+  51 |       - uses: actions/checkout@v6
+  52 |         with:
+  53 |           persist-credentials: false
+  54 | 
+  55 |       - uses: pnpm/action-setup@v4
+  56 |         with:
+  57 |           dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}
+  58 | 
+  59 |       - uses: actions/setup-node@v6
+  60 |         with:
+  61 |           node-version: ${{ env.PRIMARY_NODE_VERSION }}
+  62 | 
+  63 |       - name: Configure pnpm store path
+  64 |         id: pnpm-store
+  65 |         run: |
+  66 |           store_root="$HOME/.local/share/pnpm/store"
+  67 |           echo "PNPM_CONFIG_STORE_DIR=$store_root" >> "$GITHUB_ENV"
+  68 |           store_path=$(PNPM_CONFIG_STORE_DIR="$store_root" pnpm store path --silent)
+  69 |           echo "path=$store_path" >> "$GITHUB_OUTPUT"
+  70 | 
+  71 |       - uses: actions/cache/restore@v4
+  72 |         with:
+  73 |           path: ${{ steps.pnpm-store.outputs.path }}
+  74 |           key: ${{ runner.os }}-node-${{ env.PRIMARY_NODE_VERSION }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+  75 |           restore-keys: |
+  76 |             ${{ runner.os }}-node-${{ env.PRIMARY_NODE_VERSION }}-pnpm-
+  77 | 
+  78 |       # Master CI restores and seeds the image-specific Wine dependency cache.
+  79 |       - name: Compose Wine apt cache key
+  80 |         id: wine-cache-key
+  81 |         run: echo "key=wine-debs-${ImageOS:-linux}-${ImageVersion:-v0}" >> "$GITHUB_OUTPUT"
+  82 | 
+  83 |       - uses: actions/cache@v4
+  84 |         with:
+  85 |           path: ~/wine-debs
+  86 |           key: ${{ steps.wine-cache-key.outputs.key }}
+  87 | 
+  88 |       # Runner provisioning only — a developer machine installs Wine through
+  89 |       # its own package manager; the gate script assumes a wine binary and
+  90 |       # fails loud without one. Wine from the apt cache when present; else
+  91 |       # download the full dependency closure once and keep it for the next
+  92 |       # run. The `wine` dispatcher package (not bare `wine64`) is what puts a
+  93 |       # binary on PATH.
+  94 |       - name: Install Wine
+  95 |         run: |
+  96 |           if compgen -G "$HOME/wine-debs/*.deb" > /dev/null; then
+  97 |             # The restored archive is the full --download-only closure of
+  98 |             # `wine` for this runner image, so installing the .debs directly
+  99 |             # with dpkg needs no repository access. apt-get would instead
+ 100 |             # re-download the same 100+ MB closure from the mirror, which has
+ 101 |             # stalled the job past its budget on a degraded runner network.
+ 102 |             # If the archive cannot satisfy the closure, fall back to the apt
+ 103 |             # network install.
+ 104 |             if ! sudo DEBIAN_FRONTEND=noninteractive dpkg -i "$HOME"/wine-debs/*.deb; then
+ 105 |               sudo DEBIAN_FRONTEND=noninteractive dpkg --configure -a || true
+ 106 |               sudo apt-get install -y --no-install-recommends "$HOME"/wine-debs/*.deb
+ 107 |             fi
+ 108 |           else
+ 109 |             sudo apt-get update
+ 110 |             sudo apt-get install -y --no-install-recommends --download-only wine
+ 111 |             mkdir -p "$HOME/wine-debs"
+ 112 |             cp /var/cache/apt/archives/*.deb "$HOME/wine-debs/" 2>/dev/null || true
+ 113 |             sudo apt-get install -y --no-install-recommends wine
+ 114 |           fi
+ 115 | 
+ 116 |       - name: Run the Wine Windows gates
+ 117 |         run: bash scripts/wine-windows-gates.sh
+ 118 | 
+ 119 |       - name: Shut down wineserver
+ 120 |         if: always()
+ 121 |         run: wineserver -k 2>/dev/null || true
+ 122 | 
+ 123 |   # Hot-standby drill for the in-house self-hosted pool: every master move
+ 124 |   # re-runs the complete unsharded aggregate on the persistent 64-core VM,
+ 125 |   # continuously proving that environment can take over a required lane if
+ 126 |   # the hosted pools degrade (the switch is then setting the writer-manageable
+ 127 |   # DSH_CI_FAILOVER_LINUX variable — see the failover runbook, no merge required).
+ 128 |   # Push-triggered, so this lane always executes the base branch's own
+ 129 |   # workflow definition. This workflow never listens to pull_request, so the
+ 130 |   # drill does not appear in PR checks. No cache steps because the VM's
+ 131 |   # persistent pnpm store and tool caches make them redundant (and saving here
+ 132 |   # would poison the hosted cache namespace with self-hosted paths).
+ 133 |   serial-linux-selfhosted:
+ 134 |     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+ 135 |     name: serial / linux (self-hosted standby)
+ 136 |     runs-on: [self-hosted, linux, x64, vm-backup]
+ 137 |     steps:
+ 138 |       # DSH_ARCHIVE_BASE_REF below compares the frozen-archive gate against
+ 139 |       # github.event.before, so full history is required: depth 2 would miss it
+ 140 |       # on multi-commit or force pushes; full fetch is cheap here because
+ 141 |       # checkout resolves against the VM's local mirror.
+ 142 |       - uses: actions/checkout@v6
+ 143 |         with:
+ 144 |           fetch-depth: 0
+ 145 | 
+ 146 |       # Redirect the Node compile cache (enabled by pnpm and TypeScript) off
+ 147 |       # the root partition's /tmp before the first pnpm call in this lane —
+ 148 |       # see .agents/notes/implemented/process/2026-08-28-ci-node-compile-cache-data-disk.md.
+ 149 |       - name: Redirect Node compile cache to runner temp
+ 150 |         run: echo "NODE_COMPILE_CACHE=${{ runner.temp }}/node-compile-cache" >> "$GITHUB_ENV"
+ 151 | 
+ 152 |       - uses: pnpm/action-setup@v4
+ 153 |         with:
+ 154 |           dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}
+ 155 | 
+ 156 |       - uses: actions/setup-node@v6
+ 157 |         with:
+ 158 |           node-version: ${{ env.PRIMARY_NODE_VERSION }}
+ 159 | 
+ 160 |       - name: Configure persistent pnpm store
+ 161 |         run: echo "PNPM_CONFIG_STORE_DIR=$HOME/.local/share/pnpm/store" >> "$GITHUB_ENV"
+ 162 | 
+ 163 |       - name: Install (immutable)
+ 164 |         run: pnpm install --frozen-lockfile
+ 165 | 
+ 166 |       # The persistent VM image owns Playwright's Linux system packages; this
+ 167 |       # step also proves that browser provisioning remains usable for failover.
+ 168 |       - name: Install Playwright Chromium
+ 169 |         run: pnpm --filter @deepseek-ai/dsh-web-frontend exec playwright install chromium
+ 170 | 
+ 171 |       - name: Prepare bubblewrap (unrestrict userns)
+ 172 |         run: bash scripts/prepare-ci-bubblewrap.sh
+ 173 | 
+ 174 |       - name: Run complete unsharded primary Node CI serially
+ 175 |         env:
+ 176 |           DSH_ARCHIVE_BASE_REF: ${{ github.event.before }}
+ 177 |           DSH_COVERAGE_MAX_WORKERS: '1'
+ 178 |           DSH_E2E_MAX_WORKERS: '1'
+ 179 |           DSH_GATE_CONCURRENCY: '1'
+ 180 |           DSH_OXLINT_THREADS: '1'
+ 181 |           DSH_PUBLINT_CONCURRENCY: '1'
+ 182 |           DSH_SNAPSHOT_MAX_CONCURRENCY: '1'
+ 183 |         run: pnpm run check:ci:linux-primary
+ 184 | 
+ 185 |   # TODO(hosted-serial-ci): Re-enable the one remaining disabled hosted serial
+ 186 |   # reference job (serial-macos) before release. Re-enabling serial-macos does
+ 187 |   # not restore a Linux hosted-cache producer: decide whether to add a master
+ 188 |   # seeder or remove the restore-only steps if cold starts become a concern.
+ 189 |   serial-macos:
+ 190 |     if: false
+ 191 |     name: serial / macos
+ 192 |     runs-on: macos-latest
+ 193 |     steps:
+ 194 |       - uses: actions/checkout@v6
+ 195 | 
+ 196 |       - uses: pnpm/action-setup@v4
+ 197 |         with:
+ 198 |           dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}
+ 199 | 
+ 200 |       - uses: actions/setup-node@v6
+ 201 |         with:
+ 202 |           node-version: ${{ env.PRIMARY_NODE_VERSION }}
+ 203 | 
+ 204 |       - name: Install (immutable)
+ 205 |         run: pnpm install --frozen-lockfile
+ 206 | 
+ 207 |       - name: Run complete unsharded primary Node CI serially
+ 208 |         env:
+ 209 |           DSH_COVERAGE_MAX_WORKERS: '1'
+ 210 |           DSH_E2E_MAX_WORKERS: '1'
+ 211 |           DSH_GATE_CONCURRENCY: '1'
+ 212 |           DSH_PUBLINT_CONCURRENCY: '1'
+ 213 |           DSH_SNAPSHOT_MAX_CONCURRENCY: '1'
+ 214 |         run: pnpm run check:ci
+ 215 | 
+ 216 |   # Hot-standby drill for the in-house self-hosted Windows pool: every master
+ 217 |   # move re-runs the complete unsharded Windows gate inventory on the persistent
+ 218 |   # VM, continuously proving that environment can take over the required
+ 219 |   # `windows` lane if the hosted pool degrades (the switch is setting the
+ 220 |   # writer-manageable DSH_CI_FAILOVER_WINDOWS variable — see the failover
+ 221 |   # runbook, no merge required). Push-triggered, so this lane always executes
+ 222 |   # the base branch's own workflow definition. This workflow never listens to
+ 223 |   # pull_request, so the drill does not appear in PR checks. No cache steps
+ 224 |   # because the VM's persistent pnpm store and tool caches make them redundant
+ 225 |   # (and saving here would poison the hosted cache namespace with self-hosted
+ 226 |   # paths).
+ 227 |   serial-windows:
+ 228 |     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+ 229 |     name: serial / windows (self-hosted standby)
+ 230 |     runs-on: [self-hosted, dsh-win-ci, windows]
+ 231 |     timeout-minutes: 120
+ 232 |     steps:
+ 233 |       - uses: actions/checkout@v6
+ 234 | 
+ 235 |       - name: Enable Developer Mode (symlink support)
+ 236 |         shell: pwsh
+ 237 |         run: >-
+ 238 |           reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+ 239 |           /t REG_DWORD /f /v "AllowDevelopmentWithoutDevLicense" /d "1"
+ 240 | 
+ 241 |       - uses: pnpm/action-setup@v4
+ 242 |         with:
+ 243 |           dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}
+ 244 | 
+ 245 |       - uses: actions/setup-node@v6
+ 246 |         with:
+ 247 |           node-version: ${{ env.PRIMARY_NODE_VERSION }}
+ 248 | 
+ 249 |       - name: Configure persistent pnpm store
+ 250 |         shell: pwsh
+ 251 |         # The store must share the ReFS workspace volume for the clone
+ 252 |         # import method below. Runner workspaces can reside on different drives.
+ 253 |         run: |
+ 254 |           $storeRoot = Join-Path ([IO.Path]::GetPathRoot($env:GITHUB_WORKSPACE)) '.pnpm-store'
+ 255 |           echo "PNPM_CONFIG_STORE_DIR=$storeRoot" >> $env:GITHUB_ENV
+ 256 | 
+ 257 |       - name: Install (immutable)
+ 258 |         shell: pwsh
+ 259 |         # See 2026-08-30-windows-refs-store-block-clone-install for the
+ 260 |         # ReFS block-clone rationale; use clone only on ReFS.
+ 261 |         run: >-
+ 262 |           $drive = (Split-Path -Qualifier $env:GITHUB_WORKSPACE).TrimEnd(':');
+ 263 |           $fs = (Get-Volume -DriveLetter $drive).FileSystem;
+ 264 |           if ($fs -eq 'ReFS') {
+ 265 |             corepack pnpm install --frozen-lockfile --package-import-method=clone
+ 266 |           } else {
+ 267 |             pnpm install --frozen-lockfile
+ 268 |           }
+ 269 | 
+ 270 |       - name: Run complete unsharded Windows gate inventory serially
+ 271 |         shell: pwsh
+ 272 |         env:
+ 273 |           DSH_COVERAGE_MAX_WORKERS: '1'
+ 274 |           DSH_COVERAGE_TEST_TIMEOUT_MS: '90000'
+ 275 |           DSH_GATE_CONCURRENCY: '1'
+ 276 |           DSH_PUBLINT_CONCURRENCY: '1'
+ 277 |         run: pnpm run check:ci:windows-complete
+ 278 | 
+ 279 |   # Manual, bounded comparison of the actual critical Linux and Windows lanes.
+ 280 |   # The named pools are restricted at the organization level to this repository.
+ 281 |   larger-runner-benchmark:
+ 282 |     if: github.event_name == 'workflow_dispatch' && inputs.suite == 'larger-runner-benchmark'
+ 283 |     # Default measures the repository's own fleet tiers; under the matching
+ 284 |     # platform's blacksmith failover value the tiers Blacksmith offers (up to
+ 285 |     # 32 vCPU) move onto their Blacksmith equivalents, while the 64/96-core
+ 286 |     # rows keep the fleet labels because Blacksmith has no such tier.
+ 287 |     runs-on: >-
+ 288 |       ${{ (matrix.platform == 'linux' && vars.DSH_CI_FAILOVER_LINUX == 'blacksmith'
+ 289 |             || matrix.platform == 'windows' && vars.DSH_CI_FAILOVER_WINDOWS == 'blacksmith')
+ 290 |           && matrix.blacksmith
+ 291 |           || matrix.runner }}
+ 292 |     timeout-minutes: 15
+ 293 |     strategy:
+ 294 |       fail-fast: false
+ 295 |       max-parallel: 12
+ 296 |       matrix:
+ 297 |         include:
+ 298 |           - platform: linux
+ 299 |             cores: '4'
+ 300 |             runner: dsh-ubuntu-24-04-4core
+ 301 |             blacksmith: blacksmith-4vcpu-ubuntu-2404
+ 302 |             workload: typecheck
+ 303 |           - platform: linux
+ 304 |             cores: '8'
+ 305 |             runner: dsh-ubuntu-24-04-8core
+ 306 |             blacksmith: blacksmith-8vcpu-ubuntu-2404
+ 307 |             workload: typecheck
+ 308 |           - platform: linux
+ 309 |             cores: '16'
+ 310 |             runner: dsh-ubuntu-24-04-16core
+ 311 |             blacksmith: blacksmith-16vcpu-ubuntu-2404
+ 312 |             workload: typecheck
+ 313 |           - platform: linux
+ 314 |             cores: '32'
+ 315 |             runner: dsh-ubuntu-24-04-32core
+ 316 |             blacksmith: blacksmith-32vcpu-ubuntu-2404
+ 317 |             workload: typecheck
+ 318 |           - platform: linux
+ 319 |             cores: '64'
+ 320 |             runner: dsh-ubuntu-24-04-64core
+ 321 |             blacksmith: ''
+ 322 |             workload: typecheck
+ 323 |           - platform: linux
+ 324 |             cores: '96'
+ 325 |             runner: dsh-ubuntu-24-04-96core
+ 326 |             blacksmith: ''
+ 327 |             workload: typecheck
+ 328 |           - platform: windows
+ 329 |             cores: '4'
+ 330 |             runner: dsh-windows-2025-4core
+ 331 |             blacksmith: blacksmith-4vcpu-windows-2025
+ 332 |             workload: production-site
+ 333 |           - platform: windows
+ 334 |             cores: '8'
+ 335 |             runner: dsh-windows-2025-8core
+ 336 |             blacksmith: blacksmith-8vcpu-windows-2025
+ 337 |             workload: production-site
+ 338 |           - platform: windows
+ 339 |             cores: '16'
+ 340 |             runner: dsh-windows-2025-16core
+ 341 |             blacksmith: blacksmith-16vcpu-windows-2025
+ 342 |             workload: production-site
+ 343 |           - platform: windows
+ 344 |             cores: '32'
+ 345 |             runner: dsh-windows-2025-32core
+ 346 |             blacksmith: blacksmith-32vcpu-windows-2025
+ 347 |             workload: production-site
+ 348 |           - platform: windows
+ 349 |             cores: '64'
+ 350 |             runner: dsh-windows-2025-64core
+ 351 |             blacksmith: ''
+ 352 |             workload: production-site
+ 353 |           - platform: windows
+ 354 |             cores: '96'
+ 355 |             runner: dsh-windows-2025-96core
+ 356 |             blacksmith: ''
+ 357 |             workload: production-site
+ 358 |     steps:
+ 359 |       - uses: actions/checkout@v6
+ 360 | 
+ 361 |       - uses: pnpm/action-setup@v4
+ 362 |         with:
+ 363 |           dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}
+ 364 | 
+ 365 |       # The benchmark's Windows lanes deliberately skip the store cache like
+ 366 |       # the independent native Windows job; an empty input disables caching.
+ 367 |       - uses: actions/setup-node@v6
+ 368 |         with:
+ 369 |           node-version: ${{ env.PRIMARY_NODE_VERSION }}
+ 370 |           cache: ${{ matrix.platform == 'linux' && 'pnpm' || '' }}
+ 371 | 
+ 372 |       - name: Report runner capacity
+ 373 |         run: >-
+ 374 |           node -e "const os = require('node:os');
+ 375 |           console.log(JSON.stringify({ arch: process.arch, cpus: os.cpus().length,
+ 376 |           memoryGiB: Math.round(os.totalmem() / 2 ** 30) }))"
+ 377 | 
+ 378 |       - name: Install (immutable)
+ 379 |         run: pnpm install --frozen-lockfile
+ 380 | 
+ 381 |       - name: Run critical Linux typecheck lane
+ 382 |         if: matrix.platform == 'linux'
+ 383 |         run: pnpm run typecheck
+ 384 | 
+ 385 |       - name: Run critical Windows production-site lane
+ 386 |         if: matrix.platform == 'windows'
+ 387 |         run: pnpm run docs:build
+ 388 | 
+ 389 |   # Manual comparison of the intended low-fanout topology. Linux runs the
+ 390 |   # complete unsharded primary aggregate with bounded in-runner parallelism;
+ 391 |   # Windows runs both blocking build targets concurrently through run-gates.
+ 392 |   consolidated-runner-benchmark:
+ 393 |     if: github.event_name == 'workflow_dispatch' && inputs.suite == 'consolidated-runner-benchmark'
+ 394 |     # Default measures the repository's own fleet tiers; under the matching
+ 395 |     # platform's blacksmith failover value the tiers Blacksmith offers (up to
+ 396 |     # 32 vCPU) move onto their Blacksmith equivalents, while the 64/96-core
+ 397 |     # rows keep the fleet labels because Blacksmith has no such tier.
+ 398 |     runs-on: >-
+ 399 |       ${{ (matrix.platform == 'linux' && vars.DSH_CI_FAILOVER_LINUX == 'blacksmith'
+ 400 |             || matrix.platform == 'windows' && vars.DSH_CI_FAILOVER_WINDOWS == 'blacksmith')
+ 401 |           && matrix.blacksmith
+ 402 |           || matrix.runner }}
+ 403 |     timeout-minutes: 15
+ 404 |     strategy:
+ 405 |       fail-fast: false
+ 406 |       max-parallel: 12
+ 407 |       matrix:
+ 408 |         include:
+ 409 |           - platform: linux
+ 410 |             cores: '4'
+ 411 |             runner: dsh-ubuntu-24-04-4core
+ 412 |             blacksmith: blacksmith-4vcpu-ubuntu-2404
+ 413 |             workers: '4'
+ 414 |           - platform: linux
+ 415 |             cores: '8'
+ 416 |             runner: dsh-ubuntu-24-04-8core
+ 417 |             blacksmith: blacksmith-8vcpu-ubuntu-2404
+ 418 |             workers: '8'
+ 419 |           - platform: linux
+ 420 |             cores: '16'
+ 421 |             runner: dsh-ubuntu-24-04-16core
+ 422 |             blacksmith: blacksmith-16vcpu-ubuntu-2404
+ 423 |             workers: '16'
+ 424 |           - platform: linux
+ 425 |             cores: '32'
+ 426 |             runner: dsh-ubuntu-24-04-32core
+ 427 |             blacksmith: blacksmith-32vcpu-ubuntu-2404
+ 428 |             workers: '32'
+ 429 |           - platform: linux
+ 430 |             cores: '64'
+ 431 |             runner: dsh-ubuntu-24-04-64core
+ 432 |             blacksmith: ''
+ 433 |             workers: '32'
+ 434 |           - platform: linux
+ 435 |             cores: '96'
+ 436 |             runner: dsh-ubuntu-24-04-96core
+ 437 |             blacksmith: ''
+ 438 |             workers: '32'
+ 439 |           - platform: windows
+ 440 |             cores: '4'
+ 441 |             runner: dsh-windows-2025-4core
+ 442 |             blacksmith: blacksmith-4vcpu-windows-2025
+ 443 |             workers: '2'
+ 444 |           - platform: windows
+ 445 |             cores: '8'
+ 446 |             runner: dsh-windows-2025-8core
+ 447 |             blacksmith: blacksmith-8vcpu-windows-2025
+ 448 |             workers: '2'
+ 449 |           - platform: windows
+ 450 |             cores: '16'
+ 451 |             runner: dsh-windows-2025-16core
+ 452 |             blacksmith: blacksmith-16vcpu-windows-2025
+ 453 |             workers: '2'
+ 454 |           - platform: windows
+ 455 |             cores: '32'
+ 456 |             runner: dsh-windows-2025-32core
+ 457 |             blacksmith: blacksmith-32vcpu-windows-2025
+ 458 |             workers: '2'
+ 459 |           - platform: windows
+ 460 |             cores: '64'
+ 461 |             runner: dsh-windows-2025-64core
+ 462 |             blacksmith: ''
+ 463 |             workers: '2'
+ 464 |           - platform: windows
+ 465 |             cores: '96'
+ 466 |             runner: dsh-windows-2025-96core
+ 467 |             blacksmith: ''
+ 468 |             workers: '2'
+ 469 |     steps:
+ 470 |       - uses: actions/checkout@v6
+ 471 | 
+ 472 |       - uses: pnpm/action-setup@v4
+ 473 |         with:
+ 474 |           dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}
+ 475 | 
+ 476 |       # Unlike the larger-runner suite, both platforms cache the store here:
+ 477 |       # the consolidated topology measures cache mechanics as workload.
+ 478 |       - uses: actions/setup-node@v6
+ 479 |         with:
+ 480 |           node-version: ${{ env.PRIMARY_NODE_VERSION }}
+ 481 |           cache: pnpm
+ 482 | 
+ 483 |       - name: Report runner capacity
+ 484 |         run: >-
+ 485 |           node -e "const os = require('node:os');
+ 486 |           console.log(JSON.stringify({ arch: process.arch, cpus: os.cpus().length,
+ 487 |           memoryGiB: Math.round(os.totalmem() / 2 ** 30) }))"
+ 488 | 
+ 489 |       - name: Install and prepare Linux
+ 490 |         if: matrix.platform == 'linux'
+ 491 |         run: |
+ 492 |           pnpm install --frozen-lockfile &
+ 493 |           install_pid=$!
+ 494 |           bash scripts/prepare-ci-bubblewrap.sh &
+ 495 |           sandbox_pid=$!
+ 496 |           install_status=0
+ 497 |           wait "$install_pid" || install_status=$?
+ 498 |           sandbox_status=0
+ 499 |           wait "$sandbox_pid" || sandbox_status=$?
+ 500 |           if (( install_status != 0 )); then exit "$install_status"; fi
+ 501 |           exit "$sandbox_status"
+ 502 | 
+ 503 |       - name: Install (immutable)
+ 504 |         if: matrix.platform == 'windows'
+ 505 |         shell: pwsh
+ 506 |         run: pnpm install --frozen-lockfile
+ 507 | 
+ 508 |       - name: Run complete unsharded primary Node CI concurrently
+ 509 |         if: matrix.platform == 'linux'
+ 510 |         env:
+ 511 |           DSH_COVERAGE_MAX_WORKERS: ${{ matrix.workers }}
+ 512 |           DSH_GATE_CONCURRENCY: ${{ matrix.workers }}
+ 513 |           DSH_OXLINT_THREADS: ${{ matrix.workers }}
+ 514 |           DSH_PUBLINT_CONCURRENCY: ${{ matrix.workers }}
+ 515 |           DSH_SNAPSHOT_MAX_CONCURRENCY: ${{ matrix.workers }}
+ 516 |         run: pnpm run check:ci
+ 517 | 
+ 518 |       - name: Run blocking Windows builds concurrently
+ 519 |         if: matrix.platform == 'windows'
+ 520 |         shell: pwsh
+ 521 |         env:
+ 522 |           DSH_GATE_CONCURRENCY: ${{ matrix.workers }}
+ 523 |         run: pnpm run check:ci:windows-blocking

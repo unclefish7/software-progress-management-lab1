@@ -1,0 +1,248 @@
+commit 3c4c6c3d7b7079d1ea3f721ddf3d519ba8ba7cc9
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Wed Sep 9 18:20:01 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Wed Sep 9 18:20:01 2026 +0800
+
+    fix(ci): cancel superseded PR and master validation
+diff --git a/.github/workflows/ci-master.yml b/.github/workflows/ci-master.yml
+index df9f7f2bcc..dd861115d4 100644
+--- a/.github/workflows/ci-master.yml
++++ b/.github/workflows/ci-master.yml
+@@ -14,14 +14,11 @@ on:
+           - larger-runner-benchmark
+           - consolidated-runner-benchmark
+ 
+-# Master runs platform runtime checks, Wine, and two self-hosted standby drills.
+-# The drills outlast the interval between master merges, so
+-# push is exempt from cancellation (see ci-failover-runbook). workflow_dispatch
+-# keeps cancelling: a re-dispatched runner benchmark holds up to 12 larger
+-# runners for 15 minutes in this same group.
++# New master pushes and manual runs replace obsolete checks in this workflow/ref.
++# Standby drills share cancellation; use completed runs as readiness evidence.
+ concurrency:
+   group: ${{ github.workflow }}-${{ github.ref }}
+-  cancel-in-progress: ${{ github.event_name != 'push' }}
++  cancel-in-progress: true
+ 
+ permissions:
+   contents: read
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 4e05b444a4..e7cff1454e 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -562,7 +562,7 @@ jobs:
+         # Coverage flakes must not prevent the cache from building; the
+         # measured durations remain useful even when a partition failed. The
+         # per-run key keeps every save a fresh immutable cache entry.
+-        if: always()
++        if: ${{ !cancelled() }}
+         uses: actions/cache/save@v4
+         with:
+           path: .coverage-times.json
+@@ -666,10 +666,8 @@ jobs:
+   # `needs`. Native Windows build and process checks are required; Wine and
+   # the deferred Python runtime targets live in ci-master.yml and do not
+   # participate in this PR verdict. `needs` cannot cross workflow files.
+-  # `if: always()` is load-bearing: without it a failed dependency
+-  # would SKIP this job, and GitHub counts a skipped required check as passing
+-  # — so this job always runs and fails on any non-success result, including
+-  # 'cancelled' and 'skipped'.
++  # An explicit status function runs the verdict after failed/skipped needs
++  # without keeping a cancelled workflow alive for an obsolete verdict.
+   all-checks-passed:
+     name: all checks passed
+     # This bookkeeping-only verdict must not depend on custom-pool
+@@ -684,7 +682,7 @@ jobs:
+           && fromJSON('["self-hosted", "linux", "x64", "vm-backup"]')
+           || 'ubuntu-latest' }}
+     needs: [node-24, node-24-coverage, node-24-bench, node-24-consumers, node-compat, python-sdk, python-runtime, windows-build, windows-native-tests]
+-    if: always() && github.event_name == 'pull_request'
++    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+     steps:
+       - name: Fail if any needed job did not succeed
+         if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped')
+diff --git a/scripts/ci-workflow.spec.ts b/scripts/ci-workflow.spec.ts
+index 46177da403..c0aba73898 100644
+--- a/scripts/ci-workflow.spec.ts
++++ b/scripts/ci-workflow.spec.ts
+@@ -8,6 +8,43 @@ const runnerPrivatePnpmDestination = /^\$\{\{ runner\.temp \}\}\/setup-pnpm-\$\{
+ const nativeWindowsPnpmDestination = '${{ runner.temp }}/setup-pnpm-js-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}'
+ 
+ describe('CI workflow', () => {
++  it.each(['ci.yml', 'ci-master.yml', 'e2e.yml', 'release.yml', 'release-vendor.yml'])(
++    '%s cancels superseded validation runs without crossing workflow or ref boundaries', (name) => {
++      const workflow = loadWorkflow('.github/workflows/' + name)
++      expect(workflow.concurrency).toEqual({
++        group: '${{ github.workflow }}-${{ github.ref }}',
++        'cancel-in-progress': true,
++      })
++    },
++  )
++
++  it('cancels reusable CI builds without cancelling release-owned builds', () => {
++    const workflow = loadWorkflow('.github/workflows/build-exe-for-python-sdk.yml')
++    expect(workflow.concurrency).toEqual({
++      group: 'build-single-exe-${{ github.workflow }}-${{ github.ref }}',
++      'cancel-in-progress': '${{ !inputs.release }}',
++    })
++  })
++
++  it('does not cancel protected publication or deployment transactions', () => {
++    for (const name of ['release-publish.yml', 'release-vendor-publish.yml']) {
++      const publish = workflowJob(loadWorkflow('.github/workflows/' + name), 'publish')
++      expect(publish.concurrency).toMatchObject({ 'cancel-in-progress': false })
++    }
++    for (const name of ['python-release.yml', 'node-addon-system-release.yml', 'docs-pages.yml']) {
++      expect(loadWorkflow('.github/workflows/' + name).concurrency).toMatchObject({ 'cancel-in-progress': false })
++    }
++  })
++
++  it('skips coverage-history uploads on cancellation but retains Wine cleanup', () => {
++    const coverage = workflowJob(loadWorkflow('.github/workflows/ci.yml'), 'windows-coverage')
++    const wine = workflowJob(loadWorkflow('.github/workflows/ci-master.yml'), 'windows')
++    expect(coverage.steps).toContainEqual(expect.objectContaining({
++      name: 'Save coverage duration history', if: '${{ !cancelled() }}',
++    }))
++    expect(wine.steps).toContainEqual(expect.objectContaining({ name: 'Shut down wineserver', if: 'always()' }))
++  })
++
+   it('isolates every pnpm action setup destination per runner', () => {
+     const files = ['.github/workflows/ci.yml', '.github/workflows/ci-master.yml']
+     const setups: Array<{ jobName: string; step: unknown }> = []
+@@ -346,7 +383,7 @@ describe('CI workflow', () => {
+     )
+   })
+ 
+-  it('exempts push from cancellation in ci-master, so one master merge does not cancel the running drill', () => {
++  it('cancels superseded master runs without changing the post-merge job inventory', () => {
+     const workflow = loadWorkflow('.github/workflows/ci-master.yml')
+     const prWorkflow = loadWorkflow('.github/workflows/ci.yml')
+     if (!isRecord(workflow.jobs) || !isRecord(workflow.concurrency)) {
+@@ -356,21 +393,11 @@ describe('CI workflow', () => {
+       throw new TypeError('ci workflow must define jobs')
+     }
+ 
+-    // Cancellation applies to the whole superseded RUN, so this has to be
+-    // decided at workflow level and gated on the event: a job-level group
+-    // cannot exempt its job from its run being cancelled. Only push is exempt —
+-    // a drill takes longer than the interval between master merges. The negated
+-    // form is load-bearing: `== 'pull_request'` would also stop cancelling
+-    // workflow_dispatch, and a re-dispatched runner benchmark holds up to 12
+-    // larger runners for 15 minutes in this same group on master.
+-    expect(workflow.concurrency['cancel-in-progress']).toBe("${{ github.event_name != 'push' }}")
+-
+-    // The PR-only ci.yml still cancels a superseded run on a new push, so a
+-    // fresh head does not stack a second full 9-job run behind a stale one.
+-    // Unlike ci-master it has no push carve-out: every PR event supersedes.
+-    expect(prWorkflow.concurrency).toMatchObject({
++    expect(workflow.concurrency).toEqual({
++      group: '${{ github.workflow }}-${{ github.ref }}',
+       'cancel-in-progress': true,
+     })
++    expect(prWorkflow.concurrency).toEqual(workflow.concurrency)
+ 
+     // The exact event sets are what keep master-only jobs out of the PR check
+     // panel: ci-master triggers only on push(master) + workflow_dispatch and
+@@ -382,13 +409,12 @@ describe('CI workflow', () => {
+     expect(Object.keys(workflow.on).sort()).toEqual(['push', 'workflow_dispatch'])
+     expect(Object.keys(prWorkflow.on)).toEqual(['pull_request'])
+ 
+-    // Neither drill may carry a job-level group: it would not exempt the job
+-    // from run-scoped cancellation.
++    // Drills share the parent run’s supersession policy.
+     for (const name of ['serial-linux-selfhosted', 'serial-windows']) {
+       const job = workflow.jobs[name]
+       if (!isRecord(job)) throw new TypeError(`${name} must be defined`)
+       expect(job.concurrency).toBeUndefined()
+-      // Both stay master-push-only; that is what makes the push carve-out safe.
++      // Standby drills remain post-merge work, but share run cancellation.
+       expect(job.if).toBe("github.event_name == 'push' && github.ref == 'refs/heads/master'")
+     }
+ 
+@@ -409,10 +435,7 @@ describe('CI workflow', () => {
+       .sort()
+     expect(pushReachable).toEqual(['python-runtime', 'serial-linux-selfhosted', 'serial-windows', 'windows'])
+ 
+-    // Why workflow_dispatch must keep cancelling: each benchmark fans out to a
+-    // dozen larger runners at once, in this same group on master. If it stopped
+-    // cancelling, a re-dispatch would queue ahead of a drill instead of
+-    // replacing the stale measurement.
++    // Manual benchmarks retain their bounded fan-out.
+     for (const name of ['larger-runner-benchmark', 'consolidated-runner-benchmark']) {
+       const job = workflow.jobs[name]
+       if (!isRecord(job) || !isRecord(job.strategy)) {
+diff --git a/scripts/tests/ci-master-platforms.spec.ts b/scripts/tests/ci-master-platforms.spec.ts
+index b07f71cd62..3cdbb00f9b 100644
+--- a/scripts/tests/ci-master-platforms.spec.ts
++++ b/scripts/tests/ci-master-platforms.spec.ts
+@@ -1,6 +1,7 @@
+ /** Scheduling policy for post-merge native runtime carriers and Wine. */
+ import { readFileSync } from 'node:fs'
+ import { resolve } from 'node:path'
++import { runInNewContext } from 'node:vm'
+ import { load } from 'js-yaml'
+ import { describe, expect, it } from 'vitest'
+ import { gatesForMode } from '../run-gates.ts'
+@@ -34,7 +35,43 @@ function commands(job: Job): string[] {
+   return (job.steps ?? []).flatMap(step => step.run ? [step.run] : [])
+ }
+ 
++// These boolean/string cases share Actions and JavaScript semantics. GitHub
++// supplies status functions; this probe is not a general Actions interpreter.
++function evaluateCondition(expression: string, cancelled: boolean, results: string[], event = 'pull_request'): boolean {
++  const source = expression.trim().replace(/^[$][{][{]|[}][}]$/g, '')
++    .replaceAll('needs.*.result', 'results')
++  return runInNewContext(source, {
++    cancelled: () => cancelled,
++    always: () => true,
++    contains: (values: string[], value: string) => values.includes(value),
++    results,
++    github: { event_name: event },
++  }, { timeout: 1000 }) as boolean
++}
++
+ describe('master-only platform scheduling', () => {
++  it.each(['success', 'failure', 'skipped', 'cancelled'])(
++    'reports %s dependencies in active runs but never starts a cancelled-run verdict', (result) => {
++      const aggregate = workflow('ci.yml').jobs['all-checks-passed']!
++      const results = aggregate.needs!.map(() => 'success')
++      results[0] = result
++      const condition = aggregate.if as string
++      // A status function prevents Actions from implicitly gating on success().
++      expect(condition).toContain('!cancelled()')
++      expect(evaluateCondition(condition, false, results)).toBe(true)
++      expect(evaluateCondition(condition, true, results)).toBe(false)
++      expect(evaluateCondition(condition, false, results, 'push')).toBe(false)
++      const failureStep = aggregate.steps!.find(step => step.name === 'Fail if any needed job did not succeed')!
++      expect(evaluateCondition(failureStep.if!, false, results)).toBe(result !== 'success')
++      expect(failureStep.run).toContain('exit 1')
++    },
++  )
++
++  it('distinguishes the obsolete always verdict from the cancellable status guard', () => {
++    expect(evaluateCondition("always() && github.event_name == 'pull_request'", true, ['success'])).toBe(true)
++    expect(evaluateCondition(workflow('ci.yml').jobs['all-checks-passed']!.if as string, true, ['success'])).toBe(false)
++  })
++
+   it('keeps only Linux and Windows x64 runtimes in required PR CI', () => {
+     const pr = workflow('ci.yml')
+     expect(Object.keys(pr.on)).toEqual(['pull_request'])
+@@ -49,7 +86,7 @@ describe('master-only platform scheduling', () => {
+     expect(aggregate.needs).toContain('python-runtime')
+     expect(aggregate.needs).not.toContain('windows')
+     expect(aggregate.needs!.every(id => id in pr.jobs)).toBe(true)
+-    expect(aggregate.if).toBe("always() && github.event_name == 'pull_request'")
++    expect(aggregate.if).toBe("${{ !cancelled() && github.event_name == 'pull_request' }}")
+     expect(aggregate.steps).toContainEqual(expect.objectContaining({
+       if: "contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped')",
+     }))
+@@ -70,7 +107,7 @@ describe('master-only platform scheduling', () => {
+     expect(runtime['continue-on-error']).toBeUndefined()
+     const builder = workflow('build-exe-for-python-sdk.yml')
+     expect(builder.concurrency?.['cancel-in-progress']).toBe(
+-      "${{ github.event_name != 'push' || github.ref != 'refs/heads/master' }}",
++      '${{ !inputs.release }}',
+     )
+     const build = builder.jobs.build!
+     const preflight = build.steps!.find(step => step.name === 'Preflight installed-wheel real API test (POSIX)')!

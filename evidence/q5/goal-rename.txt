@@ -1,0 +1,21 @@
+commit a2d0f7f41121ee81911dd1badbf248edd3f2ab70
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Thu Aug 13 00:36:22 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Thu Aug 13 00:54:38 2026 +0800
+
+    refactor: apply repository naming contract
+    
+    Apply the accepted pre-release package, service, type, directory, and role renames as one repository-wide change.
+
+R069	packages/goal/goal-session/README.i18n.yaml	packages/goal/goal-round-driver/README.i18n.yaml
+R098	packages/goal/goal-session/README.md	packages/goal/goal-round-driver/README.md
+R098	packages/goal/goal-session/README.zh.md	packages/goal/goal-round-driver/README.zh.md
+R093	packages/goal/goal-session/package.json	packages/goal/goal-round-driver/package.json
+R093	packages/goal/goal-session/src/index.ts	packages/goal/goal-round-driver/src/index.ts
+R094	packages/goal/goal-session/src/invariant.ts	packages/goal/goal-round-driver/src/invariant.ts
+R100	packages/goal/goal-session/src/prompt.ts	packages/goal/goal-round-driver/src/prompt.ts
+R099	packages/goal/goal-session/tests/goal-session.spec.ts	packages/goal/goal-round-driver/tests/goal-round-driver.spec.ts
+R083	packages/goal/goal-session/tests/invariant.spec.ts	packages/goal/goal-round-driver/tests/invariant.spec.ts
+R089	packages/goal/goal-session/tsconfig.json	packages/goal/goal-round-driver/tsconfig.json
+R100	packages/goal/goal-session/tsdown.config.ts	packages/goal/goal-round-driver/tsdown.config.ts

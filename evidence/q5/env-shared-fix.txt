@@ -1,0 +1,260 @@
+commit 43d81b67cef2a957afd2cb0646894757f3f28315
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Mon Jul 27 01:21:32 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Mon Jul 27 01:21:32 2026 +0800
+
+    fix(subprocess): consumers with one mixed env map split DSH_* onto the managed channel
+    
+    Codex review of the acp-only fix found lsp-local carries the identical
+    defect: its server config's unrestricted env merges into the connection's
+    ordinary spawn channel, so a configured DSH_* fact crashed the spawn with
+    the reserved-namespace rejection. The partition now lives on the seam as
+    splitEnvChannels() beside the scrub it complements; the ACP run and the
+    LSP connection both use it, and each proves child delivery end-to-end
+    (MOCK_ECHO_ENV / LSP_FAKE_ECHO_ENV fixture knobs). Seam + consumer README
+    rows updated (en+zh, re-recorded). bash-local is already two-channel;
+    mcp/pty/sdk bypass the seam and only share the scrub.
+diff --git a/packages/lsp/lsp-local/README.i18n.yaml b/packages/lsp/lsp-local/README.i18n.yaml
+index 9532bc1cb3..41bbe5f7c6 100644
+--- a/packages/lsp/lsp-local/README.i18n.yaml
++++ b/packages/lsp/lsp-local/README.i18n.yaml
+@@ -2,5 +2,5 @@
+ # side as of the last confirmed-consistent state. Both languages carry equal authority;
+ # after editing either side, bring the other along and re-record with:
+ #   pnpm run verify-translation-pairing --write
+-README.md: 462cb12ce96dbbb645c9a19126911d32d4ddd722
+-README.zh.md: f5537a416c49106b128188efe4adb2d65304320a
++README.md: 3c70977b6ea783d5aa1766709d2a507e08b8ceca
++README.zh.md: d24100c5f850172845a24acadcbd2d0207b64859
+diff --git a/packages/lsp/lsp-local/README.md b/packages/lsp/lsp-local/README.md
+index 462cb12ce9..3c70977b6e 100644
+--- a/packages/lsp/lsp-local/README.md
++++ b/packages/lsp/lsp-local/README.md
+@@ -23,7 +23,7 @@ The `servers` record key is the stable provider id reserved on `ctx.lsp`; each v
+ |---|---|---|
+ | `command` | (required) | Executable to spawn — absolute, or resolved on the child PATH at load. Launch uses no shell. |
+ | `args` | `[]` | Arguments passed to the executable. |
+-| `env` | `{}` | Extra env merged on top of the credential-scrubbed ambient env (vars matching `KEY`/`SECRET`/`TOKEN` are not forwarded). |
++| `env` | `{}` | Extra env merged on top of the credential-scrubbed ambient env (vars matching `KEY`/`SECRET`/`TOKEN` are not forwarded); `DSH_*` entries ride the subprocess seam's managed channel. |
+ | `extensionToLanguage` | (required) | Lowercase leading-dot extension → LSP language id (e.g. `{ '.ts': 'typescript' }`). |
+ | `initializationOptions` | `null` | Static `initialize` options forwarded to the server. |
+ | `configuration` | `null` | Static answer to every `workspace/configuration` item. |
+diff --git a/packages/lsp/lsp-local/README.zh.md b/packages/lsp/lsp-local/README.zh.md
+index f5537a416c..d24100c5f8 100644
+--- a/packages/lsp/lsp-local/README.zh.md
++++ b/packages/lsp/lsp-local/README.zh.md
+@@ -23,7 +23,7 @@ Namespace 插件（`name`／`inject`／`Config`／`apply`，无默认导出）
+ |---|---|---|
+ | `command` | （必填） | 要 spawn 的可执行文件：绝对路径，或在加载时从子进程 PATH 解析。不使用 shell 启动。 |
+ | `args` | `[]` | 传给可执行文件的参数。 |
+-| `env` | `{}` | 合并到已清理 credential 的环境之上的额外 env（匹配 `KEY`／`SECRET`／`TOKEN` 的变量不会转发）。 |
++| `env` | `{}` | 合并到已清理 credential 的环境之上的额外 env（匹配 `KEY`／`SECRET`／`TOKEN` 的变量不会转发）；`DSH_*` 条目走 subprocess seam 的受管通道。 |
+ | `extensionToLanguage` | （必填） | 小写、以点开头的扩展名 → LSP language id（例如 `{ '.ts': 'typescript' }`）。 |
+ | `initializationOptions` | `null` | 转发给服务器的静态 `initialize` 选项。 |
+ | `configuration` | `null` | 每个 `workspace/configuration` 配置项的静态答案。 |
+diff --git a/packages/lsp/lsp-local/src/connection.ts b/packages/lsp/lsp-local/src/connection.ts
+index cbad79ea0d..74f68288e6 100644
+--- a/packages/lsp/lsp-local/src/connection.ts
++++ b/packages/lsp/lsp-local/src/connection.ts
+@@ -11,6 +11,7 @@
+  */
+ 
+ import type { Writable } from 'node:stream'
++import { splitEnvChannels } from '@deepseek-ai/dsh-subprocess'
+ import type { SubprocessHandle, SubprocessSpawnSpec } from '@deepseek-ai/dsh-subprocess'
+ import { encodeMessage, MessageDecoder } from './framing.ts'
+ 
+@@ -98,7 +99,9 @@ export class LspConnection {
+         stderr: { maxBytes: spec.maxStderrBytes },
+       },
+       graceMs: spec.pipeDrainGraceMs,
+-      env: spec.env,
++      // spec.env mixes the scrubbed base with explicit config entries; a
++      // configured DSH_* fact takes the managed channel the seam reserves.
++      ...splitEnvChannels(spec.env),
+     })
+     /* v8 ignore start -- 'pipe' dispositions expose both streams by the seam contract; defensive. */
+     if (this.handle.stdin === undefined || this.handle.stdout === undefined) {
+diff --git a/packages/lsp/lsp-local/tests/connection.spec.ts b/packages/lsp/lsp-local/tests/connection.spec.ts
+index 0fdf223521..c717e3c886 100644
+--- a/packages/lsp/lsp-local/tests/connection.spec.ts
++++ b/packages/lsp/lsp-local/tests/connection.spec.ts
+@@ -51,6 +51,15 @@ describe('LspConnection', () => {
+     expect(conn.pid).toBeGreaterThan(0)
+   })
+ 
++  it('routes explicit DSH_* env entries onto the managed channel', async () => {
++    // A configured DSH_* fact must reach the child: the ordinary channel
++    // rejects the reserved namespace, so the connection's spawn must split it
++    // onto dshEnv. The fixture echoes the named variable back as hover text.
++    const conn = connect({ LSP_FAKE_ECHO_ENV: 'DSH_LSP_TEST_FACT', DSH_LSP_TEST_FACT: 'managed' })
++    await conn.request('initialize', { capabilities: {} })
++    expect(await conn.request('textDocument/hover', {})).toEqual({ contents: 'managed' })
++  })
++
+   it('rejects a request when the server replies with an error', async () => {
+     const conn = connect({ LSP_FAKE_ERROR: '1' })
+     await conn.request('initialize', { capabilities: {} })
+diff --git a/packages/lsp/lsp-local/tests/fixture-server.ts b/packages/lsp/lsp-local/tests/fixture-server.ts
+index 1a30ed5628..9399b5a1a7 100644
+--- a/packages/lsp/lsp-local/tests/fixture-server.ts
++++ b/packages/lsp/lsp-local/tests/fixture-server.ts
+@@ -58,7 +58,13 @@ function resultFor(method: string): unknown {
+     case 'textDocument/definition': return envJson('LSP_FAKE_DEF', null)
+     case 'textDocument/references': return envJson('LSP_FAKE_REFS', null)
+     case 'textDocument/implementation': return envJson('LSP_FAKE_IMPL', null)
+-    case 'textDocument/hover': return envJson('LSP_FAKE_HOVER', null)
++    case 'textDocument/hover': {
++      // LSP_FAKE_ECHO_ENV names a variable whose VALUE becomes the hover
++      // contents — a test can assert exactly what env reached this process.
++      const echoName = process.env.LSP_FAKE_ECHO_ENV
++      if (echoName !== undefined) return { contents: process.env[echoName] ?? `<${echoName} unset>` }
++      return envJson('LSP_FAKE_HOVER', null)
++    }
+     default: return null
+   }
+ }
+diff --git a/packages/subagent/subagent-acp/src/run.ts b/packages/subagent/subagent-acp/src/run.ts
+index d2fc52d876..07358f230c 100644
+--- a/packages/subagent/subagent-acp/src/run.ts
++++ b/packages/subagent/subagent-acp/src/run.ts
+@@ -25,8 +25,8 @@ import {
+ import type { ContentBlock } from '@deepseek-ai/dsh-llm'
+ import { SessionId } from '@deepseek-ai/dsh-session'
+ import type { SubagentResult, SubagentRun, SubagentStartRequest, SubagentStopReason } from '@deepseek-ai/dsh-subagent'
+-import { DSH_ENV_PREFIX } from '@deepseek-ai/dsh-subprocess'
+-import type { DshEnvironmentKey, SubprocessHandle, SubprocessSpawnSpec } from '@deepseek-ai/dsh-subprocess'
++import { splitEnvChannels } from '@deepseek-ai/dsh-subprocess'
++import type { SubprocessHandle, SubprocessSpawnSpec } from '@deepseek-ai/dsh-subprocess'
+ 
+ /** Fixed response to child permission requests: reject by default, or select the first allow option. */
+ export type PermissionPolicy = 'allow' | 'reject'
+@@ -170,23 +170,14 @@ export async function startAcpRun(request: SubagentStartRequest, spec: AcpRunSpe
+ 
+   // Keep diagnostics on parent stderr ('inherit'); only ACP output contributes
+   // to the result. The seam's scrub drops ambient credentials while spec.env
+-  // (the child's own key) merges after it. Explicit DSH_* entries are the
+-  // deployment's facts for the child and take the managed channel — the
+-  // ordinary channel rejects that reserved namespace.
+-  const env: Record<string, string> = {}
+-  const dshEnv: Record<DshEnvironmentKey, string> = {}
+-  const isDshKey = (key: string): key is DshEnvironmentKey => key.startsWith(DSH_ENV_PREFIX)
+-  for (const [key, value] of Object.entries(spec.env)) {
+-    if (isDshKey(key)) dshEnv[key] = value
+-    else env[key] = value
+-  }
++  // (the child's own key) merges after it; explicit DSH_* entries ride the
++  // managed channel via the seam's split.
+   const child = spec.spawn({
+     argv: [spec.command, ...spec.args],
+     cwd: spec.cwd,
+     stdio: { stdin: 'pipe', stdout: 'pipe', stderr: 'inherit' },
+     graceMs: spec.disposeGraceMs,
+-    env,
+-    dshEnv,
++    ...splitEnvChannels(spec.env),
+   })
+   /* v8 ignore start -- 'pipe' dispositions expose both streams by the seam contract; defensive. */
+   if (child.stdin === undefined || child.stdout === undefined) {
+diff --git a/packages/subprocess/subprocess/README.i18n.yaml b/packages/subprocess/subprocess/README.i18n.yaml
+index 818069e978..31f0fc4e84 100644
+--- a/packages/subprocess/subprocess/README.i18n.yaml
++++ b/packages/subprocess/subprocess/README.i18n.yaml
+@@ -2,5 +2,5 @@
+ # side as of the last confirmed-consistent state. Both languages carry equal authority;
+ # after editing either side, bring the other along and re-record with:
+ #   pnpm run verify-translation-pairing --write
+-README.md: 73e0a4abe49e8d3060f246218694faee127668e9
+-README.zh.md: c38a1dd7c15e7d1c0f3139f8942911a4cd9f23fe
++README.md: 2cb7a5ebce404c440e625dea844ed28ceadb06f3
++README.zh.md: a3211834e065359e813e8148a8f6a6a15f8f89b6
+diff --git a/packages/subprocess/subprocess/README.md b/packages/subprocess/subprocess/README.md
+index 73e0a4abe4..2cb7a5ebce 100644
+--- a/packages/subprocess/subprocess/README.md
++++ b/packages/subprocess/subprocess/README.md
+@@ -10,7 +10,7 @@ The subprocess seam (`ctx.subprocess`). The abstract `SubprocessService` exposes
+ - The spec is fully explicit — argv, cwd, per-stream stdio dispositions, grace — because deployment-varying defaults belong to the calling seam's config, not to a hidden subprocess-service default (the `dsh-bash` request/spec split is the owning template). `argv` is never shell-interpreted; a consumer that wants a shell passes `['bash', '-c', command]` itself.
+ - Stdio is Node-shaped per stream: `'pipe'` hands the caller the raw stream for its own protocol framing (LSP JSON-RPC, ACP ndjson), `'inherit'` passes the parent descriptor through for diagnostics, and collect mode (`{ maxBytes, spill? }`) buffers a bounded tail with an optional full-stream spill file. Collect readers take whole-stream byte offsets and never consume, so independent readers cannot steal one another's deltas; a read whose offset slid out of the in-memory tail is `lossy` and points at the spill file when one exists. Collected output stays readable after settlement.
+ - Termination is tree-scoped on every platform (POSIX detached groups with direct-child fallback; Windows `taskkill /T`): `kill(signal)` sends one signal Node-style and is a no-op after settlement, `terminate()` (and the spec's abort signal) escalates SIGTERM→grace→SIGKILL, `waitForExit()` observes the whole tree, and `dispose(graces)` runs the cooperative stdin-EOF→SIGTERM→SIGKILL ladder out-of-process children need — the manager reacts but never classifies why (callers own deadlines and cause classification).
+-- `scrubbedParentEnv()` / `SENSITIVE_ENV_PATTERN` are the one shared scrub definition: ambient credential-shaped and `DSH_*` names are dropped, explicit `env` merges after the scrub (a deliberately forwarded key survives), and `dshEnv` carries current harness facts on its own validated channel. Spawners that cannot route through the service (node-pty backends, SDK-managed transports) import the function.
++- `scrubbedParentEnv()` / `SENSITIVE_ENV_PATTERN` are the one shared scrub definition: ambient credential-shaped and `DSH_*` names are dropped, explicit `env` merges after the scrub (a deliberately forwarded key survives), and `dshEnv` carries current harness facts on its own validated channel; `splitEnvChannels()` partitions a consumer config's single mixed env map onto those two channels (lsp-local servers and the ACP backend expose one map, and a configured `DSH_*` fact must ride the managed channel the ordinary one rejects). Spawners that cannot route through the service (node-pty backends, SDK-managed transports) import the scrub.
+ - Disposal of the service terminates all still-running managed processes and awaits their exit.
+ 
+ See the [subprocess data-structure catalog](../../../docs/core-data-structures/subprocess.md) and the [seam Agent Note](../../../.agents/notes/implemented/architecture/2026-07-26-subprocess-seam.md).
+diff --git a/packages/subprocess/subprocess/README.zh.md b/packages/subprocess/subprocess/README.zh.md
+index c38a1dd7c1..a3211834e0 100644
+--- a/packages/subprocess/subprocess/README.zh.md
++++ b/packages/subprocess/subprocess/README.zh.md
+@@ -10,7 +10,7 @@
+ - spec 完全显式（argv、cwd、按流划分的 stdio 处置方式（disposition）、宽限期），因为随部署变化的默认值属于调用方 seam 的配置，而不属于某个隐藏的进程管理器默认值（`dsh-bash` 的 request/spec 拆分是这条规则的所属模板）。`argv` 绝不经过 shell 解释；需要 shell 的消费方自行传入 `['bash', '-c', command]`。
+ - stdio 按流采用 Node 形状：`'pipe'` 把原始流交给调用方做自己的协议分帧（LSP 的 JSON-RPC、ACP（Agent Client Protocol）的 ndjson），`'inherit'` 直通父进程描述符以承载诊断输出，收集模式（collect）`{ maxBytes, spill? }` 则缓冲一段有界尾部，外加可选的完整流 spill 文件。收集模式的读取器接受全流字节偏移量且从不消费，因此独立的读取器不会抢走彼此的增量；偏移量滑出内存尾部窗口的读取标记为 `lossy`，并在 spill 文件存在时指向它。收集到的输出在结算后仍可读取。
+ - 终止在每个平台上都以进程树为范围（POSIX 用 detached 进程组并以直接子进程回退；Windows 用 `taskkill /T`）：`kill(signal)` 以 Node 风格只发送一个信号，结算后为空操作；`terminate()`（以及 spec 的 abort 信号）执行 SIGTERM→宽限期→SIGKILL 升级；`waitForExit()` 观察整棵进程树；`dispose(graces)` 运行进程外子进程所需的协作式 stdin EOF→SIGTERM→SIGKILL 阶梯。管理器只响应中止，但绝不判定原因（deadline 与原因分类归调用方所有）。
+-- `scrubbedParentEnv()` / `SENSITIVE_ENV_PATTERN` 是唯一一份共享的凭据清除定义：环境中形似凭据的名称与 `DSH_*` 名称都会被丢弃，显式 `env` 在清除之后合并（有意转发的键会保留下来），`dshEnv` 则经由自身带校验的通道携带当前 harness 事实。无法把 spawn 路由到该服务的调用点（node-pty 后端、由 SDK 管理的传输层）改为导入该函数。
++- `scrubbedParentEnv()` / `SENSITIVE_ENV_PATTERN` 是唯一一份共享的凭据清除定义：环境中形似凭据的名称与 `DSH_*` 名称都会被丢弃，显式 `env` 在清除之后合并（有意转发的键会保留下来），`dshEnv` 则经由自身带校验的通道携带当前 harness 事实；`splitEnvChannels()` 把消费方配置中单一的混合 env 映射按这两条通道切分（lsp-local 的服务器配置与 ACP 后端只暴露一个映射，而配置的 `DSH_*` 事实必须走受管通道，普通通道会拒绝它）。无法把 spawn 路由到该服务的调用点（node-pty 后端、由 SDK 管理的传输层）改为导入凭据清除函数。
+ - 服务自身的 dispose（资源释放）会终止所有仍在运行的受管进程并等待其退出。
+ 
+ 参见[进程管理器数据结构目录](../../../docs/core-data-structures/subprocess.md)与 [seam Agent Note（agent 决策记录）](../../../.agents/notes/implemented/architecture/2026-07-26-subprocess-seam.md)。
+diff --git a/packages/subprocess/subprocess/src/index.ts b/packages/subprocess/subprocess/src/index.ts
+index bbcca90133..e4cfaae901 100644
+--- a/packages/subprocess/subprocess/src/index.ts
++++ b/packages/subprocess/subprocess/src/index.ts
+@@ -12,6 +12,7 @@
+ 
+ import { Context, Service } from 'cordis'
+ import { DSH_ENV_PREFIX } from './types.ts'
++import type { DshEnvironment, DshEnvironmentKey } from './types.ts'
+ import type { SubprocessHandle, SubprocessSpawnSpec } from './types.ts'
+ 
+ export { DSH_ENV_PREFIX } from './types.ts'
+@@ -61,6 +62,27 @@ export function scrubbedParentEnv(): Record<string, string> {
+   return env
+ }
+ 
++/**
++ * Partition one mixed explicit-env map onto the spec's two channels: `DSH_*`
++ * names are deployment-owned facts for the child and take the managed
++ * {@link SubprocessSpawnSpec.dshEnv} channel (the ordinary channel rejects the
++ * reserved namespace), everything else stays ordinary `env`. For consumers
++ * whose configs expose a single env map (lsp-local servers, the ACP backend)
++ * rather than two channel-shaped fields.
++ * @param env - explicit entries from a consumer's config, both namespaces mixed.
++ * @returns the two spec channels, each safe for its validator.
++ */
++export function splitEnvChannels(env: Readonly<Record<string, string>>): { env: Record<string, string>; dshEnv: DshEnvironment } {
++  const ordinary: Record<string, string> = {}
++  const managed: Record<DshEnvironmentKey, string> = {}
++  const isDshKey = (key: string): key is DshEnvironmentKey => key.startsWith(DSH_ENV_PREFIX)
++  for (const [key, value] of Object.entries(env)) {
++    if (isDshKey(key)) managed[key] = value
++    else ordinary[key] = value
++  }
++  return { env: ordinary, dshEnv: managed }
++}
++
+ declare module 'cordis' {
+   interface Context {
+     subprocess: SubprocessService
+diff --git a/packages/subprocess/subprocess/tests/service.spec.ts b/packages/subprocess/subprocess/tests/service.spec.ts
+index d033e24a31..9fb68f403f 100644
+--- a/packages/subprocess/subprocess/tests/service.spec.ts
++++ b/packages/subprocess/subprocess/tests/service.spec.ts
+@@ -1,6 +1,6 @@
+ import { describe, expect, it } from 'vitest'
+ import { Context } from 'cordis'
+-import { scrubbedParentEnv, SubprocessService } from '@deepseek-ai/dsh-subprocess'
++import { scrubbedParentEnv, splitEnvChannels, SubprocessService } from '@deepseek-ai/dsh-subprocess'
+ import type { SubprocessDisposeGraces, SubprocessHandle, SubprocessOutputRead, SubprocessSpawnSpec } from '@deepseek-ai/dsh-subprocess'
+ 
+ /**
+@@ -72,4 +72,10 @@ describe('SubprocessService seam', () => {
+       delete process.env.SCRUB_PROBE_PLAIN
+     }
+   })
++
++  it('splitEnvChannels partitions a mixed map onto the two spec channels', () => {
++    const { env, dshEnv } = splitEnvChannels({ DSH_FACT: 'managed', PLAIN: 'ordinary', DEEPSEEK_API_KEY: 'explicit' })
++    expect(env).toEqual({ PLAIN: 'ordinary', DEEPSEEK_API_KEY: 'explicit' })
++    expect(dshEnv).toEqual({ DSH_FACT: 'managed' })
++  })
+ })

@@ -1,0 +1,1446 @@
+commit 25555c9cfc33b0e7eb0d656cb3ae011d6e7bfdab
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Sun Jul 19 20:30:43 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Sun Jul 19 20:30:43 2026 +0800
+
+    feat(goal): drive same-session goal rounds
+diff --git a/docs/rfc/implemented/feature/2026-07-19-same-session-goal-round-driver.md b/docs/rfc/implemented/feature/2026-07-19-same-session-goal-round-driver.md
+new file mode 100644
+index 0000000000..886ea98105
+--- /dev/null
++++ b/docs/rfc/implemented/feature/2026-07-19-same-session-goal-round-driver.md
+@@ -0,0 +1,100 @@
++# RFC: Same-session goal-round driver
++
++Status: implemented
++
++English | [中文](2026-07-19-same-session-goal-round-driver.zh.md)
++
++## Problem
++
++The goal domain can retain an objective and the model-facing tools can mutate its lifecycle, but neither should decide when another model turn begins. A continuation driver must bridge active goal state to the ordinary agent loop without adding goal-specific branches to `dsh-agent-loop`, inventing a second conversation, or treating every human turn as an autonomous iteration.
++
++That bridge has concurrency and durability obligations. Human input, cancellation, a goal edit, persistence failure, session restart, plugin unload, and a downstream prompt policy can all race a pending continuation. A naive `goal/changed -> agent.send()` listener can admit obsolete work, run alongside a human prompt, spend beyond the cap, or restart from replay without new authority.
++
++## Decision
++
++`@deepseek-ai/dsh-goal-session` in `packages/goal/goal-session/` is a policy plugin over `ctx.goals`, the public `Agent` interface, and durable session events. It imports no concrete agent-loop implementation. For each exact live `Agent`, it owns process-local scheduling state and may reserve at most one automatic round.
++
++The hierarchy is Goal → Goal Round → Turn → Step. A goal round is the outer continuation policy iteration; it becomes one goal-sourced session turn, and that turn can contain any number of ordinary model/tool steps. Human turns in the same session are not goal rounds and never increment `roundsStarted`.
++
++The plugin has no configuration. `maxGoalRounds` is resolved and persisted by `dsh-goal`, and the same-condition blocking threshold is resolved and prompted by `dsh-tool-goal`. Repeating those tunables in the driver would create multiple owners for one policy.
++
++### Reservation and admission
++
++When an agent is idle, has no competing queued work, and its current goal is `active` plus `armed`, the driver checkpoints pending goal mutations and rechecks every predicate after the await. If `roundsStarted` already equals `maxGoalRounds`, it records `budget-limited`. Otherwise it reserves the exact identity `{ goalId, revision, round: roundsStarted + 1 }` and the complete rendered prompt before calling `Agent.send()` with `GoalMessageSource`. The prompt JSON-quotes the objective so multiline or tag-like text remains an unambiguous data value inside the familiar frame.
++
++The `agent/prompt-submit` waterfall is the admission fence. A positive goal source is allowed only when it exactly matches the driver's pending identity and content, the live goal still has that id and revision, activation remains armed, and the round is still the next number. The plugin checks once before delegating and again after downstream hooks return. This second check prevents an async hook from editing or pausing the goal while still admitting the old prompt.
++
++Only the resulting `user/message` is an admitted round and advances the goal fold. A stale reservation becomes a durable `prompt/blocked` plus zero-step rejected turn, but the driver marks it stale and does not charge the round. A downstream policy rejection that is not caused by staleness blocks the goal rather than retrying around policy.
++
++### Human work and revision races
++
++`agent/queued` distinguishes the driver's complete accepted record from every other prompt. Ordinary work already queued before a reservation prevents scheduling. Ordinary work queued while an automatic prompt is pending makes that reservation stale, so a mixed batch admits the human prompt but rejects the automatic one. Ordinary work arriving after the goal round was admitted remains queued for its own next turn; continuation is reconsidered only when the agent later becomes idle.
++
++A goal mutation during a round advances its durable revision. Settlement of the older revision cannot overwrite that mutation. The driver discards the old attempt outcome, reads the new projection, and continues only if the new revision is still active and armed. This makes model-recorded completion, pause, block, and edit authoritative over the physical turn's later close reason.
++
++### Settlement
++
++The driver classifies one closed goal-owned turn as follows:
++
++| Turn result | Action |
++|---|---|
++| durable `completed` | continue while active/armed and under cap |
++| broad cancellation / `aborted` | pause and disarm |
++| `error` with code `RATE_LIMIT` | mark `usage-limited` |
++| other `error` | block |
++| `max-tokens` | block |
++| non-stale `rejected` | block |
++| failed durability checkpoint | disarm without changing durable phase |
++| `disposed` or `interrupted` | disarm |
++| plugin-added unknown result | block for inspection |
++
++No abnormal outcome requests an automatic retry. A later human prompt can ask to continue in any language; the model reads the stopped goal and uses the goal tool's resume action, which records a new revision and arms continuation.
++
++### Durability and cancellation seam
++
++Every `goal/changed` notification creates a checkpoint obligation. The driver awaits `ctx.sessions.flush(session)` before reserving work, then checks for a newer mutation, agent lifecycle change, or competing prompt. Turn-end flush failure is reported by the existing `agent/error` notification after `turn/end`; the driver associates it with the exact attempt and disarms before the next idle decision.
++
++Broad cancellation previously exposed only its effects after queues were cleared or the request aborted. The public agent vocabulary now includes observe-only `agent/cancel-requested(agent, reason)`. The concrete loop emits it for effective cancellation before either action; fused notification containment means a broken listener cannot veto cancellation. The goal driver uses this edge to clear its reservation and pause an active armed goal before the loop destroys the queued-work evidence.
++
++This is a coordination notification, not a second stop API. `Agent.cancel()` remains the only public broad cancellation verb, idle calls remain no-ops, and custom `Agent` implementations that claim the interface must honor the event ordering if consumers depend on it.
++
++### Process lifecycle
++
++`GoalService.disarm(agent)` removes only process-local activation. It writes no session event, changes no revision, and emits no goal mutation. The driver calls it while loading over existing agents, on durability uncertainty, and before teardown; a later `resume` is the durable activation edge visible to the model.
++
++The driver's event listeners and quiescent close are nested in one ordered Cordis effect. Cordis unloads sibling effects concurrently, so separate listener and cleanup registrations could remove the prompt fence while an async disposer was still draining. The composite effect first closes admission, disarms goals, cancels an admitted attempt, and awaits both agent and driver quiescence; only then does it unregister its listeners.
++
++An inbox acceptance can win the microtask race immediately before plugin unload begins. In that case the turn and even its first request may start and the round remains durably charged; once unload starts, cancellation aborts it, no following round is scheduled, and the goal remains active but disarmed. Pretending that already-observed admission never happened would corrupt replay accounting.
++
++## Testing
++
++The unit suite uses the real agent loop and session service with only the model scripted. It covers exact sequential admission and cap enforcement, load/resume inertness, every outcome classification, rate limiting, request errors, max tokens, downstream prompt veto, pre-admission and in-flight cancellation, human-input ordering, queued and downstream revision races, forged goal attribution, failed mutation and turn checkpoints, scheduler and custom-agent failures, session-start reset, exact lifecycle retirement, and queued/running plugin teardown. The new driver source has per-file 100% statement, branch, function, and line coverage.
++
++A keyless Loader/stdio process test mounts the real goal domain, goal tools, goal driver, agent loop, persistence, and deterministic adapter through `cordis.yml`. One human turn creates a two-round goal; round one stops normally; round two reads the exact ref and completes it. The external JSONL assertion proves one session, round sources `1, 2`, unchanged round revision, final complete revision, five model steps, and no extra request after the terminal completion tool.
++
++The core cancellation test proves notification order and containment: observers run only for effective cancellation, can queue replacement work before the inbox clear, cannot veto later observers by throwing, and an idle call emits nothing.
++
++## Alternatives considered
++
++- **Add a goal loop inside `dsh-agent-loop`** — rejected because the public queue, prompt, session, cancellation, and status seams are sufficient, and a concrete-loop branch would privilege one policy.
++- **Use `agent/turn-continuation` to make every round another step** — rejected because a goal round is an outer policy iteration and must have its own durable user prompt, turn boundary, round count, and failure settlement.
++- **Persist a pending reservation** — rejected because a crash cannot prove that queued process memory had reached admission; only the durable `user/message` consumes the round.
++- **Retry provider or persistence errors automatically** — rejected because retry policy spends resources and needs explicit authority; stopped phases plus later human resume are simpler and observable.
++- **Fork conversation history or spawn a fresh agent for every round** — rejected for this package because the goal is explicitly same-session work. Fresh-agent Ralph execution remains a separate workflow plugin built from subagent and workflow primitives.
++- **Reuse every session turn as the round counter** — rejected because human clarification and unrelated work share the session but not the automatic-work budget.
++
++## Consequences
++
++- Goal continuation remains a removable plugin and the concrete loop gains only a generic observe-before-cancel notification.
++- Replay can reconstruct every admitted round from its exact goal source and prompt; rejected reservations cannot create phantom budget use.
++- Human messages and lifecycle mutations win documented races without corrupting the revision or counter.
++- Resume and fork remain inert until semantic human intent causes the model to record a resume mutation.
++- Conservative failure mapping can require manual continuation after transient failures, but it never hides an automatic retry.
++
++## Known limitations and deferred work
++
++- Completion evidence and semantic blocker equivalence remain model judgments. An independent evaluator, completion certificate, or verifier-driven stop policy is deferred to a separate policy plugin.
++- This package does not provide Ralph-style fresh-agent attempts, context reset, cross-round evaluator feedback, or workflow-level parallelism; those belong to the separate Ralph workflow tool.
++- Cordis unload begins asynchronously. An already accepted inbox item may enter one charged round and start one request before teardown cancellation takes effect; the closing drain prevents every subsequent round.
++- `maxGoalRounds` is only an admitted-round limit. Token, currency, wall-clock, and provider-usage budgets require independent policy.
++- A custom `Agent` implementation must produce the documented session events, status edges, cancel notification, and quiescence semantics; structural TypeScript compatibility alone cannot verify runtime ordering.
+diff --git a/packages/goal/goal-session/src/index.ts b/packages/goal/goal-session/src/index.ts
+new file mode 100644
+index 0000000000..09ff85cac4
+--- /dev/null
++++ b/packages/goal/goal-session/src/index.ts
+@@ -0,0 +1,443 @@
++/**
++ * Same-session goal-round driver over public agent, session, and goal seams.
++ * @module @deepseek-ai/dsh-goal-session
++ */
++
++import { isDeepStrictEqual } from 'node:util'
++import { FiberState } from 'cordis'
++import type { Context } from 'cordis'
++import type { Agent, PromptDecision } from '@deepseek-ai/dsh-agent'
++import type { GoalMessageSource, GoalRef, GoalView } from '@deepseek-ai/dsh-goal'
++import { assertNever } from '@deepseek-ai/dsh-llm'
++import type { ContentBlock, MessageSource } from '@deepseek-ai/dsh-llm'
++import type { Session, SessionEvent, TurnEndReason } from '@deepseek-ai/dsh-session'
++import { classifyGoalRound } from './outcome.ts'
++import type { GoalRoundOutcome } from './outcome.ts'
++import { renderGoalRoundPrompt } from './prompt.ts'
++
++export { classifyGoalRound } from './outcome.ts'
++export type { GoalRoundOutcome } from './outcome.ts'
++export { renderGoalRoundPrompt } from './prompt.ts'
++
++export const name = 'goal-session'
++export const inject = ['agents', 'goals', 'sessions']
++
++const STALE_ROUND_REASON = 'stale goal-round reservation'
++
++/** Identity reserved before a goal continuation enters the agent inbox. */
++interface RoundIdentity {
++  readonly goalId: GoalRef['id']
++  readonly revision: number
++  readonly round: number
++}
++
++/** One queued or admitted attempt, retained until its physical turn settles. */
++interface RoundAttempt extends RoundIdentity {
++  readonly content: ContentBlock[]
++  phase: 'queued' | 'admitted'
++  turn: number | undefined
++  reason: TurnEndReason | undefined
++  rejectedReason: string | undefined
++  stale: boolean
++}
++
++/** Serialized process-local scheduling state for one exact Agent lifecycle. */
++interface DriverState {
++  readonly agent: Agent
++  attempt: RoundAttempt | undefined
++  openTurn: number | undefined
++  competingQueued: boolean
++  needsCheckpoint: boolean
++  requested: boolean
++  run: Promise<void> | undefined
++  stopping: boolean
++  readonly flushFailedTurns: Set<number>
++}
++
++/** Whether a source identifies an automatic, positive-numbered goal round. */
++function isGoalRoundSource(source: MessageSource): source is GoalMessageSource {
++  return source.kind === 'goal' && source.round > 0
++}
++
++/** Compare a source to one reserved identity. */
++function sameRound(source: GoalMessageSource, round: RoundIdentity): boolean {
++  return source.goalId === round.goalId
++    && source.revision === round.revision
++    && source.round === round.round
++}
++
++/** Compare the complete queued record to the driver's reservation. */
++function sameQueued(content: ContentBlock[], source: MessageSource, attempt: RoundAttempt): boolean {
++  return isGoalRoundSource(source) && sameRound(source, attempt) && isDeepStrictEqual(content, attempt.content)
++}
++
++/** Exact current ref for a view. */
++function goalRef(goal: GoalView): GoalRef {
++  return { id: goal.id, revision: goal.revision }
++}
++
++/** Human-readable unexpected values for logs. */
++function renderThrown(value: unknown): string {
++  return value instanceof Error ? value.message : String(value)
++}
++
++/** Install automatic same-session continuation and its race fences. */
++export function apply(ctx: Context): void {
++  const states = new Map<Agent, DriverState>()
++
++  /** Create state for an exact currently live agent. */
++  function stateFor(agent: Agent): DriverState {
++    const existing = states.get(agent)
++    if (existing !== undefined) return existing
++    const state: DriverState = {
++      agent,
++      attempt: undefined,
++      openTurn: undefined,
++      competingQueued: false,
++      needsCheckpoint: false,
++      requested: false,
++      run: undefined,
++      stopping: false,
++      flushFailedTurns: new Set(),
++    }
++    states.set(agent, state)
++    return state
++  }
++
++  /** Read only when the exact Agent remains live. */
++  function currentGoal(state: DriverState): GoalView | undefined {
++    if (ctx.agents.get(state.agent.id) !== state.agent || state.agent.status === 'disposed') return undefined
++    return ctx.goals.get(state.agent)
++  }
++
++  /** Whether this exact lifecycle is quiescent with no competing prompt. */
++  function readyToDrive(state: DriverState): boolean {
++    return ctx.fiber.state === FiberState.ACTIVE
++      && !state.stopping
++      && ctx.agents.get(state.agent.id) === state.agent
++      && state.agent.status === 'idle'
++      && !state.competingQueued
++  }
++
++  /** Recheck every condition that an awaited checkpoint may have changed. */
++  function readyAfterCheckpoint(state: DriverState): boolean {
++    return readyToDrive(state) && !state.needsCheckpoint
++  }
++
++  /** Remove automatic authority while preserving the durable phase. */
++  function disarm(state: DriverState): void {
++    try {
++      const goal = currentGoal(state)
++      if (goal?.activation === 'armed') ctx.goals.disarm(state.agent)
++    } catch (error: unknown) {
++      ctx.logger.warn(`goal-session: could not disarm agent "${state.agent.id}": ${renderThrown(error)}`)
++    }
++  }
++
++  /** Apply one closed-round outcome only to the exact still-current revision. */
++  function applyOutcome(state: DriverState, goal: GoalView, outcome: GoalRoundOutcome): void {
++    const ref = goalRef(goal)
++    switch (outcome.kind) {
++      case 'continue':
++        return
++      case 'pause':
++        ctx.goals.pause(state.agent, ref)
++        return
++      case 'usage-limited':
++        ctx.goals.markUsageLimited(state.agent, ref)
++        return
++      case 'blocked':
++        ctx.goals.block(state.agent, ref)
++        return
++      case 'disarm':
++        ctx.goals.disarm(state.agent)
++        return
++      /* v8 ignore next 2 -- GoalRoundOutcome is closed and every member is handled above */
++      default:
++        assertNever(outcome, 'goal round outcome')
++    }
++  }
++
++  /** Process a settled attempt, then reserve at most one next round. */
++  async function drive(state: DriverState): Promise<void> {
++    const { agent } = state
++    if (!readyToDrive(state)) return
++
++    if (state.needsCheckpoint) {
++      state.needsCheckpoint = false
++      try {
++        await ctx.sessions.flush(agent.session)
++      } catch (error: unknown) {
++        ctx.logger.warn(`goal-session: durability checkpoint failed for agent "${agent.id}": ${renderThrown(error)}`)
++        const goal = currentGoal(state)
++        if (goal !== undefined) applyOutcome(state, goal, { kind: 'disarm', reason: 'durability-failed' })
++        return
++      }
++      // A mutation or ordinary prompt may have arrived while the checkpoint
++      // was settling. Give it its own checkpoint / turn before reserving.
++      if (!readyAfterCheckpoint(state)) return
++    }
++
++    const attempt = state.attempt
++    if (attempt !== undefined) {
++      if (attempt.reason === undefined) return
++      state.attempt = undefined
++      const turn = attempt.turn
++      /* v8 ignore next -- a closed attempt acquired its turn at turn/start */
++      if (turn === undefined) throw new Error('settled goal-round attempt lacks a turn')
++      const durable = !state.flushFailedTurns.delete(turn)
++      const goal = currentGoal(state)
++      if (goal !== undefined && goal.id === attempt.goalId && goal.revision === attempt.revision
++        && goal.phase === 'active' && goal.activation === 'armed') {
++        const outcome = attempt.phase === 'queued' && attempt.rejectedReason !== undefined && !attempt.stale
++          ? { kind: 'blocked', reason: 'rejected', detail: attempt.rejectedReason } as const
++          : classifyGoalRound(attempt.reason, durable)
++        if (!attempt.stale) applyOutcome(state, goal, outcome)
++      }
++      if (!readyToDrive(state)) return
++    }
++
++    const goal = currentGoal(state)
++    if (goal === undefined || goal.phase !== 'active' || goal.activation !== 'armed') return
++    if (goal.roundsStarted >= goal.maxGoalRounds) {
++      ctx.goals.markBudgetLimited(agent, goalRef(goal))
++      return
++    }
++
++    const round = goal.roundsStarted + 1
++    const content = renderGoalRoundPrompt(goal, round)
++    const reservation: RoundAttempt = {
++      goalId: goal.id,
++      revision: goal.revision,
++      round,
++      content,
++      phase: 'queued',
++      turn: undefined,
++      reason: undefined,
++      rejectedReason: undefined,
++      stale: false,
++    }
++    state.attempt = reservation
++    try {
++      agent.send(content, {
++        source: { kind: 'goal', goalId: goal.id, revision: goal.revision, round },
++      })
++    } catch (error: unknown) {
++      state.attempt = undefined
++      ctx.logger.warn(`goal-session: could not queue round ${round} for agent "${agent.id}": ${renderThrown(error)}`)
++      const latest = currentGoal(state)
++      if (latest !== undefined && latest.id === goal.id && latest.revision === goal.revision
++        && latest.phase === 'active' && latest.activation === 'armed') {
++        ctx.goals.block(agent, goalRef(latest))
++      }
++    }
++  }
++
++  /** Coalesce triggers onto one agent-local serialized driver. */
++  function requestDrive(state: DriverState): void {
++    /* v8 ignore next -- teardown may race a final trigger after synchronously closing admission */
++    if (state.stopping) return
++    state.requested = true
++    if (state.run !== undefined) return
++    let run: Promise<void>
++    try {
++      run = ctx.agents.withoutInitiator(async () => {
++        while (state.requested && !state.stopping) {
++          state.requested = false
++          try {
++            await drive(state)
++          } catch (error: unknown) {
++            ctx.logger.warn(`goal-session: driver failed for agent "${state.agent.id}": ${renderThrown(error)}`)
++            disarm(state)
++          }
++        }
++      })
++    } catch (error: unknown) {
++      ctx.logger.warn(`goal-session: could not start driver for agent "${state.agent.id}": ${renderThrown(error)}`)
++      disarm(state)
++      return
++    }
++    state.run = run
++    const retire = (): void => {
++      state.run = undefined
++      if (state.requested && !state.stopping) requestDrive(state)
++    }
++    void run.then(retire, (error: unknown) => {
++      ctx.logger.warn(`goal-session: driver task rejected for agent "${state.agent.id}": ${renderThrown(error)}`)
++      disarm(state)
++      retire()
++    })
++  }
++
++  // One composite effect owns every listener and the quiescent close. Cordis
++  // unloads sibling effects concurrently; nesting makes the close run first
++  // and keeps the admission fence installed until its drain settles.
++  ctx.effect(function* () {
++    /** Mark a post-turn persistence failure before idle scheduling can run. */
++    ctx.on('agent/error', (agent, turn) => {
++      const state = stateFor(agent)
++      const last = agent.session.events.at(-1)
++      if (last?.type !== 'turn/end' || last.data.turn !== turn) return
++      if (state.attempt?.turn === turn) state.flushFailedTurns.add(turn)
++      disarm(state)
++    })
++
++    ctx.on('agent/created', (agent) => { stateFor(agent) })
++    ctx.on('agent/disposed', (agent) => { states.delete(agent) })
++    ctx.on('agent/session-start', (agent) => {
++      const state = stateFor(agent)
++      state.attempt = undefined
++      state.openTurn = undefined
++      state.competingQueued = false
++      state.needsCheckpoint = false
++      state.flushFailedTurns.clear()
++    })
++    ctx.on('agent/status', (agent, status) => {
++      const state = stateFor(agent)
++      if (status === 'disposed') {
++        state.stopping = true
++        return
++      }
++      if (status === 'idle') {
++        state.competingQueued = false
++        requestDrive(state)
++      }
++    })
++    ctx.on('agent/queued', (agent, content, info) => {
++      const state = stateFor(agent)
++      const attempt = state.attempt
++      if (attempt !== undefined && sameQueued(content, info.source, attempt)) return
++      state.competingQueued = true
++      if (attempt?.phase === 'queued') attempt.stale = true
++    })
++    ctx.on('agent/cancel-requested', (agent, reason) => {
++      const state = stateFor(agent)
++      state.attempt = undefined
++      state.competingQueued = false
++      const goal = currentGoal(state)
++      if (goal?.phase === 'active' && goal.activation === 'armed') {
++        applyOutcome(state, goal, { kind: 'pause', reason })
++      }
++    })
++    ctx.on('goal/changed', (agent) => {
++      const state = stateFor(agent)
++      state.needsCheckpoint = true
++      requestDrive(state)
++    })
++
++    ctx.on('session/event', (session: Session, event: SessionEvent) => {
++      const agent = ctx.agents.get(session.id)
++      if (agent === undefined || agent.session !== session) return
++      const state = stateFor(agent)
++      switch (event.type) {
++        case 'turn/start':
++          state.openTurn = event.data.turn
++          if (state.attempt !== undefined && isGoalRoundSource(event.data.trigger.source)
++          && sameRound(event.data.trigger.source, state.attempt)) {
++            state.attempt.turn = event.data.turn
++          }
++          return
++        case 'user/message':
++          if (state.attempt !== undefined && isGoalRoundSource(event.data.source)
++          && sameRound(event.data.source, state.attempt)) {
++            state.attempt.phase = 'admitted'
++            /* v8 ignore next -- this driver's admitted message always follows its observed turn/start */
++            if (state.openTurn !== undefined) state.attempt.turn = state.openTurn
++          }
++          return
++        case 'prompt/blocked':
++          if (state.attempt !== undefined && state.attempt.phase === 'queued'
++          && isGoalRoundSource(event.data.source) && sameRound(event.data.source, state.attempt)) {
++          /* v8 ignore next -- this driver's rejected message always follows its observed turn/start */
++            if (state.openTurn !== undefined) state.attempt.turn = state.openTurn
++            state.attempt.rejectedReason = event.data.reason
++            if (event.data.reason === STALE_ROUND_REASON) state.attempt.stale = true
++          }
++          return
++        case 'turn/end':
++          if (state.attempt?.turn === event.data.turn) state.attempt.reason = event.data.reason
++          /* v8 ignore next -- balanced live turns close the open turn just observed by this listener */
++          if (state.openTurn === event.data.turn) state.openTurn = undefined
++          return
++        default:
++          return
++      }
++    })
++
++    /** Fail closed unless the queued prompt still owns the exact live revision. */
++    function validReservation(
++      state: DriverState,
++      content: ContentBlock[],
++      source: GoalMessageSource,
++    ): boolean {
++      const attempt = state.attempt
++      const goal = currentGoal(state)
++      return ctx.fiber.state === FiberState.ACTIVE
++        && !state.stopping && attempt !== undefined && attempt.phase === 'queued'
++      && !attempt.stale && sameQueued(content, source, attempt)
++      && goal !== undefined && goal.id === source.goalId && goal.revision === source.revision
++      && goal.phase === 'active' && goal.activation === 'armed'
++      && source.round === goal.roundsStarted + 1
++    }
++
++    ctx.on('agent/prompt-submit', async (agent, content, source, next): Promise<PromptDecision> => {
++      if (!isGoalRoundSource(source)) return next()
++      const state = stateFor(agent)
++      let valid = false
++      try {
++        valid = validReservation(state, content, source)
++      } catch (error: unknown) {
++        ctx.logger.warn(`goal-session: admission check failed for agent "${agent.id}": ${renderThrown(error)}`)
++        disarm(state)
++      }
++      if (!valid) {
++        const attempt = state.attempt
++        if (attempt !== undefined && sameRound(source, attempt)) attempt.stale = true
++        return { kind: 'block', reason: STALE_ROUND_REASON }
++      }
++      const decision = await next()
++      if (decision.kind === 'block') return decision
++      try {
++        valid = validReservation(state, content, source)
++      } catch (error: unknown) {
++        ctx.logger.warn(`goal-session: post-admission check failed for agent "${agent.id}": ${renderThrown(error)}`)
++        disarm(state)
++        valid = false
++      }
++      if (!valid) {
++        const attempt = state.attempt
++        if (attempt !== undefined && sameRound(source, attempt)) attempt.stale = true
++        return { kind: 'block', reason: STALE_ROUND_REASON }
++      }
++      return decision
++    })
++
++    // Loading a lifecycle driver over existing agents never inherits hidden
++    // automatic authority from an earlier producer instance.
++    for (const agent of ctx.agents.list()) {
++      const state = stateFor(agent)
++      disarm(state)
++    }
++
++    // Yielded after listener registration, so this close runs first and the
++    // composite effect removes listeners only after its promise settles.
++    yield async () => {
++      const waits: Promise<void>[] = []
++      for (const state of states.values()) {
++        state.stopping = true
++        disarm(state)
++        const attempt = state.attempt
++        if (attempt !== undefined) {
++          attempt.stale = true
++          if (attempt.phase === 'admitted' && state.agent.status === 'running') {
++            state.agent.cancel('goal-session driver disposed')
++          }
++          waits.push(state.agent.whenIdle())
++        }
++        if (state.run !== undefined) waits.push(state.run)
++      }
++      await Promise.allSettled(waits)
++      states.clear()
++    }
++  }, 'goal-session lifecycle')
++}
+diff --git a/packages/goal/goal-session/src/outcome.ts b/packages/goal/goal-session/src/outcome.ts
+new file mode 100644
+index 0000000000..4660f1b7a5
+--- /dev/null
++++ b/packages/goal/goal-session/src/outcome.ts
+@@ -0,0 +1,48 @@
++/** Typed settlement policy for one admitted same-session goal round. */
++
++import type { TurnEndReason } from '@deepseek-ai/dsh-session'
++
++/** Driver action derived from one closed goal-owned turn. */
++export type GoalRoundOutcome =
++  | { readonly kind: 'continue' }
++  | { readonly kind: 'pause'; readonly reason: string }
++  | { readonly kind: 'usage-limited'; readonly message: string }
++  | {
++    readonly kind: 'blocked'
++    readonly reason: 'error' | 'max-tokens' | 'rejected' | 'unknown'
++    readonly detail: string
++  }
++  | { readonly kind: 'disarm'; readonly reason: 'durability-failed' | 'disposed' | 'interrupted' }
++
++/**
++ * Classify one closed goal round without mutating goal state.
++ * @param reason - durable reason from the round's `turn/end`.
++ * @param durable - whether the closing flush reached its durability checkpoint.
++ * @returns the single driver action; no abnormal outcome requests an automatic retry.
++ */
++export function classifyGoalRound(reason: TurnEndReason, durable: boolean): GoalRoundOutcome {
++  if (!durable) return { kind: 'disarm', reason: 'durability-failed' }
++  const extensibleReason: { readonly kind: string } = reason
++  switch (reason.kind) {
++    case 'completed':
++      return { kind: 'continue' }
++    case 'aborted':
++      return { kind: 'pause', reason: reason.reason ?? 'cancelled' }
++    case 'error':
++      return reason.code === 'RATE_LIMIT'
++        ? { kind: 'usage-limited', message: reason.message }
++        : { kind: 'blocked', reason: 'error', detail: reason.message }
++    case 'max-tokens':
++      return { kind: 'blocked', reason: 'max-tokens', detail: 'model output reached max tokens' }
++    case 'rejected':
++      return { kind: 'blocked', reason: 'rejected', detail: reason.reason }
++    case 'disposed':
++      return { kind: 'disarm', reason: 'disposed' }
++    case 'interrupted':
++      return { kind: 'disarm', reason: 'interrupted' }
++    // TurnEndReason is merge-extensible. An unknown producer cannot opt into
++    // automatic retry merely by adding a tag; stop for inspection instead.
++    default:
++      return { kind: 'blocked', reason: 'unknown', detail: `unknown turn outcome: ${extensibleReason.kind}` }
++  }
++}
+diff --git a/packages/goal/goal-session/src/prompt.ts b/packages/goal/goal-session/src/prompt.ts
+new file mode 100644
+index 0000000000..9a2f69fcd8
+--- /dev/null
++++ b/packages/goal/goal-session/src/prompt.ts
+@@ -0,0 +1,26 @@
++/** Model-visible continuation prompt for one same-session goal round. */
++
++import type { ContentBlock } from '@deepseek-ai/dsh-llm'
++import type { GoalView } from '@deepseek-ai/dsh-goal'
++
++/**
++ * Render the complete goal-round instruction retained in session history.
++ * @param goal - exact active goal revision being admitted.
++ * @param round - next positive round number.
++ * @returns a fresh one-block prompt for `Agent.send()`.
++ */
++export function renderGoalRoundPrompt(goal: GoalView, round: number): ContentBlock[] {
++  return [{
++    type: 'text',
++    text: '<goal_round>\n'
++      + `Objective: ${JSON.stringify(goal.objective)}\n`
++      + `Round: ${round}/${goal.maxGoalRounds}\n\n`
++      + 'Continue working toward the objective in this same session. Treat the current workspace, '
++      + 'tool results, and durable session state as authoritative; inspect them instead of assuming '
++      + 'earlier narration is still current. Make concrete progress and verify the result. Before '
++      + 'claiming completion, gather evidence that the whole objective is achieved, read the current '
++      + 'goal, and mark it complete. If work remains, leave the goal active for the next round. Follow '
++      + 'the configured goal-tool policy before reporting a blocker.\n'
++      + '</goal_round>',
++  }]
++}
+diff --git a/packages/goal/goal-session/tests/goal-session.e2e.ts b/packages/goal/goal-session/tests/goal-session.e2e.ts
+new file mode 100644
+index 0000000000..d1152c5995
+--- /dev/null
++++ b/packages/goal/goal-session/tests/goal-session.e2e.ts
+@@ -0,0 +1,138 @@
++import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process'
++import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises'
++import { tmpdir } from 'node:os'
++import { join } from 'node:path'
++import { fileURLToPath } from 'node:url'
++import { afterEach, describe, expect, it } from 'vitest'
++import { foldGoal } from '@deepseek-ai/dsh-goal'
++import type { SessionEvent } from '@deepseek-ai/dsh-session'
++import { resolveExampleLaunch } from '@deepseek-ai/dsh-loader-smoke'
++
++const binScript = fileURLToPath(new URL('../../../examples/stdio-demo/src/bin.ts', import.meta.url))
++const configPath = fileURLToPath(new URL(
++  '../../../../examples/echo-agent/tests/fixtures/goal/goal-session/cordis.yml',
++  import.meta.url,
++))
++const repoTsconfig = fileURLToPath(new URL('../../../../tsconfig.json', import.meta.url))
++const PROCESS_TIMEOUT_MS = 30_000
++const TEST_TIMEOUT_MS = PROCESS_TIMEOUT_MS + 15_000
++
++let child: ChildProcessWithoutNullStreams | undefined
++let workdir: string | undefined
++
++afterEach(async () => {
++  if (child !== undefined && child.exitCode === null) child.kill('SIGKILL')
++  child = undefined
++  if (workdir !== undefined) await rm(workdir, { recursive: true, force: true })
++  workdir = undefined
++})
++
++/** Recursively locate persistence JSONL files in one temporary root. */
++async function jsonlFiles(dir: string): Promise<string[]> {
++  const entries = await readdir(dir, { withFileTypes: true })
++  const paths = await Promise.all(entries.map(async (entry) => {
++    const path = join(dir, entry.name)
++    if (entry.isDirectory()) return jsonlFiles(path)
++    return entry.isFile() && entry.name.endsWith('.jsonl') ? [path] : []
++  }))
++  return paths.flat()
++}
++
++/** Run the complete deterministic human-turn plus two-round composition. */
++async function runComposition(): Promise<{ stdout: string; stderr: string }> {
++  workdir = await mkdtemp(join(tmpdir(), 'goal-session-e2e-'))
++  const cwd = workdir
++  return new Promise((resolve, reject) => {
++    const launch = resolveExampleLaunch({
++      srcBin: binScript,
++      configArgs: [configPath],
++      tsconfigPath: repoTsconfig,
++      exposeInternals: true,
++      env: {
++        DSH_HOME: join(cwd, '.dsh'),
++        DSH_AGENTS_HOME: join(cwd, '.agents'),
++      },
++    })
++    const proc = spawn(launch.command, launch.args, {
++      cwd,
++      env: { ...process.env, ...launch.env },
++      stdio: ['pipe', 'pipe', 'pipe'],
++    })
++    child = proc
++    let stdout = ''
++    let stderr = ''
++    let inputClosed = false
++    proc.stdout.setEncoding('utf8')
++    proc.stdout.on('data', (chunk: string) => {
++      stdout += chunk
++      if (!inputClosed && stdout.includes('ROUND TWO COMPLETE') && stdout.includes('\n> ')) {
++        inputClosed = true
++        proc.stdin.end()
++      }
++    })
++    proc.stderr.setEncoding('utf8')
++    proc.stderr.on('data', (chunk: string) => { stderr += chunk })
++
++    const timer = setTimeout(() => {
++      proc.kill('SIGKILL')
++      reject(new Error(
++        `goal-session e2e did not exit within ${PROCESS_TIMEOUT_MS / 1_000}s. stdout:\n${stdout}\nstderr:\n${stderr}`,
++      ))
++    }, PROCESS_TIMEOUT_MS)
++    proc.on('exit', (code) => {
++      clearTimeout(timer)
++      if (code === 0) resolve({ stdout, stderr })
++      else reject(new Error(`goal-session e2e exited ${String(code)}. stdout:\n${stdout}\nstderr:\n${stderr}`))
++    })
++    proc.on('error', (error) => { clearTimeout(timer); reject(error) })
++    proc.stdin.write('start\n')
++  })
++}
++
++describe('same-session goal rounds through a real Loader, app, and stdio process', () => {
++  it('persists two exact rounds and stops the completion turn without another request', async () => {
++    const { stdout, stderr } = await runComposition()
++    expect(stderr).not.toContain('UNHANDLED')
++    expect(stdout).toContain('goal-session e2e ready.')
++    expect(stdout).toContain('GOAL CREATED')
++    expect(stdout).toContain('ROUND ONE')
++    expect(stdout).toContain('ROUND TWO COMPLETE')
++
++    const logs = await jsonlFiles(join(workdir as string, '.sessions'))
++    expect(logs).toHaveLength(1)
++    const lines = (await readFile(logs[0] as string, 'utf8')).trimEnd().split('\n')
++    const events = lines.slice(1).map(line => JSON.parse(line) as SessionEvent)
++
++    const calls = events.filter(event => event.type === 'tool/call')
++    expect(calls.map(event => event.data.name)).toEqual(['create_goal', 'get_goal', 'update_goal'])
++    expect(events.filter(event => event.type === 'step/start')).toHaveLength(5)
++    expect(events.filter(event => event.type === 'tool/result').every(event => !event.data.isError)).toBe(true)
++
++    const rounds = events.filter(event => event.type === 'user/message'
++      && event.data.source.kind === 'goal')
++    expect(rounds).toHaveLength(2)
++    const roundNumbers: number[] = []
++    const revisions: number[] = []
++    const prompts: string[] = []
++    for (const event of events) {
++      if (event.type !== 'user/message' || event.data.source.kind !== 'goal') continue
++      roundNumbers.push(event.data.source.round)
++      revisions.push(event.data.source.revision)
++      prompts.push(event.data.content.find(block => block.type === 'text')?.text ?? '')
++    }
++    expect(roundNumbers).toEqual([1, 2])
++    expect(revisions).toEqual([1, 1])
++    expect(prompts[0]).toContain('Round: 1/2')
++    expect(prompts[1]).toContain('Round: 2/2')
++
++    expect(foldGoal(events)).toMatchObject({
++      goal: {
++        objective: 'Complete two deterministic same-session rounds',
++        phase: 'complete',
++        revision: 2,
++        maxGoalRounds: 2,
++      },
++      roundsStarted: 2,
++    })
++  }, TEST_TIMEOUT_MS)
++})
+diff --git a/packages/goal/goal-session/tests/goal-session.spec.ts b/packages/goal/goal-session/tests/goal-session.spec.ts
+new file mode 100644
+index 0000000000..13d6d9bf3f
+--- /dev/null
++++ b/packages/goal/goal-session/tests/goal-session.spec.ts
+@@ -0,0 +1,648 @@
++import { afterEach, describe, expect, it, vi } from 'vitest'
++import { Context } from 'cordis'
++import type { Agent } from '@deepseek-ai/dsh-agent'
++import { agentEvents } from '@deepseek-ai/dsh-agent'
++import AgentLoop from '@deepseek-ai/dsh-agent-loop'
++import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
++import GoalService, { GoalId } from '@deepseek-ai/dsh-goal'
++import type { GoalView } from '@deepseek-ai/dsh-goal'
++import { LlmAdapter } from '@deepseek-ai/dsh-llm'
++import type { GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
++import { SessionId } from '@deepseek-ai/dsh-session'
++import type { TurnEndReason } from '@deepseek-ai/dsh-session'
++import * as goalSession from '../src/index.ts'
++
++type ScriptEntry = StreamChunk[] | Error | 'hang' | ((options: GenerateOptions) => StreamChunk[])
++
++/** Small request-recording adapter with controllable failure and cancellation. */
++class ScriptedAdapter extends LlmAdapter {
++  readonly requests: GenerateOptions[] = []
++
++  constructor(private readonly script: ScriptEntry[]) {
++    super()
++  }
++
++  override async * stream(options: GenerateOptions): AsyncIterable<StreamChunk> {
++    this.requests.push(options)
++    const entry = this.script.shift()
++    if (entry === undefined) throw new Error('ScriptedAdapter: script exhausted')
++    if (entry instanceof Error) throw entry
++    if (entry === 'hang') {
++      yield { type: 'block-start', index: 0, blockType: 'text' }
++      yield { type: 'text-delta', index: 0, text: 'partial' }
++      await new Promise<void>((_resolve, reject) => {
++        if (options.signal?.aborted) {
++          reject(new Error('aborted'))
++          return
++        }
++        options.signal?.addEventListener('abort', () => { reject(new Error('aborted')) }, { once: true })
++      })
++      return
++    }
++    const chunks = typeof entry === 'function' ? entry(options) : entry
++    for (const chunk of chunks) yield chunk
++  }
++}
++
++/** One successful text response. */
++function textResponse(text: string): StreamChunk[] {
++  return [
++    { type: 'block-start', index: 0, blockType: 'text' },
++    { type: 'block-end', index: 0, block: { type: 'text', text } },
++    { type: 'finish', reason: { kind: 'stop' } },
++  ]
++}
++
++/** One successful response cut off at the model output limit. */
++function maxTokensResponse(text: string): StreamChunk[] {
++  return [
++    { type: 'block-start', index: 0, blockType: 'text' },
++    { type: 'block-end', index: 0, block: { type: 'text', text } },
++    { type: 'finish', reason: { kind: 'max-tokens' } },
++  ]
++}
++
++/** Complete request history as a single string for ordering assertions. */
++function requestText(request: GenerateOptions): string {
++  return request.messages
++    .flatMap(message => message.content)
++    .filter(block => block.type === 'text')
++    .map(block => block.text)
++    .join('\n')
++}
++
++interface Harness {
++  readonly ctx: Context
++  readonly adapter: ScriptedAdapter
++  readonly agent: Agent
++  readonly driver: Awaited<ReturnType<Context['plugin']>>
++}
++
++const contexts: Context[] = []
++
++afterEach(async () => {
++  await Promise.allSettled(contexts.splice(0).map(context => context.fiber.dispose()))
++})
++
++/** Mount a real loop with only its model scripted. */
++async function harness(script: ScriptEntry[]): Promise<Harness> {
++  const ctx = new Context()
++  contexts.push(ctx)
++  await mountAgentLoopTestDependencies(ctx)
++  await ctx.plugin(GoalService)
++  const driver = await ctx.plugin(goalSession)
++  await ctx.plugin(AgentLoop, { agents: [] })
++  const adapter = new ScriptedAdapter(script)
++  ctx.llm.registerAdapter(['mock'], adapter)
++  const agent = ctx.agentLoop.create(SessionId(`goal-session-${Math.random()}`), {
++    provider: 'mock',
++    model: 'mock',
++  })
++  return { ctx, adapter, agent, driver }
++}
++
++/** Await a stable goal projection selected by the caller. */
++async function waitForGoal(
++  ctx: Context,
++  agent: Agent,
++  predicate: (goal: GoalView | undefined) => boolean,
++): Promise<GoalView | undefined> {
++  await vi.waitFor(() => {
++    expect(predicate(ctx.goals.get(agent))).toBe(true)
++  })
++  return ctx.goals.get(agent)
++}
++
++/** Await a specific number of dispatched model requests. */
++async function waitForRequests(adapter: ScriptedAdapter, count: number): Promise<void> {
++  await vi.waitFor(() => {
++    expect(adapter.requests).toHaveLength(count)
++  })
++}
++
++describe('goal-round outcome policy', () => {
++  it.each([
++    [{ kind: 'completed' }, true, { kind: 'continue' }],
++    [{ kind: 'aborted', reason: 'operator stopped' }, true, { kind: 'pause', reason: 'operator stopped' }],
++    [{ kind: 'aborted' }, true, { kind: 'pause', reason: 'cancelled' }],
++    [{ kind: 'error', step: 1, message: 'slow down', code: 'RATE_LIMIT' }, true,
++      { kind: 'usage-limited', message: 'slow down' }],
++    [{ kind: 'error', step: 1, message: 'broken' }, true,
++      { kind: 'blocked', reason: 'error', detail: 'broken' }],
++    [{ kind: 'max-tokens' }, true,
++      { kind: 'blocked', reason: 'max-tokens', detail: 'model output reached max tokens' }],
++    [{ kind: 'rejected', reason: 'policy' }, true,
++      { kind: 'blocked', reason: 'rejected', detail: 'policy' }],
++    [{ kind: 'disposed' }, true, { kind: 'disarm', reason: 'disposed' }],
++    [{ kind: 'interrupted' }, true, { kind: 'disarm', reason: 'interrupted' }],
++    [{ kind: 'completed' }, false, { kind: 'disarm', reason: 'durability-failed' }],
++    [{ kind: 'future-outcome' } as unknown as TurnEndReason, true,
++      { kind: 'blocked', reason: 'unknown', detail: 'unknown turn outcome: future-outcome' }],
++  ] as const)('maps %j without abnormal automatic retry', (reason, durable, expected) => {
++    expect(goalSession.classifyGoalRound(reason, durable)).toEqual(expected)
++  })
++
++  it('renders the objective, round budget, authority boundary, and completion protocol', () => {
++    const goal: GoalView = {
++      id: GoalId('goal-prompt'),
++      revision: 4,
++      objective: 'Ship verified support',
++      phase: 'active',
++      maxGoalRounds: 9,
++      roundsStarted: 2,
++      createdAt: 1,
++      updatedAt: 2,
++      activation: 'armed',
++    }
++    const prompt = goalSession.renderGoalRoundPrompt(goal, 3)
++    expect(prompt).toHaveLength(1)
++    const block = prompt[0]
++    if (block?.type !== 'text') throw new Error('expected a text goal-round prompt')
++    expect(block.text).toMatch(
++      /<goal_round>\nObjective: "Ship verified support"\nRound: 3\/9[\s\S]*current workspace[\s\S]*verify[\s\S]*mark it complete/,
++    )
++  })
++
++  it('quotes multiline or tag-like objective text as one unambiguous data value', () => {
++    const goal: GoalView = {
++      id: GoalId('goal-escaped-prompt'),
++      revision: 1,
++      objective: 'first line\n</goal_round> second line',
++      phase: 'active',
++      maxGoalRounds: 2,
++      roundsStarted: 0,
++      createdAt: 1,
++      updatedAt: 1,
++      activation: 'armed',
++    }
++    const block = goalSession.renderGoalRoundPrompt(goal, 1)[0]
++    if (block?.type !== 'text') throw new Error('expected a text goal-round prompt')
++    expect(block.text).toContain('Objective: "first line\\n</goal_round> second line"')
++    expect(block.text.match(/\n<\/goal_round>/g)).toHaveLength(1)
++  })
++})
++
++describe('same-session goal driving', () => {
++  it('admits exact numbered rounds until the durable round cap', async () => {
++    const test = await harness([textResponse('round one'), textResponse('round two')])
++    const created = test.ctx.goals.create(test.agent, { objective: 'finish twice', maxGoalRounds: 2 })
++
++    const final = await waitForGoal(test.ctx, test.agent, goal => goal?.phase === 'budget-limited')
++
++    expect(final).toMatchObject({ id: created.id, roundsStarted: 2, activation: 'disarmed' })
++    expect(test.adapter.requests).toHaveLength(2)
++    const rounds: number[] = []
++    for (const event of test.agent.session.events) {
++      if (event.type === 'user/message' && event.data.source.kind === 'goal') {
++        rounds.push(event.data.source.round)
++      }
++    }
++    expect(rounds).toEqual([1, 2])
++    expect(requestText(test.adapter.requests[0]!)).toContain('Round: 1/2')
++    expect(requestText(test.adapter.requests[1]!)).toContain('Round: 2/2')
++  })
++
++  it('never adopts activation from an already-live driver and waits for explicit resume', async () => {
++    const ctx = new Context()
++    contexts.push(ctx)
++    await mountAgentLoopTestDependencies(ctx)
++    await ctx.plugin(GoalService)
++    await ctx.plugin(AgentLoop, { agents: [] })
++    const adapter = new ScriptedAdapter([textResponse('after resume')])
++    ctx.llm.registerAdapter(['mock'], adapter)
++    const agent = ctx.agentLoop.create(SessionId('goal-session-hot-load'), { provider: 'mock', model: 'mock' })
++    const created = ctx.goals.create(agent, { objective: 'wait for a human', maxGoalRounds: 1 })
++
++    await ctx.plugin(goalSession)
++    await Promise.resolve()
++    expect(ctx.goals.get(agent)).toMatchObject({ phase: 'active', activation: 'disarmed', revision: 1 })
++    expect(adapter.requests).toHaveLength(0)
++
++    ctx.goals.resume(agent, created)
++    await waitForGoal(ctx, agent, goal => goal?.phase === 'budget-limited')
++    expect(adapter.requests).toHaveLength(1)
++  })
++
++  it.each([
++    ['rate limit', Object.assign(new Error('slow down'), { code: 'RATE_LIMIT' }), 'usage-limited'],
++    ['request error', new Error('provider broke'), 'blocked'],
++    ['max tokens', maxTokensResponse('unfinished'), 'blocked'],
++  ] as const)('stops after a %s without an automatic retry', async (_label, response, phase) => {
++    const test = await harness([response])
++    test.ctx.goals.create(test.agent, { objective: 'stop safely', maxGoalRounds: 8 })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.phase === phase)
++
++    expect(goal).toMatchObject({ roundsStarted: 1, activation: 'disarmed' })
++    expect(test.adapter.requests).toHaveLength(1)
++  })
++
++  it('maps a downstream prompt veto to blocked without admitting the round', async () => {
++    const test = await harness([])
++    test.ctx.on('agent/prompt-submit', (_agent, _content, source, next) => source.kind === 'goal'
++      ? Promise.resolve({ kind: 'block', reason: 'deployment policy' })
++      : next())
++    test.ctx.goals.create(test.agent, { objective: 'respect policy' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.phase === 'blocked')
++
++    expect(goal?.roundsStarted).toBe(0)
++    expect(test.adapter.requests).toHaveLength(0)
++    expect(test.agent.session.events.some(event => event.type === 'prompt/blocked'
++      && event.data.reason === 'deployment policy')).toBe(true)
++  })
++
++  it('does not reserve again when a stopped-goal observer queues ordinary work', async () => {
++    const test = await harness([textResponse('human follow-up')])
++    test.ctx.on('agent/prompt-submit', (_agent, _content, source, next) => source.kind === 'goal'
++      ? Promise.resolve({ kind: 'block', reason: 'stop this round' })
++      : next())
++    test.ctx.on('goal/changed', (agent, change) => {
++      if (change.operation === 'block') agent.send([{ type: 'text', text: 'inspect the blocker' }])
++    })
++    test.ctx.goals.create(test.agent, { objective: 'stop and inspect' })
++
++    await waitForGoal(test.ctx, test.agent, goal => goal?.phase === 'blocked')
++    await waitForRequests(test.adapter, 1)
++    await test.agent.whenIdle()
++
++    expect(requestText(test.adapter.requests[0]!)).toContain('inspect the blocker')
++  })
++
++  it('pauses and drops a reserved round when cancellation lands before admission', async () => {
++    const test = await harness([])
++    const cancel = test.ctx.on('agent/queued', (agent, _content, info) => {
++      if (agent === test.agent && info.source.kind === 'goal') {
++        cancel()
++        agent.cancel('operator cancelled pending goal')
++      }
++    })
++    test.ctx.goals.create(test.agent, { objective: 'do not start yet' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.phase === 'paused')
++
++    expect(goal).toMatchObject({ roundsStarted: 0, activation: 'disarmed' })
++    expect(test.adapter.requests).toHaveLength(0)
++    expect(test.agent.session.events.some(event => event.type === 'user/message'
++      && event.data.source.kind === 'goal')).toBe(false)
++  })
++
++  it('pauses an admitted round when cancellation aborts an active step', async () => {
++    const test = await harness(['hang'])
++    test.ctx.goals.create(test.agent, { objective: 'stop in flight' })
++    await waitForRequests(test.adapter, 1)
++
++    test.agent.cancel('operator stopped active goal')
++    await test.agent.whenIdle()
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.phase === 'paused')
++
++    expect(goal).toMatchObject({ roundsStarted: 1, activation: 'disarmed' })
++    expect(test.adapter.requests).toHaveLength(1)
++  })
++
++  it('lets already-queued human work finish before reserving the next round', async () => {
++    const test = await harness([textResponse('human answer'), textResponse('goal answer')])
++    test.ctx.goals.create(test.agent, { objective: 'continue after the human', maxGoalRounds: 1 })
++    test.agent.send([{ type: 'text', text: 'human goes first' }])
++
++    await waitForGoal(test.ctx, test.agent, goal => goal?.phase === 'budget-limited')
++
++    expect(test.adapter.requests).toHaveLength(2)
++    expect(requestText(test.adapter.requests[0]!)).toContain('human goes first')
++    expect(requestText(test.adapter.requests[0]!)).not.toContain('<goal_round>')
++    expect(requestText(test.adapter.requests[1]!)).toContain('<goal_round>')
++  })
++
++  it('makes a reserved round stale when a listener queues human work behind it', async () => {
++    const test = await harness([textResponse('human batch'), textResponse('later goal')])
++    let inserted = false
++    test.ctx.on('agent/queued', (agent, _content, info) => {
++      if (agent !== test.agent || info.source.kind !== 'goal' || inserted) return
++      inserted = true
++      agent.send([{ type: 'text', text: 'human joined the pending batch' }])
++    })
++    test.ctx.goals.create(test.agent, { objective: 'yield to nested human input', maxGoalRounds: 1 })
++
++    await waitForGoal(test.ctx, test.agent, goal => goal?.phase === 'budget-limited')
++
++    expect(test.adapter.requests).toHaveLength(2)
++    expect(requestText(test.adapter.requests[0]!)).toContain('human joined the pending batch')
++    expect(requestText(test.adapter.requests[0]!)).not.toContain('<goal_round>')
++    expect(requestText(test.adapter.requests[1]!)).toContain('<goal_round>')
++  })
++
++  it('blocks a queued reservation made stale by a goal edit and continues the new revision', async () => {
++    const test = await harness([textResponse('new revision')])
++    let edited = false
++    test.ctx.on('agent/queued', (agent, _content, info) => {
++      if (agent !== test.agent || info.source.kind !== 'goal' || edited) return
++      edited = true
++      const current = test.ctx.goals.get(agent)
++      if (current === undefined) throw new Error('missing goal during queued edit')
++      test.ctx.goals.edit(agent, current, { objective: 'new objective' })
++    })
++    test.ctx.goals.create(test.agent, { objective: 'old objective', maxGoalRounds: 1 })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.phase === 'budget-limited')
++
++    expect(goal).toMatchObject({ revision: 3, objective: 'new objective', roundsStarted: 1 })
++    const blocked = test.agent.session.events.find(event => event.type === 'prompt/blocked')
++    expect(blocked?.type === 'prompt/blocked' ? blocked.data.reason : undefined)
++      .toBe('stale goal-round reservation')
++    const admitted = test.agent.session.events.find(event => event.type === 'user/message'
++      && event.data.source.kind === 'goal')
++    expect(admitted?.type === 'user/message' && admitted.data.source.kind === 'goal'
++      ? admitted.data.source.revision
++      : undefined).toBe(2)
++  })
++
++  it('rechecks revision after downstream prompt hooks before admitting', async () => {
++    const test = await harness([textResponse('new revision')])
++    let edited = false
++    test.ctx.on('agent/prompt-submit', (agent, _content, source, next) => {
++      if (source.kind === 'goal' && !edited) {
++        edited = true
++        const current = test.ctx.goals.get(agent)
++        if (current === undefined) throw new Error('missing goal during prompt edit')
++        test.ctx.goals.edit(agent, current, { objective: 'edited downstream' })
++      }
++      return next()
++    })
++    test.ctx.goals.create(test.agent, { objective: 'edit during admission', maxGoalRounds: 1 })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.phase === 'budget-limited')
++
++    expect(goal).toMatchObject({ objective: 'edited downstream', roundsStarted: 1 })
++    expect(test.adapter.requests).toHaveLength(1)
++    expect(test.agent.session.events.some(event => event.type === 'prompt/blocked'
++      && event.data.reason === 'stale goal-round reservation')).toBe(true)
++  })
++
++  it('disarms without dispatch when a durability checkpoint fails', async () => {
++    const test = await harness([])
++    test.ctx.on('session/flush', () => Promise.reject(new Error('disk unavailable')))
++    test.ctx.goals.create(test.agent, { objective: 'do not outrun storage' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.activation === 'disarmed')
++
++    expect(goal).toMatchObject({ phase: 'active', roundsStarted: 0 })
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('contains a checkpoint failure after a clear notification leaves no current goal', async () => {
++    const test = await harness([])
++    test.ctx.on('session/flush', () => Promise.reject(new Error('clear checkpoint failed')))
++    agentEvents(test.ctx, test.agent).emit('goal/changed', {
++      operation: 'clear',
++      ref: { id: GoalId('cleared-goal'), revision: 2 },
++    })
++    await new Promise<void>((resolve) => { setImmediate(resolve) })
++
++    expect(test.ctx.goals.get(test.agent)).toBeUndefined()
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('disarms an admitted round whose closing durability checkpoint fails', async () => {
++    const test = await harness([textResponse('not durable')])
++    test.ctx.on('session/flush', (session) => {
++      const lastStart = session.events.findLast(event => event.type === 'turn/start')
++      if (lastStart?.type === 'turn/start' && lastStart.data.trigger.kind === 'message'
++        && lastStart.data.trigger.source.kind === 'goal') {
++        return Promise.reject(new Error('round flush failed'))
++      }
++    })
++    test.ctx.goals.create(test.agent, { objective: 'checkpoint the result' })
++
++    const goal = await waitForGoal(
++      test.ctx,
++      test.agent,
++      current => current?.roundsStarted === 1 && current.activation === 'disarmed',
++    )
++
++    expect(goal?.phase).toBe('active')
++    expect(test.adapter.requests).toHaveLength(1)
++  })
++
++  it('blocks the goal when a custom agent rejects the otherwise valid send', async () => {
++    const test = await harness([])
++    vi.spyOn(test.agent, 'send').mockImplementationOnce(() => {
++      throw new Error('queue rejected')
++    })
++    test.ctx.goals.create(test.agent, { objective: 'handle queue failure' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.phase === 'blocked')
++
++    expect(goal).toMatchObject({ roundsStarted: 0, activation: 'disarmed' })
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('preserves a custom agent side effect when send disarms before throwing', async () => {
++    const test = await harness([])
++    vi.spyOn(test.agent, 'send').mockImplementationOnce(() => {
++      test.ctx.goals.disarm(test.agent)
++      throw new Error('queue rejected after disarm')
++    })
++    test.ctx.goals.create(test.agent, { objective: 'preserve the newer activation state' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.activation === 'disarmed')
++
++    expect(goal).toMatchObject({ phase: 'active', roundsStarted: 0 })
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('contains a driver read failure and removes continuation authority', async () => {
++    const test = await harness([])
++    let flushes = 0
++    test.ctx.on('session/flush', () => {
++      flushes += 1
++      if (flushes !== 2) return
++      vi.spyOn(test.ctx.goals, 'get').mockImplementationOnce(() => {
++        throw new Error('corrupt projection')
++      })
++    })
++    test.ctx.goals.create(test.agent, { objective: 'fail the driver closed' })
++    await new Promise<void>((resolve) => { setImmediate(resolve) })
++
++    const goal = test.ctx.goals.get(test.agent)
++
++    expect(goal?.phase).toBe('active')
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('contains synchronous scheduler startup failure', async () => {
++    const test = await harness([])
++    vi.spyOn(test.ctx.agents, 'withoutInitiator').mockImplementationOnce(() => {
++      throw 'scheduler closed'
++    })
++    test.ctx.goals.create(test.agent, { objective: 'fail startup closed' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.activation === 'disarmed')
++
++    expect(goal?.phase).toBe('active')
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('contains an asynchronously rejected scheduler task', async () => {
++    const test = await harness([])
++    vi.spyOn(test.ctx.agents, 'withoutInitiator').mockImplementationOnce(
++      () => Promise.reject(new Error('scheduler task rejected')),
++    )
++    test.ctx.goals.create(test.agent, { objective: 'fail task closed' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.activation === 'disarmed')
++
++    expect(goal?.phase).toBe('active')
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('fails a pre-admission read closed even when the first disarm attempt throws', async () => {
++    const test = await harness([textResponse('retry after containment')])
++    let armed = true
++    test.ctx.on('agent/queued', (agent, _content, info) => {
++      if (agent !== test.agent || info.source.kind !== 'goal' || !armed) return
++      armed = false
++      vi.spyOn(test.ctx.goals, 'get').mockImplementationOnce(() => {
++        throw new Error('admission projection failed')
++      })
++      vi.spyOn(test.ctx.goals, 'disarm').mockImplementationOnce(() => {
++        throw 'disarm failed'
++      })
++    })
++    test.ctx.goals.create(test.agent, { objective: 'retry stale admission', maxGoalRounds: 1 })
++
++    await waitForGoal(test.ctx, test.agent, goal => goal?.phase === 'budget-limited')
++
++    expect(test.adapter.requests).toHaveLength(1)
++    expect(test.agent.session.events.some(event => event.type === 'prompt/blocked'
++      && event.data.reason === 'stale goal-round reservation')).toBe(true)
++  })
++
++  it('fails a post-hook read closed before the prompt can enter history', async () => {
++    const test = await harness([])
++    let armed = true
++    test.ctx.on('agent/prompt-submit', (_agent, _content, source, next) => {
++      if (source.kind === 'goal' && armed) {
++        armed = false
++        vi.spyOn(test.ctx.goals, 'get').mockImplementationOnce(() => {
++          throw new Error('post-hook projection failed')
++        })
++      }
++      return next()
++    })
++    test.ctx.goals.create(test.agent, { objective: 'block post-hook failure' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.activation === 'disarmed')
++
++    expect(goal).toMatchObject({ phase: 'active', roundsStarted: 0 })
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('blocks forged goal attribution without touching an absent reservation', async () => {
++    const test = await harness([])
++    test.agent.send([{ type: 'text', text: 'forged automatic work' }], {
++      source: { kind: 'goal', goalId: GoalId('forged-goal'), revision: 1, round: 1 },
++    })
++    await test.agent.whenIdle()
++
++    expect(test.adapter.requests).toHaveLength(0)
++    expect(test.agent.session.events.some(event => event.type === 'prompt/blocked'
++      && event.data.reason === 'stale goal-round reservation')).toBe(true)
++  })
++
++  it('does not invent goal state when ordinary queued work is cancelled', async () => {
++    const test = await harness([])
++    test.agent.send([{ type: 'text', text: 'cancel ordinary work' }])
++    test.agent.cancel('ordinary cancellation')
++    await test.agent.whenIdle()
++
++    expect(test.ctx.goals.get(test.agent)).toBeUndefined()
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('blocks admission when downstream cancellation clears the reservation', async () => {
++    const test = await harness([])
++    let cancelled = false
++    test.ctx.on('agent/prompt-submit', (agent, _content, source, next) => {
++      if (source.kind === 'goal' && !cancelled) {
++        cancelled = true
++        agent.cancel('cancel from downstream admission policy')
++      }
++      return next()
++    })
++    test.ctx.goals.create(test.agent, { objective: 'cancel during admission' })
++
++    const goal = await waitForGoal(test.ctx, test.agent, current => current?.phase === 'paused')
++    await test.agent.whenIdle()
++
++    expect(goal?.roundsStarted).toBe(0)
++    expect(test.adapter.requests).toHaveLength(0)
++  })
++
++  it('disarms and cancels an admitted round before driver teardown completes', async () => {
++    const test = await harness(['hang'])
++    test.ctx.goals.create(test.agent, { objective: 'survive plugin unload' })
++    await waitForRequests(test.adapter, 1)
++
++    await test.driver.dispose()
++
++    expect(test.ctx.goals.get(test.agent)).toMatchObject({
++      phase: 'active',
++      activation: 'disarmed',
++      roundsStarted: 1,
++    })
++    await test.agent.whenIdle()
++    expect(test.adapter.requests).toHaveLength(1)
++  })
++
++  it('cancels an accepted queued round and awaits its driver task during teardown', async () => {
++    const test = await harness([])
++    let unloading: Promise<void> | undefined
++    test.ctx.on('agent/queued', (agent, _content, info) => {
++      if (agent === test.agent && info.source.kind === 'goal' && unloading === undefined) {
++        unloading = Promise.resolve(test.driver.dispose())
++      }
++    })
++    test.ctx.goals.create(test.agent, { objective: 'unload while queued' })
++    await vi.waitFor(() => { expect(unloading).toBeDefined() })
++    await unloading
++
++    expect(test.ctx.goals.get(test.agent)).toMatchObject({
++      phase: 'active',
++      activation: 'disarmed',
++      roundsStarted: 1,
++    })
++    expect(test.adapter.requests).toHaveLength(1)
++  })
++
++  it('resets process-local scheduling state at a session-start edge', async () => {
++    const test = await harness([textResponse('after explicit resume')])
++    const created = test.ctx.goals.create(test.agent, { objective: 'restart safely', maxGoalRounds: 1 })
++    agentEvents(test.ctx, test.agent).emit('agent/session-start', 'resume')
++    await Promise.resolve()
++
++    expect(test.ctx.goals.get(test.agent)).toMatchObject({ activation: 'disarmed', roundsStarted: 0 })
++    expect(test.adapter.requests).toHaveLength(0)
++
++    test.ctx.goals.resume(test.agent, created)
++    await waitForGoal(test.ctx, test.agent, goal => goal?.phase === 'budget-limited')
++    expect(test.adapter.requests).toHaveLength(1)
++  })
++
++  it('ignores session events without an exact owning agent and retires disposed agent state', async () => {
++    const test = await harness([])
++    const orphan = test.ctx.sessions.create(SessionId('goal-session-orphan'))
++    orphan.append('turn/start', {
++      turn: 1,
++      trigger: { kind: 'injection', source: { kind: 'plugin', plugin: 'test' } },
++    })
++    orphan.append('turn/end', { turn: 1, reason: { kind: 'completed' } })
++
++    const handle = await test.ctx.agents.create({
++      sessionId: SessionId('goal-session-disposed'),
++      agentOptions: { provider: 'mock', model: 'mock' },
++    })
++    await handle.dispose()
++
++    expect(test.ctx.agents.get(handle.agent.id)).toBeUndefined()
++  })
++})

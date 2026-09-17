@@ -1,0 +1,49 @@
+aeb13413c71e0b20a0440d617e7e82ebd88b7ae9 2026-09-09T17:14:53+08:00 test(agent): complete awaited creation migration
+8f986c8da63a212bfa6c64e4d58bbcafbc03a63e 2026-09-09T12:55:32+08:00 chore(session): scope history reader exemptions to tests
+37abcb74c588b57d373a6594faa268a0c40ccb26 2026-09-09T12:33:53+08:00 chore(session): permit existing deprecated history reads
+bec6805d6af1cbb2a61f75c863d10a57371a58b3 2026-09-01T23:19:02+08:00 refactor(session-persistence)!: handle-based seam with a lifecycle-owned write path
+33fa98b3c255d581182fcab3e88751f4f3c007de 2026-09-01T19:58:52+08:00 fix(goal): fence pause to the dropped attempt ref
+29ce849738d864ea05905eded7a105921827cee4 2026-09-01T13:56:36+08:00 fix(goal): abort the live turn on host-initiated pause
+c33fe6265e0715a1f5efe989910c1d96a9b8bbd5 2026-08-31T13:37:15+08:00 fix(agent-loop): restore inbox projection test wiring
+5660f44d29f47fca2612c92ecffe6fb699c486f1 2026-08-28T13:25:58+08:00 perf(session): separate indexed and snapshot log reads
+61b65d3147437b18220171d7d091841100208450 2026-08-25T14:44:08+08:00 fix(web): show system prompts in chat
+1a72ae202af15c32ce067efcb93824fb3b30587a 2026-08-19T13:57:58+08:00 refactor(session): migrate host state reads to projections
+a2d0f7f41121ee81911dd1badbf248edd3f2ab70 2026-08-13T00:54:38+08:00 refactor: apply repository naming contract
+ec601ca13dbc8a8a912d6e1b2f4a7550d2be6c9a 2026-08-10T22:04:13+08:00 build(vendor): rescope the vendored Cordis packages into @deepseek-ai
+ccebba2349b79a1d46bd40aa9736641a0cc646b3 2026-08-06T12:13:14+08:00 refactor(agent): unify agent-scoped event signatures as payload objects
+c357f94ddc3ba14ef9d2c67b6dfc76e3b3123231 2026-08-04T21:14:34+08:00 test(agent-loop): align consumers with direct wakeup
+e874910a76bcd6dedde2c722dc076b681cab5b10 2026-08-04T14:09:52+08:00 test(session): align turn-end contract artifacts
+49e90695cc950ea9afb5bf2db0526c91b848152e 2026-08-03T12:25:33+08:00 refactor(agent): complete inbox lifecycle migration
+bb6e6d6f3b832bcb17e213d4cc32c60f565985f6 2026-08-02T04:35:23+08:00 fix(subagent): preserve continuable behavior after rebase
+ddab8b84c00af41c80524731ad8f351d914e309c 2026-08-02T04:34:16+08:00 test(goal-session): cover unsettled attempt yield
+dbdf270af080c90f65a20ed285c5dd106f35d880 2026-08-02T00:27:37+08:00 refactor(agent): simplify inbox-driven turn admission
+1a09174987e565a21eb3368224942513ecb373f7 2026-07-31T22:52:18+08:00 refactor(goal): persist state with domain events
+afedf18ccf6b078465bee56a83c5c9dfa357c064 2026-07-31T22:00:39+08:00 fix inbox lifecycle downstream contracts
+8e88b17c9f8d09577783be8ceca6bc14125372df 2026-07-31T19:40:59+08:00 fix pre-step lifecycle regressions
+fcc2b5e2827e8579e01402988e8576946d3b4362 2026-07-31T19:21:16+08:00 refactor agent pre-step inbox lifecycle
+c2ff9ddec89c7f89f52532001f3f97da5843728c 2026-07-31T14:35:58+08:00 fix(agent-loop): scope blocked admission cleanup
+741fc7dc793e078a4d696ef36bff0e5d0da8db44 2026-07-31T13:54:36+08:00 fix(agent-loop): report turn failures at source
+c891cb6f6f6b85392f142518e23c68664d87c33e 2026-07-30T18:54:19+08:00 fix(agent): address initial review findings
+97111cb5b32a3d7975ddad7c5282fcf37a5026d4 2026-07-30T17:56:02+08:00 fix: align lifecycle consumers with durable inbox semantics
+5a0d26a0e40b44692fb2492a29a7ac47a82b7f45 2026-07-30T17:28:03+08:00 test: migrate consumers to inbox and owned-run APIs
+4370004360d140bf12e76956c43d5564309980fe 2026-07-30T15:35:18+08:00 refactor(agent): expose mutable inbox state
+f2e20c1ef04b27501016dabda696fe6891781489 2026-07-30T13:49:57+08:00 refactor(agent-loop): simplify message machine
+f893e2281dd3187328427f6463dfeb8924e1fa1c 2026-07-30T00:05:00+08:00 feat(agent): add addressable queue operations
+fbf87e660c7c622cf59b24a4ebaaf921d0f7664e 2026-07-28T13:55:59+08:00 refactor: identify and freeze messages at creation
+ed67ad53d260e05e67cabf05c93f946921475bc0 2026-07-27T21:17:49+08:00 refactor(agent): return request retry action
+0dc5d07ae7cceb7cd490afa644eba7d764770f89 2026-07-26T23:03:32+08:00 fix: close five composition seams found in review round five
+2a51ef85fb2fc318ccae1fb99242ccd533ac56d2 2026-07-26T20:51:32+08:00 fix: close three seams the message-machine refactor left open
+2985bc5267f3bff9415988bc4e7e10c2d4541ac6 2026-07-26T19:13:47+08:00 test(goal-session): pin the unsettled-attempt yield with a real failure path
+af3311e1f6c5323bfc7370cfd227dc3967ece02e 2026-07-26T11:49:19+08:00 test: close per-file coverage gaps opened by the message-machine refactor
+992cf894af8033050714c09d172b5df78e60ac8e 2026-07-24T22:38:50+08:00 refactor(agent): unify sourced message delivery
+009d113e0e6f8109a39792995e365b0a31c011de 2026-07-24T21:58:07+08:00 refactor(agent): trim obsolete loop surfaces
+b73eb7663c00d29f87644a7eb7cb7f0dc5e016f6 2026-07-24T21:18:48+08:00 refactor(agent-loop): simplify observable state machine
+e23960b8add59f0442e9b61d67f3e96072b992de 2026-07-24T16:23:20+08:00 refactor(agent): require complete send options
+b02b438667d29b4cdc3ec83e4ea95404945e9d7e 2026-07-24T15:08:36+08:00 refactor(agent): align delivery method names
+086e4549310436199c39ce9f860579a5f70416eb 2026-07-24T12:27:20+08:00 refactor(agent): name delivery methods by intent
+3fd72f7c7470379139b9b75ad36721e4558f3716 2026-07-23T20:45:29+08:00 feat(agent): rename InboxItemInfo to AgentMessage with an id; send returns it
+44fd93fd06fff32e83351c77673b25c9af5dfb93 2026-07-23T19:15:45+08:00 feat(agent): unify send(target × wakeup), coalesce context/message into user/message
+6475e518255b6c70b5994a7ace0ae563beb220db 2026-07-21T16:08:53+08:00 fix(goal-session): discriminate plugin turn triggers
+de72f972b71c58629fff7844986bbdedd971e860 2026-07-20T22:58:01+08:00 Exercise normalized goal-round rate limits
+979fbbd96108a8fa6979992a1ac86cd14c2f612c 2026-07-20T09:07:15+08:00 fix(goal): harden driver cancellation settlement
+25555c9cfc33b0e7eb0d656cb3ae011d6e7bfdab 2026-07-19T20:30:43+08:00 feat(goal): drive same-session goal rounds
