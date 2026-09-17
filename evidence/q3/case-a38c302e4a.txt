@@ -1,0 +1,8 @@
+commit a38c302e4a8e5b1375f7339093893aee1c66a337
+Merge: d225dbba50 aa8262ec09
+Author:     turtle1999 <turtle1999@deepseek.com>
+AuthorDate: Thu Sep 10 13:09:19 2026 +0800
+Commit:     turtle1999 <turtle1999@deepseek.com>
+CommitDate: Thu Sep 10 13:09:19 2026 +0800
+
+    Merge master and resolve revert documentation conflicts

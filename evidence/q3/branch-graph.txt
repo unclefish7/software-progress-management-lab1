@@ -1,0 +1,20 @@
+*   0d1f50007f 0a15e36e7f e459e32637 Merge pull request #4192 from deepseek-harness/worktree-bootfast2
+|\  
+| * e459e32637 232ab768a9 perf(typert): materialize generated schemas on first use
+| * 232ab768a9 eb8cc594b3 perf(runtime): defer optional native dependencies
+| * eb8cc594b3 42286726c8 feat(util): add caller-relative lazy require
+| * 42286726c8 0a15e36e7f perf(web): defer client combo assembly
+|/  
+*   0a15e36e7f 64a8ba929d ea53423b60 Merge pull request #4171 from deepseek-harness/worktree/release-dsh-0.1.6-alpha.1
+|\  
+| * ea53423b60 64a8ba929d release(dsh): 0.1.6-alpha.1
+|/  
+*   64a8ba929d c75e3d4e81 b416ac99e4 Merge pull request #4195 from deepseek-harness/fix/compaction-banner-offset
+|\  
+| * b416ac99e4 c75e3d4e81 fix(web): hold a compaction summary's code banner below the pinned header
+|/  
+*   c75e3d4e81 57364a8475 67271a921b Merge pull request #1170 from deepseek-harness/sticky-collapsible-headers
+|\  
+| * 67271a921b bb2b325486 feat(web): pin Think and compaction headers sticky while scrolling
+* |   57364a8475 01f2f01a2f 344a3c9257 Merge pull request #4104 from deepseek-harness/feat/electron-asar-runtime-resolution
+|\ \  

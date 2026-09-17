@@ -1,0 +1,35 @@
+commit e8e0ec417631a91f0365225767bd2df7c3fb79f8
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Sun Sep 6 00:08:46 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Sun Sep 6 20:42:43 2026 +0800
+
+    docs(snapshot): remove stale prompt scrubber conflict residue
+    
+    Delete the leftover diff3 parent marker and both copies of the obsolete request-header prompt JSDoc. Keep only the current system/message tokenization contract. This is a local comment-only finding; neither oracle behavior nor fixture content changes.
+    
+    Evidence: git diff --check is clean; focused normalize.spec.ts scrubSystemPrompts test passes (1 selected, 64 skipped). The earlier header-preservation commit intentionally retained this marker so the findings stay independent.
+diff --git a/packages/test-support/session-snapshot/src/normalize.ts b/packages/test-support/session-snapshot/src/normalize.ts
+index 02838d00c7..4f3768f3b7 100644
+--- a/packages/test-support/session-snapshot/src/normalize.ts
++++ b/packages/test-support/session-snapshot/src/normalize.ts
+@@ -517,19 +517,6 @@ function hasSessionFormatVersion(rawLog: string): boolean {
+ }
+ 
+ /**
+- * Replace system-prompt content in request headers with `{{system}}` tokens
+- * while retaining field presence.
+- * Other header content stays verbatim, so a header-pinning fixture can keep
+- * its complete tool schemas while every JSONL fixture omits the prompt text.
+- * Lines without a system payload pass through byte-for-byte; the transform is
+- * idempotent.
+-||||||| parent of 842fdd6a51 (refactor(session): log the system prompt as surface node 0)
+- * Replace system-prompt content in request headers with `{{system}}` tokens
+- * while retaining field presence.
+- * Other header content stays verbatim, so a header-pinning fixture can keep
+- * its complete tool schemas while every JSONL fixture omits the prompt text.
+- * Lines without a system payload pass through byte-for-byte; the transform is
+- * idempotent.
+  * Replace the rendered prompt text of every `system/message` event with the
+  * `{{system}}` token. The text block keeps its position and type, so the
+  * fixture still shows one system node per prompt version; an empty `content`

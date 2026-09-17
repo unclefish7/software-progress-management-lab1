@@ -1,0 +1,84 @@
+commit 1b7b50bbe141cfd4d74fad9a4967e24d81812364
+Merge: 80badab556 9ccd9b0634
+Author:     Yichen Jiang <jyc132780208@sina.com>
+AuthorDate: Mon Sep 14 10:36:31 2026 +0800
+Commit:     Yichen Jiang <jyc132780208@sina.com>
+CommitDate: Mon Sep 14 10:36:31 2026 +0800
+
+    Merge remote-tracking branch 'origin/master' into worktree/web-sidebar-terminal
+    
+    # Conflicts:
+    #       apps/web/package.json
+    #       docs/config-catalog.i18n.yaml
+    #       docs/config-catalog.md
+    #       docs/event-producer-consumer.i18n.yaml
+    #       docs/event-producer-consumer.md
+    #       docs/event-producer-consumer.zh.md
+    #       packages/api/remotes/src/client/index.ts
+    #       packages/e2b/subprocess-e2b/README.md
+    #       packages/e2b/subprocess-e2b/README.zh.md
+    #       packages/e2b/subprocess-e2b/src/index.ts
+    #       packages/e2b/subprocess-e2b/src/terminal.ts
+    #       packages/e2b/subprocess-e2b/tests/subprocess.spec.ts
+    #       packages/e2b/subprocess-e2b/tests/terminal.spec.ts
+    #       packages/mcp/mcp-resources/README.i18n.yaml
+    #       pnpm-lock.yaml
+    #       scripts/verify-package-readme-model-experience.ts
+    #       snapshots/session/cordis-inspect-jsdoc/session.v3.jsonl
+    #       tsconfig.base.json
+    #       tsconfig.client.json
+    #       tsconfig.host.json
+
+与父提交 1 比较 apps/web/package.json：
+diff --git a/apps/web/package.json b/apps/web/package.json
+index d4a3adff72..598b4c9e7f 100644
+--- a/apps/web/package.json
++++ b/apps/web/package.json
+@@ -1,7 +1,7 @@
+ {
+   "name": "@deepseek-ai/dsh-web-frontend",
+   "description": "Web application entry: vite build over the @deepseek-ai/dsh-client-web shell library; dist/ served by apps/cli's dsh web",
+-  "version": "0.1.5-rc.1",
++  "version": "0.1.5-rc.2",
+   "publishConfig": {
+     "access": "public"
+   },
+@@ -33,6 +33,7 @@
+     "@deepseek-ai/cordis-plugin-group": "workspace:^",
+     "@deepseek-ai/dsh-client-modules": "workspace:^",
+     "@deepseek-ai/dsh-client-store": "workspace:^",
++    "@deepseek-ai/dsh-client-test-runtime": "workspace:^",
+     "@deepseek-ai/dsh-client-ui-dockkit": "workspace:^",
+     "@deepseek-ai/dsh-client-ui-primitives": "workspace:^",
+     "@deepseek-ai/dsh-client-ui-slots": "workspace:^",
+@@ -41,6 +42,7 @@
+     "@deepseek-ai/dsh-pwsh-local": "workspace:^",
+     "@deepseek-ai/dsh-experimental-webworker-packer": "workspace:^",
+     "@deepseek-ai/dsh-experimental-webworker-runtime": "workspace:^",
++    "@deepseek-ai/dsh-remote-mock": "workspace:^",
+     "@types/node": "^22.0.0",
+     "@types/react": "~18.3.1",
+     "@types/react-dom": "~18.3.0",
+@@ -56,6 +58,7 @@
+     "vitest": "^4.1.8",
+     "ws": "8.21.0",
+     "@deepseek-ai/dsh-launch-environment": "workspace:^",
+-    "@deepseek-ai/dsh-subprocess-local": "workspace:^"
++    "@deepseek-ai/dsh-subprocess-local": "workspace:^",
++    "@deepseek-ai/dsh-experimental-auto-review": "workspace:^"
+   }
+ }
+
+与父提交 2 比较 apps/web/package.json：
+diff --git a/apps/web/package.json b/apps/web/package.json
+index 6d4575aaf5..598b4c9e7f 100644
+--- a/apps/web/package.json
++++ b/apps/web/package.json
+@@ -58,6 +58,7 @@
+     "vitest": "^4.1.8",
+     "ws": "8.21.0",
+     "@deepseek-ai/dsh-launch-environment": "workspace:^",
++    "@deepseek-ai/dsh-subprocess-local": "workspace:^",
+     "@deepseek-ai/dsh-experimental-auto-review": "workspace:^"
+   }
+ }

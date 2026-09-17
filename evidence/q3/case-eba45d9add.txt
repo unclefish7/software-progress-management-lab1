@@ -1,0 +1,188 @@
+commit eba45d9add924ab00d5e356f436bc9b128a267f1
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Sun Sep 6 12:49:32 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Sun Sep 6 20:42:43 2026 +0800
+
+    fix(rebase): preserve the complete replay plugin after migration API merge
+    
+    Retain installLlmReplay, Config validation and apply when resolving the streaming migration API change. The representation layer requires no replay plugin source changes, so restore its complete current-master implementation rather than a truncated conflict fragment. Capability additions remain exclusively in the dependent feature layer.
+    
+    Validation: the restored source is byte-identical to origin/master and the replay unit suite passes. The initial normal commit hook failed because this detached worktree had no dependency links; pnpm install --frozen-lockfile installs them before retrying the unchanged hook, without bypass.
+diff --git a/packages/test-support/llm-replay/src/index.ts b/packages/test-support/llm-replay/src/index.ts
+index 67a13a8949..2224e1ce9c 100644
+--- a/packages/test-support/llm-replay/src/index.ts
++++ b/packages/test-support/llm-replay/src/index.ts
+@@ -1173,3 +1173,172 @@ function providerAccepted(entry: ReplayEntry): boolean {
+  * non-empty provider catalog registers a routed replay adapter; otherwise a
+  * catch-all waterfall intercepts requests.
+  *
++ * @param ctx - the context whose LLM service receives the replay route or waterfall.
++ * @param config - the resolved fixture paths (env-var defaulting is `apply`'s job).
++ * @returns the {@link ReplayHandle} carrying the disposer and the teardown consumption check.
++ */
++export function installLlmReplay(ctx: Context, config: ReplayConfig): ReplayHandle {
++  const paceMs = config.paceMs ?? 0
++  if (!Number.isInteger(paceMs) || paceMs < 0) {
++    throw new Error(`llm-replay: paceMs must be a non-negative integer, got ${String(config.paceMs)}`)
++  }
++  const scripts = loadSessionScripts(config)
++  // Live-session → its bound script + cursor. A new live session id claims the
++  // next not-yet-bound script (scripts are in bind order); `nextScript` is the
++  // index of the next unclaimed one.
++  const bound = new Map<string, { entries: ReplayEntry[]; cursor: number }>()
++  const liveSessionIds: (string | undefined)[] = Array.from({ length: scripts.length })
++  let nextScript = 0
++  const ANON = '\0anon\0' // the key for a call that carries no sessionId
++  const replay = (options: GenerateOptions): AsyncIterable<StreamChunk> => {
++    const key = options.sessionId ?? ANON
++    let state = bound.get(key)
++    let unrecorded = false
++    if (state === undefined) {
++      const script = scripts[nextScript]
++      if (script === undefined) {
++        // More distinct live sessions made calls than the scenario recorded —
++        // an unrecorded subagent appeared. Defer the throw into the returned
++        // generator (the listener must return an AsyncIterable, not throw).
++        unrecorded = true
++        state = { entries: [], cursor: 0 }
++      } else {
++        const scriptIndex = nextScript
++        nextScript++
++        state = { entries: script.entries, cursor: 0 }
++        bound.set(key, state)
++        if (key !== ANON) liveSessionIds[scriptIndex] = key
++      }
++    }
++    const boundState = state
++    const seenSessions = nextScript
++    const totalScripts = scripts.length
++    const index = boundState.cursor++
++    const entry: ReplayEntry | undefined = boundState.entries[index]
++    return (async function* () {
++      if (unrecorded) {
++        throw new Error(
++          `llm-replay: a model call arrived from an unrecorded session (#${seenSessions + 1}); `
++          + `the scenario recorded only ${totalScripts} session(s) — re-record it`,
++        )
++      }
++      if (entry === undefined) {
++        throw new Error(
++          `llm-replay: script exhausted — session requested model call #${index + 1} `
++          + `but its script has only ${boundState.entries.length}; re-record the scenario`,
++        )
++      }
++      inferStartedSubagents(options.messages, liveSessionIds)
++      const resolved = resolveScriptedEntry(materializeSessionTokens(entry, liveSessionIds), options.messages)
++      if (options.provider === 'deepseek-official' && providerAccepted(resolved)) {
++        const extensions = ctx.get('deepseekLlmApiExtensions')
++        if (extensions !== undefined) {
++          const signal = options.signal ?? new AbortController().signal
++          const prepared = await extensions.prepare({
++            // Replay reproduces post-2xx side effects, not the provider wire body.
++            body: { messages: [] },
++            signal,
++            ...options.sessionId === undefined ? {} : { sessionId: String(options.sessionId) },
++            ...options.purpose === undefined ? {} : { purpose: options.purpose },
++          })
++          await prepared.accept()
++        }
++      }
++      yield* replayEntry(resolved, options.signal, paceMs)
++    })()
++  }
++  const providers = config.providers ?? []
++  const dispose = providers.length > 0
++    ? ctx.llm.registerAdapter(providers.map(provider => provider.id), new ReplayAdapter(providers, replay))
++    : ctx.on('llm/stream', (options: GenerateOptions, _next) => replay(options))
++  return {
++    dispose,
++    assertConsumed(): void {
++      const problems: string[] = []
++      if (nextScript < scripts.length) {
++        problems.push(`${scripts.length - nextScript} recorded script(s) never bound to a live session`)
++      }
++      for (const [key, state] of bound) {
++        if (state.cursor < state.entries.length) {
++          const who = key === ANON ? 'the anonymous session' : `session ${key}`
++          problems.push(`${who} consumed ${state.cursor}/${state.entries.length} recorded call(s)`)
++        }
++      }
++      if (problems.length > 0) {
++        throw new Error(`llm-replay: fixture not fully consumed — ${problems.join('; ')}; the scenario drove fewer model calls than recorded`)
++      }
++    },
++  }
++}
++
++export const name = 'llm-replay'
++export const inject = ['llm']
++
++/** Plugin config: the {@link ReplayConfig} inputs, each defaulting to its `DSH_SNAPSHOT_*` env var in `apply`. */
++export interface Config {
++  /** Override the fixture path; defaults to `$DSH_SNAPSHOT_FILE`. */
++  file?: string
++  /** Override the sidecar path; defaults to `$DSH_SNAPSHOT_OVERRIDE`. */
++  overrideFile?: string
++  /**
++   * Override the child-log paths; defaults to `$DSH_SNAPSHOT_CHILD_FILES` (a
++   * path-separator-delimited list). Each is a recorded subagent session log for
++   * a nested-agent scenario; absent/empty for a single-session scenario.
++   */
++  childFiles?: string[]
++  /** Optional replay-only provider catalog; absent or empty selects catch-all waterfall replay. */
++  providers?: ReplayProviderConfig[]
++  /** Optional per-chunk pacing delay in ms (see {@link ReplayConfig.paceMs}); absent keeps burst yield. */
++  paceMs?: number
++}
++
++function validateConfiguredModels(providers: ReplayProviderConfig[] | undefined): void {
++  for (const provider of providers ?? []) {
++    for (const model of provider.models ?? []) {
++      const modalities: unknown = model.inputModalities
++      if (modalities !== undefined && (!Array.isArray(modalities)
++        || !modalities.every((modality: unknown) => modality === 'text' || modality === 'image'))) {
++        throw new Error(
++          `llm-replay: provider "${provider.id}" model "${model.id}" inputModalities `
++          + 'must be an array containing only "text" and "image"',
++        )
++      }
++      const imageRequestTokens: unknown = model.imageRequestTokens
++      if (imageRequestTokens !== undefined
++        && (!Number.isSafeInteger(imageRequestTokens) || (imageRequestTokens as number) <= 0)) {
++        throw new Error(
++          `llm-replay: provider "${provider.id}" model "${model.id}" imageRequestTokens `
++          + 'must be a positive safe integer',
++        )
++      }
++      // A text-only route never sends visual tokens: LlmRuntime substitutes
++      // its images with deterministic text before dispatch, so declared
++      // visual pricing would contradict the actual request projection.
++      if (imageRequestTokens !== undefined && model.inputModalities?.includes('image') !== true) {
++        throw new Error(
++          `llm-replay: provider "${provider.id}" model "${model.id}" imageRequestTokens `
++          + 'requires inputModalities to include "image"',
++        )
++      }
++    }
++  }
++}
++
++export function apply(ctx: Context, config: Config = {}): void {
++  const file = config.file ?? process.env.DSH_SNAPSHOT_FILE
++  if (file === undefined || file.length === 0) {
++    throw new Error('llm-replay: a fixture path is required (Config.file or $DSH_SNAPSHOT_FILE)')
++  }
++  validateConfiguredModels(config.providers)
++  const overrideFile = config.overrideFile ?? process.env.DSH_SNAPSHOT_OVERRIDE
++  const childEnv = process.env.DSH_SNAPSHOT_CHILD_FILES
++  const childFiles = config.childFiles
++    ?? (childEnv !== undefined && childEnv.length > 0 ? childEnv.split(pathDelimiter) : [])
++  installLlmReplay(ctx, {
++    file,
++    ...overrideFile !== undefined && overrideFile.length > 0 ? { overrideFile } : {},
++    ...childFiles.length > 0 ? { childFiles } : {},
++    ...config.providers !== undefined ? { providers: config.providers } : {},
++    ...config.paceMs !== undefined ? { paceMs: config.paceMs } : {},
++  })
++}

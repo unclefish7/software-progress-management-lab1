@@ -1,0 +1,57 @@
+{
+  "head": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+  "git_version": "git version 2.43.0",
+  "total": 17177,
+  "merges": 7097,
+  "merge_percent": 41.31687721953775,
+  "parent_counts": {
+    "2": 7097,
+    "1": 10079,
+    "0": 1
+  },
+  "title_categories": {
+    "PR 标题": 1514,
+    "远端跟踪分支标题": 2763,
+    "其他标题": 961,
+    "本地分支标题": 1693,
+    "指定提交标题": 166
+  },
+  "first_parent_merges": 1455,
+  "first_parent_pr_titles": 1453,
+  "conflict_keyword_candidates": 1668,
+  "conflicts_block_commits": 1536,
+  "conflicts_block_merge_commits": 1536,
+  "candidate_regex": "conflict|冲突",
+  "conflicts_block_regex": "^\\s*#?\\s*Conflicts:\\s*$",
+  "cases": [
+    {
+      "hash": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+      "file": "case-0d1f50007f.txt"
+    },
+    {
+      "hash": "1b7b50bbe141cfd4d74fad9a4967e24d81812364",
+      "file": "case-1b7b50bbe1.txt"
+    },
+    {
+      "hash": "a38c302e4a8e5b1375f7339093893aee1c66a337",
+      "file": "case-a38c302e4a.txt"
+    },
+    {
+      "hash": "eba45d9add924ab00d5e356f436bc9b128a267f1",
+      "file": "case-eba45d9add.txt"
+    },
+    {
+      "hash": "e8e0ec417631a91f0365225767bd2df7c3fb79f8",
+      "file": "case-e8e0ec4176.txt"
+    }
+  ],
+  "checks": {
+    "total_matches_git": true,
+    "merges_match_git": true,
+    "non_merges_match_git": true,
+    "categories_sum_to_merges": true,
+    "first_parent_subset": true,
+    "residue_present_before_removed_after": true,
+    "research_worktree_unchanged": true
+  }
+}

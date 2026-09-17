@@ -1,0 +1,10 @@
+commit 0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
+Merge: 0a15e36e7f e459e32637
+Author:     imccyu <276526105+imccyu@users.noreply.github.com>
+AuthorDate: Tue Sep 15 11:16:06 2026 +0800
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Sep 15 11:16:06 2026 +0800
+
+    Merge pull request #4192 from deepseek-harness/worktree-bootfast2
+    
+    perf(web): bootstrap client fast
