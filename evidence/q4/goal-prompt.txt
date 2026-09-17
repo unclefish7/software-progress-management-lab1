@@ -1,0 +1,29 @@
+快照：0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
+路径：packages/goal/goal-round-driver/src/prompt.ts
+
+   1 | /** Model-visible continuation prompt for one same-session goal round. */
+   2 | 
+   3 | import type { ContentBlock } from '@deepseek-ai/dsh-llm'
+   4 | import type { GoalView } from '@deepseek-ai/dsh-goal'
+   5 | 
+   6 | /**
+   7 |  * Render the complete goal-round instruction retained in session history.
+   8 |  * @param goal - exact active goal revision being admitted.
+   9 |  * @param round - next positive round number.
+  10 |  * @returns a fresh one-block prompt for `Agent.followup()`.
+  11 |  */
+  12 | export function renderGoalRoundPrompt(goal: GoalView, round: number): ContentBlock[] {
+  13 |   return [{
+  14 |     type: 'text',
+  15 |     text: '<goal_round>\n'
+  16 |       + `Objective: ${JSON.stringify(goal.objective)}\n`
+  17 |       + `Round: ${round}/${goal.maxGoalRounds}\n\n`
+  18 |       + 'Continue working toward the objective in this same session. Treat the current workspace, '
+  19 |       + 'tool results, and durable session state as authoritative; inspect them instead of assuming '
+  20 |       + 'earlier narration is still current. Make concrete progress and verify the result. Before '
+  21 |       + 'claiming completion, gather evidence that the whole objective is achieved, read the current '
+  22 |       + 'goal, and mark it complete. If work remains, leave the goal active for the next round. Follow '
+  23 |       + 'the configured goal-tool policy before reporting a blocker.\n'
+  24 |       + '</goal_round>',
+  25 |   }]
+  26 | }

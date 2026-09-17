@@ -1,0 +1,29 @@
+commit 43d81b67cef2a957afd2cb0646894757f3f28315
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Mon Jul 27 01:21:32 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Mon Jul 27 01:21:32 2026 +0800
+
+    fix(subprocess): consumers with one mixed env map split DSH_* onto the managed channel
+    
+    Codex review of the acp-only fix found lsp-local carries the identical
+    defect: its server config's unrestricted env merges into the connection's
+    ordinary spawn channel, so a configured DSH_* fact crashed the spawn with
+    the reserved-namespace rejection. The partition now lives on the seam as
+    splitEnvChannels() beside the scrub it complements; the ACP run and the
+    LSP connection both use it, and each proves child delivery end-to-end
+    (MOCK_ECHO_ENV / LSP_FAKE_ECHO_ENV fixture knobs). Seam + consumer README
+    rows updated (en+zh, re-recorded). bash-local is already two-channel;
+    mcp/pty/sdk bypass the seam and only share the scrub.
+
+commit e8e0ec417631a91f0365225767bd2df7c3fb79f8
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Sun Sep 6 00:08:46 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Sun Sep 6 20:42:43 2026 +0800
+
+    docs(snapshot): remove stale prompt scrubber conflict residue
+    
+    Delete the leftover diff3 parent marker and both copies of the obsolete request-header prompt JSDoc. Keep only the current system/message tokenization contract. This is a local comment-only finding; neither oracle behavior nor fixture content changes.
+    
+    Evidence: git diff --check is clean; focused normalize.spec.ts scrubSystemPrompts test passes (1 selected, 64 skipped). The earlier header-preservation commit intentionally retained this marker so the findings stay independent.

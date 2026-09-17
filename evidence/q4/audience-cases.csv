@@ -1,0 +1,11 @@
+path,audience,reason,evidence
+README.md,人类为主,启动入口、社区链接，并另指向 agent 指令,root-readme.txt
+docs/user/guide/index.md,人类为主,按界面操作顺序指导配置模型、选择工作区和运行任务,user-guide.txt
+CONTRIBUTING.md,人类为主,面向社区说明贡献途径；仅描述固定快照政策,contributing.txt
+AGENTS.md,开发 agent 为主,常驻规则、验证要求以及链接导航；人类也需维护和审阅,agent-instructions.txt
+docs/AGENTS.md,开发 agent 与维护者共享,明确区分 human-facing docs、agent standing orders 和设计决策,doc-standard.txt
+.agents/notes/README.md,人和开发 agent 共享,保存动机、方案、替代方案与后果，避免重复争论,notes-guide.txt
+.agents/notes/implemented/process/2026-07-04-doc-tiers-and-budgets.md,人和开发 agent 共享,解释文档分层及字数预算的理由与取舍,doc-decision.txt
+packages/core/system-prompt/README.md,人和开发 agent 共享,解释提示词组件配置；描述模型体验不等于整篇是提示词,package-readme.txt
+packages/goal/goal-round-driver/src/prompt.ts,字符串面向运行时 agent；JSDoc 面向维护者与开发 agent,同文件内有两种用途，结合调用链区分,goal-prompt.txt
+packages/goal/goal-round-driver/src/index.ts,提示词调用位置证据,renderGoalRoundPrompt → createUserMessage → agent.followup,goal-caller.txt

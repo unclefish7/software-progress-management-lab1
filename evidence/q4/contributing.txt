@@ -1,0 +1,26 @@
+快照：0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
+路径：CONTRIBUTING.md
+
+   1 | # Contributing
+   2 | 
+   3 | English | [中文](CONTRIBUTING.zh.md)
+   4 | 
+   5 | Thank you for your interest in contributing to DeepSeek Harness!
+   6 | 
+   7 | We deeply believe in the power of open source communities, and that belief has shaped this project from the very beginning.
+   8 | 
+   9 | DeepSeek Harness is still at an early stage and under active development. We are sorry that we cannot accept external pull requests at the moment. However, contributing code to this repository is far from the only way to help. There are many other ways to get involved:
+  10 | 
+  11 | - Identify and report issues or bugs in GitHub Discussions:
+  12 |   - Upvote discussions that you would like to bring to the team's attention. We are a very small team and may not be able to reply to every post, but we monitor them and consider them when allocating resources.
+  13 | - Contribute to the ecosystem:
+  14 |   - Create a plugin that excites you and share it with others:
+  15 |     - Associate your GitHub project with the `dsh-plugin` topic to help others discover your plugin.
+  16 |   - Write blog posts and how-to guides about DeepSeek Harness.
+  17 |   - Answer questions and help other members of the community.
+  18 | 
+  19 | DeepSeek Harness is designed to be deeply customizable. We do not believe that packages in the official repository are inherently more important than packages created by the community. You may consider this repository an idea, an official showcase, and a source of inspiration, but not a mandate from us.
+  20 | 
+  21 | We have already seen exciting projects emerge from the community, and we hope to see the ecosystem continue to grow in its own directions.
+  22 | 
+  23 | Into the unknown.

@@ -1,0 +1,122 @@
+[
+  {
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:README.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:docs/user/guide/index.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:CONTRIBUTING.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:AGENTS.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:docs/AGENTS.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:.agents/notes/README.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:.agents/notes/implemented/process/2026-07-04-doc-tiers-and-budgets.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:packages/core/system-prompt/README.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:packages/goal/goal-round-driver/src/prompt.ts"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:packages/goal/goal-round-driver/src/index.ts"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "merge-base",
+      "--is-ancestor",
+      "43d81b67cef2a957afd2cb0646894757f3f28315",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "-s",
+      "--format=fuller",
+      "43d81b67cef2a957afd2cb0646894757f3f28315"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "merge-base",
+      "--is-ancestor",
+      "e8e0ec417631a91f0365225767bd2df7c3fb79f8",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "-s",
+      "--format=fuller",
+      "e8e0ec417631a91f0365225767bd2df7c3fb79f8"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "head": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+  "selection": "定向选择十个文件和两条提交，不作全仓库读者比例估计",
+  "commit_cases": [
+    "43d81b67cef2a957afd2cb0646894757f3f28315",
+    "e8e0ec417631a91f0365225767bd2df7c3fb79f8"
+  ],
+  "checks": {
+    "ten_selected_files_saved": true,
+    "readme_explicit_agent_entry": true,
+    "standard_explicit_human_scope": true,
+    "prompt_caller_chain_present": true,
+    "research_worktree_unchanged": true
+  }
+}

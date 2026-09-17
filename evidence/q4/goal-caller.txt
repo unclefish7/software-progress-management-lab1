@@ -1,0 +1,459 @@
+快照：0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
+路径：packages/goal/goal-round-driver/src/index.ts
+
+   1 | /**
+   2 |  * Same-session goal-round driver over public agent, session, and goal services.
+   3 |  * @module @deepseek-ai/dsh-goal-round-driver
+   4 |  */
+   5 | 
+   6 | import { isDeepStrictEqual } from 'node:util'
+   7 | import { FiberState } from '@deepseek-ai/cordis'
+   8 | import type { Context } from '@deepseek-ai/cordis'
+   9 | import type { Agent, PreStepDecision } from '@deepseek-ai/dsh-agent'
+  10 | import type { GoalMessageSource, GoalRef, GoalView } from '@deepseek-ai/dsh-goal'
+  11 | import { createUserMessage } from '@deepseek-ai/dsh-llm'
+  12 | import type { ContentBlock, MessageId, MessageSource } from '@deepseek-ai/dsh-llm'
+  13 | import type { Session, SessionEvent, UserMessage } from '@deepseek-ai/dsh-session'
+  14 | import { renderGoalRoundPrompt } from './prompt.ts'
+  15 | 
+  16 | export { renderGoalRoundPrompt } from './prompt.ts'
+  17 | 
+  18 | export const name = 'goal-round-driver'
+  19 | export const inject = ['agents', 'goals', 'sessions']
+  20 | 
+  21 | /** Identity reserved before a goal continuation enters the agent inbox. */
+  22 | interface RoundIdentity {
+  23 |   readonly goalId: GoalRef['id']
+  24 |   readonly revision: number
+  25 |   readonly round: number
+  26 | }
+  27 | 
+  28 | /** One queued, claimed, or admitted goal message retained until whole-agent quiescence. */
+  29 | interface RoundAttempt extends RoundIdentity {
+  30 |   readonly messageId: MessageId
+  31 |   readonly content: ContentBlock[]
+  32 |   phase: 'queued' | 'claimed' | 'admitted'
+  33 |   cancelled: boolean
+  34 |   stale: boolean
+  35 | }
+  36 | 
+  37 | /** Serialized process-local scheduling state for one exact Agent lifecycle. */
+  38 | interface DriverState {
+  39 |   readonly agent: Agent
+  40 |   attempt: RoundAttempt | undefined
+  41 |   competingQueued: boolean
+  42 |   needsCheckpoint: boolean
+  43 |   requested: boolean
+  44 |   run: Promise<void> | undefined
+  45 |   stopping: boolean
+  46 | }
+  47 | 
+  48 | /** Whether a source identifies an automatic, positive-numbered goal round. */
+  49 | function isGoalRoundSource(source: MessageSource): source is GoalMessageSource {
+  50 |   return source.kind === 'goal' && source.round > 0
+  51 | }
+  52 | 
+  53 | /** Compare a source to one reserved identity. */
+  54 | function sameRound(source: GoalMessageSource, round: RoundIdentity): boolean {
+  55 |   return source.goalId === round.goalId
+  56 |     && source.revision === round.revision
+  57 |     && source.round === round.round
+  58 | }
+  59 | 
+  60 | /** Compare the complete queued record to the driver's reservation. */
+  61 | function sameQueued(content: ContentBlock[], source: MessageSource, attempt: RoundAttempt): boolean {
+  62 |   return isGoalRoundSource(source) && sameRound(source, attempt) && isDeepStrictEqual(content, attempt.content)
+  63 | }
+  64 | 
+  65 | /** Exact current ref for a view. */
+  66 | function goalRef(goal: GoalView): GoalRef {
+  67 |   return { id: goal.id, revision: goal.revision }
+  68 | }
+  69 | 
+  70 | /** Human-readable unexpected values for logs. */
+  71 | function renderThrown(value: unknown): string {
+  72 |   return value instanceof Error ? value.message : String(value)
+  73 | }
+  74 | 
+  75 | /** Install automatic same-session continuation and its race fences. */
+  76 | export function apply(ctx: Context): void {
+  77 |   const states = new Map<Agent, DriverState>()
+  78 | 
+  79 |   /** Create state for an exact currently live agent. */
+  80 |   function stateFor(agent: Agent): DriverState {
+  81 |     const existing = states.get(agent)
+  82 |     if (existing !== undefined) return existing
+  83 |     const state: DriverState = {
+  84 |       agent,
+  85 |       attempt: undefined,
+  86 |       competingQueued: false,
+  87 |       needsCheckpoint: false,
+  88 |       requested: false,
+  89 |       run: undefined,
+  90 |       stopping: false,
+  91 |     }
+  92 |     states.set(agent, state)
+  93 |     return state
+  94 |   }
+  95 | 
+  96 |   /** Read only when the exact Agent remains live. */
+  97 |   function currentGoal(state: DriverState): GoalView | undefined {
+  98 |     if (ctx.agents.get(state.agent.id) !== state.agent) return undefined
+  99 |     return ctx.goals.get(state.agent)
+ 100 |   }
+ 101 | 
+ 102 |   /** Whether this exact lifecycle is quiescent with no competing prompt. */
+ 103 |   function readyToDrive(state: DriverState): boolean {
+ 104 |     return ctx.fiber.state === FiberState.ACTIVE
+ 105 |       && !state.stopping
+ 106 |       && ctx.agents.get(state.agent.id) === state.agent
+ 107 |       && state.agent.status === 'idle'
+ 108 |       && !state.competingQueued
+ 109 |   }
+ 110 | 
+ 111 |   /** Recheck every condition that an awaited checkpoint may have changed. */
+ 112 |   function readyAfterCheckpoint(state: DriverState): boolean {
+ 113 |     return readyToDrive(state) && !state.needsCheckpoint
+ 114 |   }
+ 115 | 
+ 116 |   /** Remove automatic authority while preserving the durable phase. */
+ 117 |   function disarm(state: DriverState): void {
+ 118 |     try {
+ 119 |       const goal = currentGoal(state)
+ 120 |       if (goal?.activation === 'armed') ctx.goals.disarm(state.agent)
+ 121 |     } catch (error: unknown) {
+ 122 |       ctx.logger.warn(`goal-round-driver: could not disarm agent "${state.agent.id}": ${renderThrown(error)}`)
+ 123 |     }
+ 124 |   }
+ 125 | 
+ 126 |   /** Preserve claimed step context when this driver drops only its own round. */
+ 127 |   function restoreOtherClaimed(agent: Agent, messages: UserMessage[], messageId: MessageId): void {
+ 128 |     const retained = messages.filter(message => message.id !== messageId
+ 129 |       && !(message.source.kind === 'goal' && message.source.round === 0))
+ 130 |     for (const message of retained.toReversed()) {
+ 131 |       if (agent.inbox.nextStep.some(candidate => candidate.id === message.id)
+ 132 |         || agent.inbox.nextTurn.some(candidate => candidate.id === message.id)) continue
+ 133 |       agent.inbox.prepend('next-step', message)
+ 134 |     }
+ 135 |   }
+ 136 | 
+ 137 |   /** Process admitted work at quiescence, then reserve at most one next round. */
+ 138 |   async function drive(state: DriverState): Promise<void> {
+ 139 |     const { agent } = state
+ 140 |     if (!readyToDrive(state)) return
+ 141 | 
+ 142 |     if (state.needsCheckpoint) {
+ 143 |       state.needsCheckpoint = false
+ 144 |       try {
+ 145 |         await ctx.sessions.flush(agent.session)
+ 146 |       } catch (error: unknown) {
+ 147 |         ctx.logger.warn(`goal-round-driver: durability checkpoint failed for agent "${agent.id}": ${renderThrown(error)}`)
+ 148 |         disarm(state)
+ 149 |         return
+ 150 |       }
+ 151 |       // A mutation or ordinary prompt may have arrived while the checkpoint
+ 152 |       // was settling. Give it its own checkpoint / turn before reserving.
+ 153 |       if (!readyAfterCheckpoint(state)) return
+ 154 |     }
+ 155 | 
+ 156 |     const attempt = state.attempt
+ 157 |     if (attempt !== undefined) {
+ 158 |       state.attempt = undefined
+ 159 |       state.needsCheckpoint = true
+ 160 |       state.requested = true
+ 161 |       return
+ 162 |     }
+ 163 | 
+ 164 |     const goal = currentGoal(state)
+ 165 |     if (goal === undefined || goal.phase !== 'active' || goal.activation !== 'armed') return
+ 166 |     if (goal.roundsStarted >= goal.maxGoalRounds) {
+ 167 |       ctx.goals.block(agent, goalRef(goal), {
+ 168 |         code: 'round-limit',
+ 169 |         message: `Goal reached its configured limit of ${goal.maxGoalRounds} rounds.`,
+ 170 |       })
+ 171 |       return
+ 172 |     }
+ 173 | 
+ 174 |     const round = goal.roundsStarted + 1
+ 175 |     const content = renderGoalRoundPrompt(goal, round)
+ 176 |     const message = createUserMessage({
+ 177 |       content,
+ 178 |       source: { kind: 'goal', goalId: goal.id, revision: goal.revision, round },
+ 179 |     })
+ 180 |     const reservation: RoundAttempt = {
+ 181 |       goalId: goal.id,
+ 182 |       revision: goal.revision,
+ 183 |       round,
+ 184 |       messageId: message.id,
+ 185 |       content,
+ 186 |       phase: 'queued',
+ 187 |       cancelled: false,
+ 188 |       stale: false,
+ 189 |     }
+ 190 |     state.attempt = reservation
+ 191 |     try {
+ 192 |       agent.followup(message)
+ 193 |     } catch (error: unknown) {
+ 194 |       state.attempt = undefined
+ 195 |       ctx.logger.warn(`goal-round-driver: could not queue round ${round} for agent "${agent.id}": ${renderThrown(error)}`)
+ 196 |       const latest = currentGoal(state)
+ 197 |       if (latest !== undefined && latest.id === goal.id && latest.revision === goal.revision
+ 198 |         && latest.phase === 'active' && latest.activation === 'armed') {
+ 199 |         ctx.goals.block(agent, goalRef(latest), {
+ 200 |           code: 'queue-failed',
+ 201 |           message: `Could not queue goal round ${round}: ${renderThrown(error)}`,
+ 202 |         })
+ 203 |       }
+ 204 |     }
+ 205 |   }
+ 206 | 
+ 207 |   /** Coalesce triggers onto one agent-local serialized driver. */
+ 208 |   function requestDrive(state: DriverState): void {
+ 209 |     /* v8 ignore next -- teardown may race a final trigger after synchronously closing the step fence */
+ 210 |     if (state.stopping) return
+ 211 |     state.requested = true
+ 212 |     if (state.run !== undefined) return
+ 213 |     let run: Promise<void>
+ 214 |     try {
+ 215 |       run = ctx.agents.withoutInitiator(async () => {
+ 216 |         while (state.requested && !state.stopping) {
+ 217 |           state.requested = false
+ 218 |           try {
+ 219 |             await drive(state)
+ 220 |           } catch (error: unknown) {
+ 221 |             ctx.logger.warn(`goal-round-driver: driver failed for agent "${state.agent.id}": ${renderThrown(error)}`)
+ 222 |             disarm(state)
+ 223 |           }
+ 224 |         }
+ 225 |       })
+ 226 |     } catch (error: unknown) {
+ 227 |       ctx.logger.warn(`goal-round-driver: could not start driver for agent "${state.agent.id}": ${renderThrown(error)}`)
+ 228 |       disarm(state)
+ 229 |       return
+ 230 |     }
+ 231 |     state.run = run
+ 232 |     const retire = (): void => {
+ 233 |       state.run = undefined
+ 234 |       if (state.requested && !state.stopping) requestDrive(state)
+ 235 |     }
+ 236 |     void run.then(retire, (error: unknown) => {
+ 237 |       ctx.logger.warn(`goal-round-driver: driver task rejected for agent "${state.agent.id}": ${renderThrown(error)}`)
+ 238 |       disarm(state)
+ 239 |       retire()
+ 240 |     })
+ 241 |   }
+ 242 | 
+ 243 |   // One composite effect keeps the step fence installed until this
+ 244 |   // plugin's own scheduling tasks settle.
+ 245 |   ctx.effect(function* () {
+ 246 |     ctx.on('agent/error', ({ agent }) => {
+ 247 |       const state = stateFor(agent)
+ 248 |       disarm(state)
+ 249 |     })
+ 250 | 
+ 251 |     ctx.on('agent/disposed', ({ agent }) => { states.delete(agent) })
+ 252 |     ctx.on('agent/created', ({ agent }) => {
+ 253 |       const state = stateFor(agent)
+ 254 |       state.attempt = undefined
+ 255 |       state.competingQueued = false
+ 256 |       state.needsCheckpoint = false
+ 257 |     })
+ 258 |     ctx.on('agent/status', ({ agent, status }) => {
+ 259 |       const state = stateFor(agent)
+ 260 |       if (status === 'idle') {
+ 261 |         state.competingQueued = false
+ 262 |         const attempt = state.attempt
+ 263 |         const goal = currentGoal(state)
+ 264 |         // Fence the pause to the exact dropped attempt's ref. A resume bumps
+ 265 |         // the revision, so a host pause followed by an immediate resume (before
+ 266 |         // the aborted turn converges to idle) must not re-pause the resumed goal.
+ 267 |         if (attempt !== undefined
+ 268 |           && (attempt.phase === 'queued' || attempt.phase === 'claimed' || attempt.cancelled)
+ 269 |           && goal !== undefined && goal.phase === 'active' && goal.activation === 'armed'
+ 270 |           && attempt.goalId === goal.id && attempt.revision === goal.revision) {
+ 271 |           state.attempt = undefined
+ 272 |           try {
+ 273 |             ctx.goals.pause(agent, goalRef(goal))
+ 274 |           } catch (error: unknown) {
+ 275 |             ctx.logger.warn(`goal-round-driver: could not pause cancelled goal for agent "${agent.id}": ${renderThrown(error)}`)
+ 276 |             disarm(state)
+ 277 |           }
+ 278 |         }
+ 279 |         requestDrive(state)
+ 280 |       }
+ 281 |     })
+ 282 |     ctx.on('goal/changed', ({ agent, change }) => {
+ 283 |       const state = stateFor(agent)
+ 284 |       state.needsCheckpoint = true
+ 285 |       // A host-initiated pause stops goal execution: abort the live turn so the
+ 286 |       // model cannot keep acting or resume in the same turn. A model-initiated
+ 287 |       // pause (update_goal inside its own turn) finishes normally.
+ 288 |       if (change.operation === 'pause' && agent.status === 'running'
+ 289 |         && ctx.agents.currentInitiator() !== agent) {
+ 290 |         agent.cancel({ kind: 'user' }, { keepInbox: true })
+ 291 |       }
+ 292 |       requestDrive(state)
+ 293 |     })
+ 294 | 
+ 295 |     ctx.on('agent/inbox/inserted', ({ agent, message }) => {
+ 296 |       if (!agent.inbox.nextTurn.some(candidate => candidate.id === message.id)) return
+ 297 |       const state = stateFor(agent)
+ 298 |       const attempt = state.attempt
+ 299 |       if (attempt !== undefined && sameQueued(message.content, message.source, attempt)) return
+ 300 |       state.competingQueued = true
+ 301 |       if (attempt?.phase === 'queued') attempt.stale = true
+ 302 |     })
+ 303 |     ctx.on('agent/inbox/claimed', ({ agent, message }) => {
+ 304 |       const state = stateFor(agent)
+ 305 |       const attempt = state.attempt
+ 306 |       if (attempt !== undefined && sameQueued(message.content, message.source, attempt)) {
+ 307 |         attempt.phase = 'claimed'
+ 308 |       }
+ 309 |     })
+ 310 |     ctx.on('agent/inbox/discarded', ({ agent, message }) => {
+ 311 |       const state = stateFor(agent)
+ 312 |       const attempt = state.attempt
+ 313 |       if (attempt !== undefined && sameQueued(message.content, message.source, attempt)) {
+ 314 |         attempt.cancelled = true
+ 315 |       }
+ 316 |     })
+ 317 | 
+ 318 |     ctx.on('session/event', (session: Session, event: SessionEvent) => {
+ 319 |       const agent = ctx.agents.get(session.id)
+ 320 |       if (agent === undefined || agent.session !== session) return
+ 321 |       const state = stateFor(agent)
+ 322 |       switch (event.type) {
+ 323 |         case 'user/message':
+ 324 |           if (state.attempt !== undefined && event.data.id === state.attempt.messageId) {
+ 325 |             state.attempt.phase = 'admitted'
+ 326 |           }
+ 327 |           return
+ 328 |         case 'turn/end':
+ 329 |           if (event.data.reason.kind === 'max-tokens') {
+ 330 |             disarm(state)
+ 331 |             return
+ 332 |           }
+ 333 |           if (event.data.reason.kind !== 'aborted') return
+ 334 |           if (state.attempt?.phase === 'claimed' || state.attempt?.phase === 'admitted') {
+ 335 |             state.attempt.cancelled = true
+ 336 |           }
+ 337 |           else disarm(state)
+ 338 |           return
+ 339 |         default:
+ 340 |           return
+ 341 |       }
+ 342 |     })
+ 343 | 
+ 344 |     /** Fail closed unless the queued prompt still owns the exact live revision. */
+ 345 |     function validReservation(
+ 346 |       state: DriverState,
+ 347 |       content: ContentBlock[],
+ 348 |       source: GoalMessageSource,
+ 349 |     ): boolean {
+ 350 |       const attempt = state.attempt
+ 351 |       const goal = currentGoal(state)
+ 352 |       return ctx.fiber.state === FiberState.ACTIVE
+ 353 |         && !state.stopping && attempt !== undefined && attempt.phase === 'claimed'
+ 354 |       && !attempt.stale && sameQueued(content, source, attempt)
+ 355 |       && goal !== undefined && goal.id === source.goalId && goal.revision === source.revision
+ 356 |       && goal.phase === 'active' && goal.activation === 'armed'
+ 357 |       && source.round === goal.roundsStarted + 1
+ 358 |     }
+ 359 | 
+ 360 |     ctx.on('agent/pre-step', async ({ agent, messages, signal }, next): Promise<PreStepDecision> => {
+ 361 |       const submitted = messages.find((message): message is UserMessage & { source: GoalMessageSource } =>
+ 362 |         isGoalRoundSource(message.source))
+ 363 |       if (submitted === undefined) return next()
+ 364 |       const { content, source } = submitted
+ 365 |       const state = stateFor(agent)
+ 366 |       let valid = false
+ 367 |       try {
+ 368 |         valid = validReservation(state, content, source)
+ 369 |       } catch (error: unknown) {
+ 370 |         ctx.logger.warn(`goal-round-driver: pre-step check failed for agent "${agent.id}": ${renderThrown(error)}`)
+ 371 |         disarm(state)
+ 372 |       }
+ 373 |       if (!valid) {
+ 374 |         const attempt = state.attempt
+ 375 |         if (attempt !== undefined && sameRound(source, attempt)) {
+ 376 |           attempt.stale = true
+ 377 |           state.attempt = undefined
+ 378 |         }
+ 379 |         restoreOtherClaimed(agent, messages, submitted.id)
+ 380 |         requestDrive(state)
+ 381 |         return { kind: 'reject' }
+ 382 |       }
+ 383 |       let decision: PreStepDecision
+ 384 |       try {
+ 385 |         decision = await next()
+ 386 |       } catch (error: unknown) {
+ 387 |         if (signal.aborted) throw error
+ 388 |         // A throwing downstream hook drops the whole step proposal. Clear the
+ 389 |         // reservation before the balanced no-step turn returns to idle so the
+ 390 |         // next drive pass can reschedule the round.
+ 391 |         state.attempt = undefined
+ 392 |         requestDrive(state)
+ 393 |         throw error
+ 394 |       }
+ 395 |       if (signal.aborted) {
+ 396 |         if (decision.kind === 'enter') restoreOtherClaimed(agent, decision.messages, submitted.id)
+ 397 |         return decision
+ 398 |       }
+ 399 |       if (decision.kind === 'reject') {
+ 400 |         state.attempt = undefined
+ 401 |         const goal = currentGoal(state)
+ 402 |         if (goal !== undefined && goal.id === source.goalId && goal.revision === source.revision
+ 403 |           && goal.phase === 'active' && goal.activation === 'armed') {
+ 404 |           ctx.goals.block(agent, goalRef(goal), {
+ 405 |             code: 'prompt-rejected',
+ 406 |             message: 'Goal round was rejected before entering its step.',
+ 407 |           })
+ 408 |         }
+ 409 |         return decision
+ 410 |       }
+ 411 |       try {
+ 412 |         valid = validReservation(state, content, source)
+ 413 |       } catch (error: unknown) {
+ 414 |         ctx.logger.warn(`goal-round-driver: post-decision check failed for agent "${agent.id}": ${renderThrown(error)}`)
+ 415 |         disarm(state)
+ 416 |         valid = false
+ 417 |       }
+ 418 |       if (!valid) {
+ 419 |         state.attempt = undefined
+ 420 |         restoreOtherClaimed(agent, decision.messages, submitted.id)
+ 421 |         requestDrive(state)
+ 422 |         return { kind: 'reject' }
+ 423 |       }
+ 424 |       return { ...decision, startsRequestSeries: true }
+ 425 |     })
+ 426 | 
+ 427 |     // Loading a lifecycle driver over existing agents never inherits hidden
+ 428 |     // automatic authority from an earlier producer instance.
+ 429 |     for (const agent of ctx.agents.list()) {
+ 430 |       const state = stateFor(agent)
+ 431 |       disarm(state)
+ 432 |     }
+ 433 | 
+ 434 |     // Yielded after listener registration, so this close runs first and the
+ 435 |     // composite effect removes listeners only after its promise settles.
+ 436 |     yield async () => {
+ 437 |       const waits: Promise<void>[] = []
+ 438 |       for (const state of states.values()) {
+ 439 |         state.stopping = true
+ 440 |         disarm(state)
+ 441 |         const attempt = state.attempt
+ 442 |         if (attempt !== undefined) {
+ 443 |           attempt.stale = true
+ 444 |           /* v8 ignore next -- followup reserves the live agent before publishing a queued attempt */
+ 445 |           if (state.agent.status === 'running') {
+ 446 |             state.agent.cancel({ kind: 'parent' })
+ 447 |             waits.push(state.agent.whenIdle())
+ 448 |           }
+ 449 |         }
+ 450 |         if (state.run !== undefined) waits.push(state.run)
+ 451 |       }
+ 452 |       await Promise.allSettled(waits)
+ 453 |       states.clear()
+ 454 |     }
+ 455 |   }, 'goal-round-driver lifecycle')
+ 456 | }

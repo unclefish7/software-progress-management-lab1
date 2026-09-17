@@ -1,0 +1,33 @@
+快照：0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
+路径：docs/user/guide/index.md
+
+   1 | # Use the Web UI
+   2 | 
+   3 | English | [中文](index.zh.md)
+   4 | 
+   5 | Start the Web UI through the [root README](../../../README.md#run); the command prints its URL. This guide begins after that server is running. The `dsh` process uses its invoking directory as the default filesystem location, but a fresh Web UI has no selected workspace until you add one.
+   6 | 
+   7 | ## Configure a model
+   8 | 
+   9 | Open **Settings → Models**, enter a [DeepSeek API key](https://platform.deepseek.com/), and save it. The model route becomes usable immediately without restarting the server.
+  10 | 
+  11 | The [model configuration guide](./providers.md) covers other providers and custom OpenAI-compatible endpoints.
+  12 | 
+  13 | ## Choose a workspace
+  14 | 
+  15 | Click **Choose workspace**, add the project directory where you started `dsh`, and select it. The session composer remains unavailable until a workspace is selected.
+  16 | 
+  17 | ## Run a task
+  18 | 
+  19 | Start a session and send:
+  20 | 
+  21 | > Summarize this repository and identify its main packages.
+  22 | 
+  23 | The agent can read and edit workspace files, run commands, delegate work, and maintain a plan. The Web UI asks before operations that require approval under the active permission policy.
+  24 | 
+  25 | ## Continue
+  26 | 
+  27 | - [Configure models](./providers.md)
+  28 | - [Use the Python SDK](./python-sdk.md)
+  29 | - [Use other CLI modes](../../../apps/cli/README.md)
+  30 | - [Develop a plugin](../develop/basic/index.md)
