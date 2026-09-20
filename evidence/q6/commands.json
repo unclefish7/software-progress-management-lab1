@@ -1,0 +1,255 @@
+[
+  {
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "log",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+      "--format=%H%x00%cI%x00%s%x00"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-parse",
+      "869b5c7bf2"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "merge-base",
+      "--is-ancestor",
+      "869b5c7bf231ccc5a94290f9b8843946684f288b",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-parse",
+      "a2d0f7f411"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "merge-base",
+      "--is-ancestor",
+      "a2d0f7f41121ee81911dd1badbf248edd3f2ab70",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-parse",
+      "ea53423b60"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "merge-base",
+      "--is-ancestor",
+      "ea53423b60d0c0c6cea8bf0bdc68a758de2aff97",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-parse",
+      "f7a6221158"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "merge-base",
+      "--is-ancestor",
+      "f7a622115882a93fda819ff71a5274fc223fd622",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-parse",
+      "98d2baf2e5"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "merge-base",
+      "--is-ancestor",
+      "98d2baf2e5a3f88b6ceb424c4f950319e7bbc259",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "rev-parse",
+      "5212603a4b"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "merge-base",
+      "--is-ancestor",
+      "5212603a4bcceaae6b77629039936a9e1501dd63",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "869b5c7bf231ccc5a94290f9b8843946684f288b:.agents/notes/proposed/architecture/2026-08-11-repository-naming-contract-and-rename-ledger.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:.agents/notes/archived/architecture/2026-08-11-repository-naming-contract-and-rename-ledger.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720:.agents/notes/implemented/architecture/2026-08-31-released-session-format-migrations.md"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=fuller",
+      "--stat",
+      "ea53423b60d0c0c6cea8bf0bdc68a758de2aff97",
+      "--",
+      "package.json",
+      "apps/cli/package.json",
+      "pnpm-lock.yaml"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "diff-tree",
+      "--no-commit-id",
+      "--name-status",
+      "-r",
+      "-M",
+      "a2d0f7f41121ee81911dd1badbf248edd3f2ab70"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=fuller",
+      "--shortstat",
+      "a2d0f7f41121ee81911dd1badbf248edd3f2ab70"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "-s",
+      "--format=fuller",
+      "f7a622115882a93fda819ff71a5274fc223fd622"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--stat",
+      "f7a622115882a93fda819ff71a5274fc223fd622"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "-s",
+      "--format=fuller",
+      "98d2baf2e5a3f88b6ceb424c4f950319e7bbc259"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--stat",
+      "98d2baf2e5a3f88b6ceb424c4f950319e7bbc259"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "-s",
+      "--format=fuller",
+      "5212603a4bcceaae6b77629039936a9e1501dd63"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=",
+      "--stat",
+      "5212603a4bcceaae6b77629039936a9e1501dd63"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "ls-tree",
+      "-r",
+      "--name-only",
+      "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "show",
+      "--format=fuller",
+      "f7a622115882a93fda819ff71a5274fc223fd622",
+      "--",
+      "packages/session/session-format-v2-to-v3/src/migration.ts",
+      "packages/session/session-format-v2-to-v3/tests/migration.spec.ts"
+    ],
+    "exit_code": 0
+  },
+  {
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "exit_code": 0
+  }
+]

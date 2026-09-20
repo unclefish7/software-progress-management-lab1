@@ -1,0 +1,11 @@
+commit a2d0f7f41121ee81911dd1badbf248edd3f2ab70
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Thu Aug 13 00:36:22 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Thu Aug 13 00:54:38 2026 +0800
+
+    refactor: apply repository naming contract
+    
+    Apply the accepted pre-release package, service, type, directory, and role renames as one repository-wide change.
+
+ 3281 files changed, 21708 insertions(+), 21570 deletions(-)

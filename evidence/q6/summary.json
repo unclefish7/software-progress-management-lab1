@@ -1,0 +1,56 @@
+{
+  "head": "0d1f50007f9bca3f52b06e1c3074fa14d5fb0720",
+  "release_commits": {
+    "count": 27,
+    "first": {
+      "hash": "b64c3ac1ba37a8afe20de534ab666e85ae69377b",
+      "committer_time": "2026-08-11T03:20:36+08:00",
+      "version": "0.0.1-rc.1",
+      "channel": "rc",
+      "hours_since_previous": ""
+    },
+    "last": {
+      "hash": "ea53423b60d0c0c6cea8bf0bdc68a758de2aff97",
+      "committer_time": "2026-09-15T09:35:57+08:00",
+      "version": "0.1.6-alpha.1",
+      "channel": "alpha",
+      "hours_since_previous": "107.960278"
+    },
+    "active_calendar_dates": 17,
+    "channels": {
+      "rc": 17,
+      "alpha": 10
+    },
+    "median_gap_hours": 21.230278,
+    "minimum_gap_hours": 0.174167,
+    "maximum_gap_hours": 149.020556,
+    "matching_rule": "release\\(dsh\\): (\\d+\\.\\d+\\.\\d+(?:-(?:alpha|rc)\\.\\d+)?)$"
+  },
+  "naming_application": {
+    "commit": "a2d0f7f41121ee81911dd1badbf248edd3f2ab70",
+    "changed_files": 3281,
+    "insertions": 21708,
+    "deletions": 21570,
+    "status_counts": {
+      "M": 2205,
+      "R": 961,
+      "A": 59,
+      "D": 56
+    }
+  },
+  "session_migration_case_commits": [
+    "f7a622115882a93fda819ff71a5274fc223fd622",
+    "98d2baf2e5a3f88b6ceb424c4f950319e7bbc259",
+    "5212603a4bcceaae6b77629039936a9e1501dd63"
+  ],
+  "scope": "三个定向过程现象；发布数仅统计匹配规则的 dsh release 提交，不等于注册表发布次数",
+  "checks": {
+    "release_rows_match_summary": true,
+    "release_channels_sum": true,
+    "rename_statuses_sum_to_changed_files": true,
+    "rename_count_is_961": true,
+    "all_six_commits_reachable": true,
+    "migration_paths_saved": true,
+    "research_worktree_unchanged": true
+  }
+}

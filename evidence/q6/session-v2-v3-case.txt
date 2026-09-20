@@ -1,0 +1,218 @@
+commit f7a622115882a93fda819ff71a5274fc223fd622
+Author:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+AuthorDate: Sun Sep 6 13:52:21 2026 +0800
+Commit:     Tianyi Cui <53024+tianyicui@users.noreply.github.com>
+CommitDate: Sun Sep 6 13:52:21 2026 +0800
+
+    feat(session): add identity V2-to-V3 migration and writer skeleton
+
+diff --git a/packages/session/session-format-v2-to-v3/src/migration.ts b/packages/session/session-format-v2-to-v3/src/migration.ts
+new file mode 100644
+index 0000000000..de6f05a179
+--- /dev/null
++++ b/packages/session/session-format-v2-to-v3/src/migration.ts
+@@ -0,0 +1,70 @@
++/** Identity adjacent stage; events and compact runs retain their values and ordering. */
++
++import { SessionFormatError, defineSessionFormatMigration, isSessionFormatJsonObject, sessionFormatCount } from '@deepseek-ai/dsh-session-format'
++import type {
++  SessionFormatEvent,
++  SessionFormatEventRun,
++  SessionFormatMigrationContext,
++  SessionFormatMigrationStage,
++  SessionFormatMigrationStageInput,
++} from '@deepseek-ai/dsh-session-format'
++import { assertReleasedV2Header } from '@deepseek-ai/dsh-session-format-v1-to-v2'
++import { assertReleasedV3Header } from './validation.ts'
++
++/** Adjacent identity migration from released v2 to v3. */
++export const sessionFormatV2ToV3 = defineSessionFormatMigration({
++  name: '@deepseek-ai/dsh-session-format-v2-to-v3',
++  fromVersion: 2,
++  toVersion: 3,
++  migrateHeader(header) {
++    assertReleasedV2Header(header)
++    return { ...header, version: 3 }
++  },
++  createStage(input) {
++    return new ReleasedV2ToV3Stage(input)
++  },
++  validateTargetHeader: assertReleasedV3Header,
++})
++
++class ReleasedV2ToV3Stage implements SessionFormatMigrationStage {
++  private inheritedEventCount: number | undefined
++  private lastForeignDeliverySeq: number | undefined
++
++  constructor(private readonly input: SessionFormatMigrationStageInput) {
++    this.inheritedEventCount = input.sourceHeader.isSeeded ? undefined : 0
++  }
++
++  transformEvent(event: SessionFormatEvent, context: SessionFormatMigrationContext): void {
++    if (event.type === 'session/end-seed'
++      && isSessionFormatJsonObject(event.data)
++      && event.data['inherited'] === true) {
++      this.inheritedEventCount = event.seq
++    }
++    if (event.type === 'session-log-deepseek/delivery-accepted'
++      && isSessionFormatJsonObject(event.data)
++      && event.data['sessionFormatVersion'] === 2
++      && event.data['sessionId'] !== this.input.sourceHeader.id) {
++      this.lastForeignDeliverySeq = event.seq
++    }
++    context.emitEvent(event)
++  }
++
++  transformRun(run: SessionFormatEventRun, context: SessionFormatMigrationContext): void {
++    context.emitRun(run)
++  }
++
++  finish(_context: SessionFormatMigrationContext): number {
++    const cut = sessionFormatCount(this.inheritedEventCount, 'format v2 inherited end-seed marker')
++    if (this.input.sourceInheritedEventCount !== undefined && this.input.sourceInheritedEventCount !== cut) {
++      throw new SessionFormatError('format v2 inherited end-seed marker disagrees with its source cut')
++    }
++    if (!this.input.sourceHeader.isSeeded && cut !== 0) {
++      throw new SessionFormatError('format v2 unseeded Session contains an inherited end-seed marker')
++    }
++    if (this.lastForeignDeliverySeq !== undefined
++      && (this.input.sourceHeader.parentSession === undefined || this.lastForeignDeliverySeq >= cut)) {
++      throw new SessionFormatError('current-generation delivery marker names the wrong Session')
++    }
++    return cut
++  }
++}
+diff --git a/packages/session/session-format-v2-to-v3/tests/migration.spec.ts b/packages/session/session-format-v2-to-v3/tests/migration.spec.ts
+new file mode 100644
+index 0000000000..8eea240bd6
+--- /dev/null
++++ b/packages/session/session-format-v2-to-v3/tests/migration.spec.ts
+@@ -0,0 +1,128 @@
++import { describe, expect, it, vi } from 'vitest'
++import { SessionFormatEventCollector } from '@deepseek-ai/dsh-session-format'
++import type { SessionFormatEvent, SessionFormatHeader } from '@deepseek-ai/dsh-session-format'
++import {
++  assertReleasedV3Header,
++  releasedV2SessionFormatCodec,
++  releasedV3SessionFormatCodec,
++  restoreReleasedV3Artifact,
++  sessionFormatV2ToV3,
++} from '../src/index.ts'
++
++const header: SessionFormatHeader = {
++  version: 2, id: 'identity', createdAt: 1, isSeeded: false, delegationDepth: 0,
++}
++
++describe('v2 to v3 identity migration', () => {
++  it('changes only the header version and forwards events and runs without expansion', () => {
++    const target = sessionFormatV2ToV3.migrateHeader(header)
++    expect(target).toEqual({ ...header, version: 3 })
++    expect(header.version).toBe(2)
++    const stage = sessionFormatV2ToV3.createStage({
++      sourceHeader: header, targetHeader: target, sourceInheritedEventCount: 0, sourceKind: 'decoded',
++    })
++    const event: SessionFormatEvent = {
++      type: 'external/event', seq: 5, time: 12, data: { nested: ['payload'] },
++      ignorable: true, sourceEventSeqs: [1, 2], surfaceOp: { replace: [3] },
++    }
++    const run = { runType: 'opaque', firstSeq: 6, eventCount: 2, expand: vi.fn() }
++    const context = { emitEvent: vi.fn(), emitRun: vi.fn() }
++    stage.transformEvent(event, context)
++    stage.transformRun(run, context)
++    expect(context.emitEvent.mock.calls[0]?.[0]).toBe(event)
++    expect(context.emitRun.mock.calls[0]?.[0]).toBe(run)
++    expect(run.expand).not.toHaveBeenCalled()
++    expect(stage.finish(context)).toBe(0)
++  })
++
++  it('derives the inherited cut from scalar end-seed markers', () => {
++    const seeded = { ...header, isSeeded: true }
++    const stage = sessionFormatV2ToV3.createStage({
++      sourceHeader: seeded, targetHeader: { ...seeded, version: 3 },
++      sourceInheritedEventCount: undefined, sourceKind: 'transformed',
++    })
++    const context = new SessionFormatEventCollector()
++    for (const data of [null, false, [], {}, { inherited: true }]) {
++      stage.transformEvent({ type: 'session/end-seed', seq: 4, time: 1, data }, context)
++    }
++    expect(stage.finish(context)).toBe(4)
++  })
++
++  it('rejects missing, mismatched, and unseeded inherited cuts', () => {
++    const context = new SessionFormatEventCollector()
++    for (const [isSeeded, sourceCut, marker] of [[true, undefined, undefined], [true, 2, 1], [false, undefined, 1]] as const) {
++      const source = { ...header, isSeeded }
++      const stage = sessionFormatV2ToV3.createStage({
++        sourceHeader: source, targetHeader: { ...source, version: 3 },
++        sourceInheritedEventCount: sourceCut, sourceKind: 'decoded',
++      })
++      if (marker !== undefined) stage.transformEvent({
++        type: 'session/end-seed', seq: marker, time: 1, data: { inherited: true },
++      }, context)
++      expect(() => stage.finish(context)).toThrow(/inherited/)
++    }
++  })
++
++  it('round-trips v3 records with identical v2 provenance encoding', () => {
++    const current = { ...header, version: 3 }
++    const event = { type: 'external/event', seq: 3, time: 1, data: null, sourceEventSeqs: [0, 1, 2] }
++    const physical = releasedV3SessionFormatCodec.encodeHeader(current, 0)
++    expect(physical).toEqual({ ...releasedV2SessionFormatCodec.encodeHeader(header, 0), version: 3 })
++    expect(releasedV3SessionFormatCodec.decodeHeader(physical)).toEqual(current)
++    const row = releasedV3SessionFormatCodec.encodeEvent(event)
++    expect(row).toEqual(releasedV2SessionFormatCodec.encodeEvent(event))
++    const decoder = releasedV3SessionFormatCodec.createDecoder(physical, 'strict')
++    const context = new SessionFormatEventCollector()
++    const first = { type: 'external/event', seq: 0, time: 1, data: null }
++    decoder.decodeRow(first, context)
++    expect(decoder.header).toEqual(current)
++    expect(decoder.finish(context)).toBe(0)
++    expect(context.values).toEqual([first])
++  })
++
++  it.each([null, [], false, { version: 2 }])('rejects a non-v3 physical header %j', (value) => {
++    expect(() => releasedV3SessionFormatCodec.decodeHeader(value)).toThrow(/format v3 physical/)
++  })
++
++  it.each([false, true])('validates V2 delivery ownership before promotion (inherited=%s)', (inherited) => {
++    const source = { ...header, isSeeded: inherited, ...(inherited ? { parentSession: 'parent' } : {}) }
++    const stage = sessionFormatV2ToV3.createStage({
++      sourceHeader: source, targetHeader: { ...source, version: 3 },
++      sourceInheritedEventCount: undefined, sourceKind: 'decoded',
++    })
++    const context = new SessionFormatEventCollector()
++    stage.transformEvent({ type: 'session-log-deepseek/delivery-accepted', seq: 0, time: 1,
++      data: { sessionId: 'parent', sessionFormatVersion: 2 } }, context)
++    if (inherited) stage.transformEvent({ type: 'session/end-seed', seq: 1, time: 1, data: { inherited: true } }, context)
++    if (inherited) {
++      expect(stage.finish(context)).toBe(1)
++      stage.transformEvent({ type: 'session-log-deepseek/delivery-accepted', seq: 2, time: 1,
++        data: { sessionId: 'parent', sessionFormatVersion: 2 } }, context)
++    }
++    expect(() => stage.finish(context)).toThrow(/wrong Session/)
++  })
++
++  it('checks native v3 delivery ownership without reinterpreting historical markers', () => {
++    const artifact = (version: number) => ({
++      header: { ...header, version: 3 }, inheritedEventCount: 0, events: [{
++        type: 'session-log-deepseek/delivery-accepted', seq: 0, time: 1,
++        data: { sessionId: 'other-session', throughSeq: 0, sessionFormatVersion: version },
++      }],
++    })
++    expect(() => restoreReleasedV3Artifact(artifact(3), new Set())).toThrow(/wrong Session/)
++    expect(restoreReleasedV3Artifact(artifact(2), new Set()).events).toEqual(artifact(2).events)
++  })
++
++  it('validates v3 metadata and event admission without mutating the artifact', () => {
++    expect(() => assertReleasedV3Header(header)).toThrow(/format v3 header/)
++    expect(() => assertReleasedV3Header({ ...header, version: 3, cwd: 'relative' })).toThrow(/absolute/)
++    const artifact = { header: { ...header, version: 3 }, inheritedEventCount: 0, events: [
++      { type: 'external/event', seq: 0, time: 1, data: null, ignorable: true },
++    ] }
++    expect(restoreReleasedV3Artifact(artifact, new Set())).toBe(artifact)
++    expect(artifact.header.version).toBe(3)
++    expect(() => restoreReleasedV3Artifact({ ...artifact, events: [
++      { type: 'external/required', seq: 0, time: 1, data: null },
++    ] }, new Set())).toThrow(/unknown event type/)
++  })
++})
